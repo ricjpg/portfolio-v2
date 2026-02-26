@@ -25,6 +25,7 @@ export interface ProjectProps {
   description: string;
   href?: string;
   date: string;
+  stack?: string[];
 }
 
 export interface SummaryProps {
@@ -43,12 +44,14 @@ export interface Translations {
     projects: ProjectProps[];
     summary: SummaryProps;
     hero: HeroStrings;
+    // projectProps: ProjectProps[];
   };
   es: {
     skills: SkillSetProps[];
     projects: ProjectProps[];
     summary: SummaryProps;
     hero: HeroStrings;
+    // projectProps: ProjectProps[];
   };
 }
 

@@ -90,6 +90,7 @@ export const translations: Translations = {
         img: "prosene.png",
         href: "/projects/prosene",
         date: "2025-03-15T14:30:00.000Z",
+        stack: ["AWS-RDS", "Postgres", "FastAPI", "VueJS", "Bootstrap"],
       },
       {
         slug: "/xatruch",
@@ -99,6 +100,7 @@ export const translations: Translations = {
         img: "plane.jpg",
         href: "/projects/xatruch",
         date: "2023-09-15T14:30:00.000Z",
+        stack: ["PHP/Laravel", "MySQL", "Java", "Spring"],
       },
       {
         slug: "/classifier",
@@ -108,6 +110,7 @@ export const translations: Translations = {
         img: "classifier.png",
         href: "/projects/classifier",
         date: "2024-03-15T14:30:00.000Z",
+        stack: ["Python", "Jupyter", "IA", "HTML/CSS/JS"],
       },
       {
         slug: "/ecommerce",
@@ -117,6 +120,7 @@ export const translations: Translations = {
         img: "general-diagram.png",
         href: "/projects/ecommerce",
         date: "2025-06-28T14:30:00.000Z",
+        stack: ["Terraform", "Workers", "Azure", "Cloud"],
       },
       {
         slug: "/smart-cache",
@@ -126,6 +130,7 @@ export const translations: Translations = {
         img: "smart-cache-low.gif",
         href: "/projects/smart-cache",
         date: "2025-07-22T14:30:00.000Z",
+        stack: ["Azure", "REDIS", "Cache", "Cloud", "Data sets", "Auth"],
       },
       {
         slug: "/poke-q",
@@ -135,6 +140,7 @@ export const translations: Translations = {
         img: "poke-q.gif",
         href: "/projects/poke-q",
         date: "2025-08-07T14:30:00.000Z",
+        stack: ["Python", "Azure", "Serverless", "React/radix"],
       },
     ],
     summary: {
@@ -206,6 +212,7 @@ export const translations: Translations = {
         img: "prosene.png",
         href: "/projects/prosene",
         date: "2025-03-15T14:30:00.000Z",
+        stack: ["AWS-RDS", "Postgres", "FastAPI", "VueJS", "Bootstrap"],
       },
       {
         slug: "/xatruch",
@@ -215,6 +222,7 @@ export const translations: Translations = {
         img: "plane.jpg",
         href: "/projects/xatruch",
         date: "2023-09-15T14:30:00.000Z",
+        stack: ["PHP/Laravel", "MySQL", "Java", "Spring"],
       },
       {
         slug: "/classifier",
@@ -224,6 +232,7 @@ export const translations: Translations = {
         img: "classifier.png",
         href: "/projects/classifier",
         date: "2024-03-15T14:30:00.000Z",
+        stack: ["Python", "Jupyter", "IA", "HTML/CSS/JS"],
       },
       {
         slug: "/ecommerce",
@@ -233,6 +242,7 @@ export const translations: Translations = {
         img: "general-diagram.png",
         href: "/projects/ecommerce",
         date: "2025-06-28T14:30:00.000Z",
+        stack: ["Terraform", "Workers", "Azure", "Cloud"],
       },
       {
         slug: "/smart-cache",
@@ -242,6 +252,7 @@ export const translations: Translations = {
         img: "smart-cache-low.gif",
         href: "/projects/smart-cache",
         date: "2025-07-22T14:30:00.000Z",
+        stack: ["Azure", "REDIS", "Cache", "Cloud", "Data sets", "Auth"],
       },
       {
         slug: "/poke-q",
@@ -251,6 +262,7 @@ export const translations: Translations = {
         img: "poke-q.gif",
         href: "/projects/poke-q",
         date: "2025-08-07T14:30:00.000Z",
+        stack: ["Python", "Azure", "Serverless", "React/radix"],
       },
     ],
     summary: {

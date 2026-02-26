@@ -54,7 +54,7 @@ export default function Home() {
         </div>
       </div>
       <Section>
-        <ProjectList items={projectsList} />
+        <ProjectList limit={3} />
       </Section>
     </Section>
   );

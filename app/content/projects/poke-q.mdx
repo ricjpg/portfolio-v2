@@ -1,0 +1,367 @@
+---
+title: "Poke Queue"
+description: "Generacion asincrona de reportes."
+date: "2025-10-06"
+toc_min_heading_level: 1
+toc_max_heading_level: 5
+tags:
+  [
+    "FastApi",
+    "Azure",
+    "Docker",
+    "Python",
+    "SQL",
+    "Queue",
+    "Workers",
+    "Terrform",
+  ]
+slug: poke-q
+---
+
+![classNameifier Banner](../../../public/images/poke-q.gif)
+
+<br />
+<br />
+
+# Objetivo General
+
+<>
+  Es extender y adaptar esta aplicación base, añadiendo nuevas funcionalidades y
+  demostrando tu habilidad para modificar y mejorar un sistema existente que
+  debe permanecer desplegado y funcional en Azure.
+</>
+<br />
+<br />
+
+## Contexto Tecnologico
+
+<>
+
+<ol className=' font-mono font-bold'>
+  <li >
+    -Frontend: Next.js (React)
+  </li>
+  <li>
+  -Backend: API Python con FastAPI desplegada en Azure App Service
+  </li>
+  <li>
+  -Proceso Asíncrono: Azure Functions (Python Queue Trigger)
+  </li>
+  <li>
+  -Base de Datos: Azure SQL Database
+  </li>
+  <li>
+  -Almacenamiento: Azure Blob Storage (para los CSV), 
+  </li>
+  <li>
+  -Azure Queue Storage (para mensajes)
+  </li>
+  <li>
+  -API Externa: PokeAPI
+  </li>
+  <li>
+  -Infraestructura como Código (IaC): Terraform (implícito por la mención del
+repositorio)
+  </li>
+</ol>
+</>
+<br />
+
+# Tarea 1: Implementar Eliminación Completa de Reportes
+
+<>
+
+El primer paso para implementar la eliminacion fue crear el correspondiente endpoint:
+
+```jsx
+{domain}/api/request/{id} <- METHOD_POST (Para el registro)
+```
+
+<br />
+Ese endpoint toma el id y hace una busqueda en la base de datos verificando si
+el registro existe Si el registro existe entonces ejecuta un metodo que ejecuta
+un query donde se elimina el registro, este metodo tambien envia un mensaje al
+queue DeleteQueue luego azure worker o azure function llamado
+serverless-pokeq-dev toma ese mensaje y procede con la eliminacion del blob
+file, el cual se hizo mediante el metodo .delete_blob() que esta incluido en el
+SDK de Azure.
+
+</>
+<br />
+<br />
+
+# Tarea 2: Enriquecer Reporte con Detalles del Pokémon
+
+<>
+Al principio el funcionamiento de la API era el siguiente:
+<br/>
+
+Se hacia una peticion `GET` a la API de PokeAPI
+
+```python
+https://pokeapi.co/api/v2/type/{type} <- METHOD_GET
+```
+
+en donde el parametro `{type}` es el tipo de pokemon del cual nosotros queremos la lista
+
+La consulta a este endpoint nos devuelve la siguiente informacion:
+
+<ol>
+  <li>1. **Nombre del pokemon**</li>
+  <li>2. **URL del pokemon**</li>
+  <li>3. **slot**</li>
+</ol>
+
+</>
+
+<>
+Para el nuevo funcionamiento:
+Se necesitaba extraer datos de la API de Pokémon desde dos estructuras diferentes:
+
+1. **Lista básica**: Con nombres y URLs de Pokémon
+
+```python
+https://pokeapi.co/api/v2/type/{type} <- METHOD_GET
+```
+
+<br />
+2. **Endpoint detallado**: Con stats y abilities tras hacer peticiones HTTP
+
+```python
+https://pokeapi.co/api/v2/pokemon/{id} <- METHOD_GET
+```
+
+Inicialmente se cree funciones que mantenían la estructura de un diccionario de la forma:
+
+```python
+data_dict = {
+    "name": "Pokemon",
+    "stats": {"hp": 39, "attack": 52, ...},
+    "abilities": [{"blaze": "blaze"}, ...]
+}
+```
+
+Sin embargo para poder dejarlo listo de un data es necesario poder 'Aplanar' esta estructura
+
+</>
+
+<>
+
+## <p className = "text-3xl font-extrabold">Recoleccion de toda la data</p>
+
+<br />
+**Proceso**:
+
+- Itera sobre lista de Pokémon
+- Aplica extracción individual a cada elemento
+- Maneja fallos individuales mediante un Try Catch sin romper el proceso completo
+
+<br />
+</>
+<>
+## <p className = "text-3xl font-extrabold">Aplanamiento de Datos</p>
+
+<br />
+
+**Problema**: Datas/CSV no manejan bien estructuras anidadas
+
+<br />
+Los stats estaban guardados en un dict llamada "stats". La solución fue romper
+el diccionario y poner cada stat directamente como una columna separada en la
+tabla. Es como si tuvieras una carpeta llamada "Calificaciones" con hojas
+sueltas adentro. En lugar de tener la carpeta, sacas cada hoja y las pones
+directamente sobre el escritorio, cada una con su propio lugar.
+
+- Stats: `stats.hp` → `hp` (columna directa)
+
+```python
+# Antes
+pokemon_data['stats'] = {"hp": 39, "attack": 52, "defense": 43}
+
+# Después - Se promocionan al nivel principal
+for stat_item in pokemon_data['stats']:
+    stat_name = stat_item['stat']['name']    # 'hp'
+    base_stat = stat_item['base_stat']       # 39
+    flat_data[stat_name] = base_stat         # flat_data['hp'] = 39
+```
+
+Para Abilities: Expandir horizontalmente
+
+<br />
+Las abilities eran una lista de elementos complejos (cada ability tenía nombre,
+si era oculta, y un número de slot). La solución fue crear múltiples columnas
+para cada ability: una columna para el nombre de la primera ability. Luego lo
+mismo para la segunda ability, y así sucesivamente.
+
+- Abilities: Array complejo → múltiples columnas (`ability_1_name`, `ability_1_name`, etc.)
+
+```python
+# Antes
+"abilities": [
+    {"name": "blaze", "is_hidden": false, "slot": 1},
+    {"name": "solar-power", "is_hidden": true, "slot": 3}
+]
+
+# Después - Una columna por cada atributo de cada ability
+abilities = extract_abilities(pokemon_data['abilities'])
+for i, ability in enumerate(abilities, 1):
+    flat_data[f'ability_{i}_name'] = ability['name']        # ability_1_name: blaze
+    flat_data[f'ability_{i}_name'] = ability['name']        # ability_1_name: blaze
+```
+
+</>
+
+<>
+
+## <p className = "text-3xl font-extrabold">Manejo de Abilities Variables</p>
+
+**Problema**: Pokémon tienen diferente número de habilidades
+
+**Solución**:
+
+```python
+# Columnas dinámicas por habilidad
+ability_1_name,
+ability_2_name
+# + columnas resumen
+all_abilities: "blaze, solar-power"
+total_abilities: 2
+```
+
+</>
+<>
+## <p className = "text-3xl font-extrabold">Organización de Columnas</p>
+
+Se estableció un orden lógico:
+
+1. **Identificación**: name, url
+2. **Stats de combate**: hp, attack, defense, etc.
+3. **Resumen de abilities**: total_abilities, all_abilities
+4. **Detalles de abilities**: ability_1_name, ability_2_name, etc.
+
+name -> url -> hp -> attack -> defense -> special-attack -> special-defense -> speed -> total_abilities -> all_abilities -> ability_1_name -> ability_2_name -> ability_3_name -> etc
+
+</>
+<>
+
+## <p className = "text-3xl font-extrabold">Data</p>
+
+El Data nos permite organizar los datos de una manera tabular, lo que nos beneficia porque queremos exportar un CSV
+
+Con los datos previamente aplanados y las columnas tambien ordenadas solo ulilizamos la libreria Pandas creamos el data y poblarlo a partir de nuestra lista.
+
+</>
+<>
+
+## <p className = "text-3xl font-extrabold">Exportación</p>
+
+Para la exportacion se utilizo el metodo previamente creado y solo fue cuestion de pasarle el nuevo blob_file
+
+</>
+<>
+
+## <p className = "text-3xl font-extrabold">Manejo de Errores</p>
+
+- Peticiones HTTP con try-catch
+- Continúa procesando aunque falte un Pokémon
+- Mensajes informativos de progreso
+
+</>
+<br />
+
+# Tarea 3: Reportes con Muestreo Aleatorio
+
+Permite al usuario especificar un número máximo de registros aleatorios a incluir
+en el reporte.
+
+<>
+  ## <p className="text-3xl font-extrabold">Frontend</p>
+  <br />
+  Utilizando la libreria radix-ui se utilizo el componente ```label-input```
+  para obtener el tamaño del sample desde el lado del clientes
+</>
+
+<>
+## <p className = "text-3xl font-extrabold">Backend</p>
+
+<br />
+Se modifico el endpoint ```http://{domain}/api/requests/{type}/{sample_size}```
+para obtener mediante un path variable el numero de registros requeridos por el
+usuario Se modifico el modelo en pydantic de manera que este tuviera un nuevo
+campo llamado `sample_size` que es un numero entero mayor o igual a cero (0) Se
+hizo la modificacion correspondiente en la base de datos y tambien en el
+procedimiento almacenado para seguir utilizando esa misma funcionalidad
+solamente con pequeños ajustes
+
+</>
+
+<>
+## <p className = "text-3xl font-extrabold">Worker - Azure Function</p>
+
+<br />
+Mediante la funcion ```get_request(id)``` obtenemos un json con los datos de la
+solicitud, incluyendo el sample size, aprovechamos esto para para validar si el
+tamaño deseado de la muestra es menor a numero de registros que contiene el tipo
+de pokemon requerido por el usuario, si llega a ser menor entonces utilizamos la
+funcion 'Recortamos' el arreglo con la lista de pokemones antes de que se
+agreguen todos los detalles que utilizaremos en el data de la siguiente manera:
+```python sample_pokemon_list = pokemon_list[:random.randint(1, list_len)] ```
+si la muestra requerida por el usuario llega a ser mayor que la lista obtenia
+desde la API de Pokemon entonces devolveremos todos los pokemones del mismo tipo
+que esten disponibles en la API
+
+</>
+
+<>
+## <p className = "text-3xl font-extrabold">Resultado final en el CSV</p>
+
+```python
+name,url,hp,attack,defense,special-attack,special-defense,speed,total_abilities,all_abilities,ability_1_name,ability_2_name,ability_3_name
+charmander,https://pokeapi.co/api/v2/pokemon/4/,39,52,43,60,50,65,2,"blaze, solar-power",blaze,solar-power,
+charmeleon,https://pokeapi.co/api/v2/pokemon/5/,58,64,58,80,65,80,2,"blaze, solar-power",blaze,solar-power,
+charizard,https://pokeapi.co/api/v2/pokemon/6/,78,84,78,109,85,100,2,"blaze, solar-power",blaze,solar-power,
+```
+
+</>
+
+<>
+# 🔗 Enlaces importantes:
+
+<br />
+<ol >
+  <li className='text-white font-mono font-bold hover:text-green-500 transition-colors'>
+    {" "}
+    [🔗 Portal UI - Desplegado](https://ui-pokeq-dev.azurewebsites.net/)
+  </li>
+  <li className='text-white font-mono font-bold hover:text-green-500 transition-colors'>
+    {" "}
+    [🔗 API - Desplegado](https://api-pokeq-dev.azurewebsites.net/)
+  </li>
+  <li className='text-white font-mono font-bold hover:text-green-500 transition-colors'>
+    {" "}
+    [🔗 Repositorio en GitHub de la API](https://github.com/ricjpg/pokeq.api)
+  </li>
+  <li className='text-white font-mono font-bold hover:text-green-500 transition-colors'>
+    {" "}
+    [🔗 Repositorio en GitHub de la UI](https://github.com/ricjpg/pokeq.ui)
+  </li>
+  <li className='text-white font-mono font-bold hover:text-green-500 transition-colors'>
+    {" "}
+    [🔗 Repositorio en GitHub del Azure Function](https://github.com/ricjpg/pokeq.funct)
+  </li>
+  <li className='text-white font-mono font-bold hover:text-green-500 transition-colors'>
+    {" "}
+    [🔗 Repositorio en GitHub de la Base de datos](https://github.com/ricjpg/pokeq.sql)
+  </li>
+  <li className='text-white font-mono font-bold hover:text-green-500 transition-colors'>
+    {" "}
+    [🔗 Repositorio en GitHub de la Arquitectura](https://github.com/ricjpg/pokeq.tf)
+  </li>
+  <li className='text-white font-mono font-bold hover:text-green-500 transition-colors'>
+    {" "}
+    [🔗 Demostracion de Funcionalidades Principales](https://youtu.be/Mc8Sg_zIL_s)
+  </li>
+</ol>
+</>
+```
+````
