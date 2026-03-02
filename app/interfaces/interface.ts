@@ -8,6 +8,11 @@ export interface SkillSetProps {
   skills: SkillProps[];
 }
 
+export interface SoftSkillProp {
+  title: string;
+  description: string;
+}
+
 export interface DataPage {
   slug: string;
 }
@@ -36,6 +41,17 @@ export interface SummaryProps {
 export interface HeroStrings {
   greeting: string;
   recentProjects: string;
+  aboutme: string;
+  techSkill: string;
+  softSkill: string;
+}
+
+export interface EducationProps {
+  title?: string;
+  degree?: string;
+  institution?: string;
+  period?: string;
+  perks?: string[];
 }
 
 export interface Translations {
@@ -44,14 +60,16 @@ export interface Translations {
     projects: ProjectProps[];
     summary: SummaryProps;
     hero: HeroStrings;
-    // projectProps: ProjectProps[];
+    education: EducationProps[];
+    softSkills: SoftSkillProp[];
   };
   es: {
     skills: SkillSetProps[];
     projects: ProjectProps[];
     summary: SummaryProps;
     hero: HeroStrings;
-    // projectProps: ProjectProps[];
+    education: EducationProps[];
+    softSkills: SoftSkillProp[];
   };
 }
 

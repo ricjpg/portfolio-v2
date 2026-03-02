@@ -1,10 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { ProjectProps } from "../interfaces/interface";
 import { Badge, Card, Heading, Inset, Text } from "@radix-ui/themes";
 import { useLanguage } from "../lib/LanguageContext";
-import { isNull } from "util";
 
 interface ItemProjectProps {
   limit: number;

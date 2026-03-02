@@ -20,7 +20,7 @@ export function LanguageToggle() {
         {/* Fondo deslizante */}
         <div
           className={` absolute top-1 left-1 w-9 h-8 bg-blue-600 hover:bg-blue-400 rounded-full transition-transform duration-300 ease-in-out ${
-            language === "es" ? "translate-x-9" : "translate-x-0"
+            language === "en" ? "translate-x-9" : "translate-x-0"
           }`}
         />
 
@@ -28,7 +28,7 @@ export function LanguageToggle() {
         <button
           onClick={handleClick}
           className={`relative z-10 w-9 h-8 font-medium transition-colors${
-            language === "es" ? "text-gray-700" : "text-white"
+            language === "en" ? "text-gray-700" : "text-white"
           }`}
         >
           ES
@@ -38,7 +38,7 @@ export function LanguageToggle() {
         <button
           onClick={handleClick}
           className={`relative z-10 w-9 h-8 font-medium transition-colors ${
-            language === "en" ? "text-gray-700" : "text-white"
+            language === "es" ? "text-gray-700" : "text-white"
           }`}
         >
           EN

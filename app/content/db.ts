@@ -52,22 +52,23 @@ export const translations: Translations = {
         ],
       },
       {
-        tittle: "DevOps",
+        tittle: "DevOps and cloud",
         skills: [
           { name: "Terraform", level: 50 },
           { name: "AzureCloud", level: 50 },
-          { name: "AWS", level: 55 },
+          { name: "AWS", level: 50 },
           { name: "CI/CD", level: 50 },
+          { name: "Cloudflare tunnels and pages", level: 60 },
         ],
       },
       {
         tittle: "Databases",
         skills: [
-          { name: "SQL", level: 70 },
+          { name: "SQL Server", level: 70 },
           { name: "Oracle", level: 70 },
           { name: "MySQL", level: 70 },
           { name: "PostgreSQL", level: 70 },
-          { name: "MongoDB", level: 50 },
+          { name: "PL/SQL", level: 50 },
         ],
       },
       {
@@ -146,12 +147,55 @@ export const translations: Translations = {
     summary: {
       title: "Professional Summary",
       content:
-        "Results-driven Systems Engineering student with a strong foundation in web and mobile application development. Proficient in frontend and backend technologies including React, FastAPI, Spring Boot, and various SQL/NoSQL databases. Adept at quickly learning new technologies and adapting to dynamic project requirements. Demonstrated ability to manage multiple projects effectively while maintaining high standards of quality. Committed to continuous improvement and passionate about leveraging technology to solve real-world problems.",
+        "Results-driven Systems Engineering student with a strong foundation in web and mobile application development. Proficient in frontend and backend technologies including React, FastAPI, Spring Boot, and various SQL databases. Adept at quickly learning new technologies and adapting to dynamic project requirements. Ability to manage multiple projects effectively while maintaining high standards of quality. Committed to continuous improvement and passionate about leveraging technology to solve real-world problems.",
     },
     hero: {
       greeting: "Hello, I'm",
       recentProjects: "Recent Projects",
+      aboutme: "About me",
+      techSkill: "Tech Skills",
+      softSkill: "Soft Skills",
     },
+    education: [
+      {
+        title: "System Engineer",
+        period: "2026",
+        degree: "Engineer",
+        institution: "National Autonomous University of Honduras",
+        perks: [
+          "Full-stack developer",
+          "Specialized in backend development",
+          "Committed to continuous improvement",
+        ],
+      },
+    ],
+    softSkills: [
+      {
+        title: "Collaboration",
+        description:
+          "I foster teamwork through active listening, clear communication, and respect for diverse perspectives to achieve shared goals efficiently.",
+      },
+      {
+        title: "Problem Solving",
+        description:
+          "I approach challenges analytically, breaking down complex problems into manageable parts and proposing practical, well-reasoned solutions.",
+      },
+      {
+        title: "Ethics",
+        description:
+          "I act with integrity and responsibility, ensuring transparency, accountability, and respect for confidentiality in every task I undertake.",
+      },
+      {
+        title: "Patient Persistence",
+        description:
+          "I remain consistent and focused when facing obstacles, maintaining a steady effort until objectives are achieved.",
+      },
+      {
+        title: "Leadership",
+        description:
+          "I lead by example, motivating others through clarity, organization, and a results-oriented mindset while supporting team growth.",
+      },
+    ],
   },
   es: {
     skills: [
@@ -180,16 +224,17 @@ export const translations: Translations = {
           { name: "AzureCloud", level: 50 },
           { name: "AWS", level: 55 },
           { name: "CI/CD", level: 50 },
+          { name: "Cloudflare tunnels and pages", level: 60 },
         ],
       },
       {
         tittle: "Bases de Datos",
         skills: [
-          { name: "SQL", level: 70 },
+          { name: "SQL Server", level: 70 },
           { name: "Oracle", level: 70 },
           { name: "MySQL", level: 70 },
           { name: "PostgreSQL", level: 70 },
-          { name: "MongoDB", level: 50 },
+          { name: "PL/SQL", level: 50 },
         ],
       },
       {
@@ -268,17 +313,61 @@ export const translations: Translations = {
     summary: {
       title: "Resumen Profesional",
       content:
-        "Estudiante de Ingeniería en Sistemas orientado a resultados con una sólida base en desarrollo de aplicaciones web y móviles. Competente en tecnologías frontend y backend incluyendo React, FastAPI, Spring Boot, y varias bases de datos SQL/NoSQL. Hábil para aprender rápidamente nuevas tecnologías y adaptarse a requisitos dinámicos de proyectos. Capacidad demostrada para gestionar múltiples proyectos efectivamente manteniendo altos estándares de calidad. Comprometido con la mejora continua y apasionado por aprovechar la tecnología para resolver problemas del mundo real.",
+        "Estudiante de Ingeniería en Sistemas orientado a resultados con una sólida base en desarrollo de aplicaciones web y móviles. Competente en tecnologías frontend y backend incluyendo React, FastAPI, Spring Boot, y varias bases de datos SQL. Hábil para aprender rápidamente nuevas tecnologías y adaptarse a requisitos dinámicos de proyectos. Capacidad para gestionar múltiples proyectos efectivamente manteniendo altos estándares de calidad. Comprometido con la mejora continua y apasionado por aprovechar la tecnología para resolver problemas del mundo real.",
     },
     hero: {
       greeting: "Hola, yo soy",
       recentProjects: "Proyectos Recientes",
+      aboutme: "Acerca de mi",
+      techSkill: "Habilidades Tecnicas",
+      softSkill: "Habilidades Blandas",
     },
+    education: [
+      {
+        title: "Ingeniero en Sistemas",
+        degree: "Ingenieria",
+        period: "2026",
+        institution: "Universidad Nacional Autónoma de Honduras",
+        perks: [
+          "Desarrollador Full-Stack",
+          "Orientado al desarrollo backend",
+          "Comprometido a la mejora continua",
+        ],
+      },
+    ],
+    softSkills: [
+      {
+        title: "Colaboración",
+        description:
+          "Fomento el trabajo en equipo mediante la escucha activa, la comunicación clara y la valoración de distintas perspectivas para alcanzar objetivos comunes de manera eficiente.",
+      },
+      {
+        title: "Resolución de Problemas",
+        description:
+          "Abordo los desafíos de forma analítica, descomponiendo problemas complejos en partes manejables y proponiendo soluciones prácticas y bien fundamentadas.",
+      },
+      {
+        title: "Ética",
+        description:
+          "Actúo con integridad y responsabilidad, asegurando transparencia, rendición de cuentas y respeto por la confidencialidad en cada tarea que realizo.",
+      },
+      {
+        title: "Persistencia Paciente",
+        description:
+          "Mantengo constancia y enfoque ante los obstáculos, sosteniendo un esfuerzo continuo hasta alcanzar los objetivos planteados.",
+      },
+      {
+        title: "Liderazgo",
+        description:
+          "Lidero con el ejemplo, motivando a otros mediante claridad, organización y orientación a resultados, mientras impulso el crecimiento del equipo.",
+      },
+    ],
   },
 };
 
 // Exportar datos legacy para compatibilidad hacia atrás
 export const skills = translations.en.skills;
+export const softSkill = translations.en.softSkills;
 export const projectsList = translations.en.projects;
 export const summaryContent = translations.en.summary;
 
