@@ -6,6 +6,7 @@ import path from "path";
 import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { MDXComponents } from "mdx/types";
+import { Link } from "@radix-ui/themes";
 
 // Tipos para el frontmatter
 interface Frontmatter {
@@ -151,6 +152,26 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
+      <Link
+        href="/projects"
+        className="group mb-8 inline-flex items-center text-sm font-medium text-gray-700 hover:text-black hover:scale-110 transition-all"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+          stroke="currentColor"
+          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+          />
+        </svg>
+        Back to Projects
+      </Link>
       {/* Header con metadata */}
       <header className="mb-8">
         <h1 className="text-5xl font-bold mb-4">{frontmatter.title}</h1>
@@ -182,6 +203,26 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <article className="prose prose-lg dark:prose-invert max-w-none">
         <MDXRemote source={content} components={components} />
       </article>
+      <Link
+        href="/projects"
+        className="group mb-8 inline-flex items-center text-sm font-medium text-gray-700 hover:text-black hover:scale-110 transition-all"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+          stroke="currentColor"
+          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+          />
+        </svg>
+        Back to Projects
+      </Link>
     </div>
   );
 }
