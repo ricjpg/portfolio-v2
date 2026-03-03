@@ -1,7 +1,18 @@
-import { Card, Code, Text, Heading, Separator, Badge } from "@radix-ui/themes";
+import {
+  Card,
+  Code,
+  Text,
+  Heading,
+  Separator,
+  Badge,
+  Link,
+} from "@radix-ui/themes";
 import { useLanguage } from "../lib/LanguageContext";
+import { translations } from "../content/db";
+import { useRouter } from "next/navigation";
 
 interface textProp {
+  type: string;
   title?: string;
   degree?: string;
   institution?: string;
@@ -9,24 +20,42 @@ interface textProp {
   perks?: string[];
 }
 
-const Slide: React.FC<textProp> = ({}) => {
-  const { t } = useLanguage();
+interface urlProp {
+  url: string;
+}
 
+const Slide: React.FC<textProp> = ({ type }) => {
+  const { t } = useLanguage();
   const education = [...t.education];
+  const kind = education.filter((education) => education.type == type);
+
   return (
     <div className="">
-      {education.map((item) => (
-        <Card variant="surface" size="3" key={item.degree}>
+      {kind.map((item) => (
+        <Card
+          variant="surface"
+          size="3"
+          key={item.title}
+          className="m-2 hover:scale-103 transition-transform"
+        >
           <Text>
-            <Heading>{"Education"}</Heading>
+            <Heading>{item.type}</Heading>
           </Text>
           <div className="flex">
             <div>
               <Separator orientation="vertical" size="4" color="iris" />
             </div>
-            <div className="pl-3">
+            <div className="p-3 ">
               <p className="text-blue-600 text-sm font-bold">{item.period}</p>
-              <Text className="text-3xl font-extrabold">{item.title}</Text>
+              <Link
+                weight={"bold"}
+                href={item.url}
+                color="indigo"
+                size="8"
+                className="font-extrabold "
+              >
+                {item.title}
+              </Link>
               <br />
               <Text color="gray" className="text-md font-extralight">
                 {item.institution}

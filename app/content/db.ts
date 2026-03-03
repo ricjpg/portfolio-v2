@@ -155,9 +155,20 @@ export const translations: Translations = {
       aboutme: "About me",
       techSkill: "Tech Skills",
       softSkill: "Soft Skills",
+      typeEd: [
+        {
+          type: "University",
+          title: "University Title",
+        },
+        {
+          type: "Certificate",
+          title: "Certifications",
+        },
+      ],
     },
     education: [
       {
+        type: "University",
         title: "System Engineer",
         period: "2026",
         degree: "Engineer",
@@ -167,6 +178,33 @@ export const translations: Translations = {
           "Specialized in backend development",
           "Committed to continuous improvement",
         ],
+      },
+      {
+        type: "Certificate",
+        title: "Introduction  to Networks",
+        degree: "CCNA Certification",
+        period: "2025",
+        institution: "Cisco - NetAcad",
+        perks: [
+          "Network Fundamentals",
+          "Security Fundamentals",
+          "Ethernet, IP Subnetting, Switching",
+        ],
+        url: "https://www.credly.com/badges/5e60098e-08cb-4291-b6a4-e805498d9b16/public_url",
+      },
+      {
+        type: "Certificate",
+        title: "Oracle - Next Education",
+        degree: "Certificate",
+        period: "2025",
+        institution: "Oracle - Alura",
+        perks: [
+          "Frontend development",
+          "Soft skills",
+          "Entrepreneurship",
+          "Agility and Professional Leadership",
+        ],
+        url: "https://app.aluracursos.com/program/certificate/8e8f0d61-363f-4619-ad15-848c3bda3bee",
       },
     ],
     softSkills: [
@@ -321,9 +359,20 @@ export const translations: Translations = {
       aboutme: "Acerca de mi",
       techSkill: "Habilidades Tecnicas",
       softSkill: "Habilidades Blandas",
+      typeEd: [
+        {
+          type: "Educacion Superior",
+          title: "Titulo de Educacion Superior",
+        },
+        {
+          type: "Certificado",
+          title: "Certificaciones",
+        },
+      ],
     },
     education: [
       {
+        type: "Educacion Superior",
         title: "Ingeniero en Sistemas",
         degree: "Ingenieria",
         period: "2026",
@@ -333,6 +382,33 @@ export const translations: Translations = {
           "Orientado al desarrollo backend",
           "Comprometido a la mejora continua",
         ],
+      },
+      {
+        type: "Certificado",
+        title: "Introduccion a las Redes",
+        degree: "Certificacion CCNA",
+        period: "2025",
+        institution: "Cisco - NetAcad",
+        perks: [
+          "Fundamento de redes",
+          "Fundamentos de seguridad",
+          "Ethernet, Subneteo, Switching",
+        ],
+        url: "https://www.credly.com/badges/5e60098e-08cb-4291-b6a4-e805498d9b16/public_url",
+      },
+      {
+        type: "Certificado",
+        title: "Oracle - Next Education",
+        degree: "Certificacion CCNA",
+        period: "2025",
+        institution: "Cisco - NetAcad",
+        perks: [
+          "Desarrollo web",
+          "Habilidades blandas",
+          "Emprendimiento",
+          "Agilidad y protagonismo profesional",
+        ],
+        url: "https://app.aluracursos.com/program/certificate/8e8f0d61-363f-4619-ad15-848c3bda3bee",
       },
     ],
     softSkills: [

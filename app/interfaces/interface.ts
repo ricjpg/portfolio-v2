@@ -38,20 +38,28 @@ export interface SummaryProps {
   content: string;
 }
 
+export interface TypeEducation {
+  type: string;
+  title: string;
+}
+
 export interface HeroStrings {
   greeting: string;
   recentProjects: string;
   aboutme: string;
   techSkill: string;
   softSkill: string;
+  typeEd: TypeEducation[];
 }
 
 export interface EducationProps {
+  type: string;
   title?: string;
   degree?: string;
   institution?: string;
   period?: string;
   perks?: string[];
+  url?: string;
 }
 
 export interface Translations {

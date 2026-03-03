@@ -26,9 +26,18 @@ export default function aboutme() {
           <p className="">{t.summary.content}</p>
         </Box>
         <Box className="w-full lg:w-1/2">
-          <Slide />
+          <Slide type={t.hero.typeEd[0].type} />
           <DownloadButton />
         </Box>
+      </Section>
+
+      <Box className=" justify-self-center">
+        <h1 className="font-extrabold text-4xl lg:text-7xl">
+          {t.hero.typeEd[1].title}
+        </h1>
+      </Box>
+      <Section className="w-full lg:w-3/5  justify-self-center">
+        <Slide type={t.hero.typeEd[1].type} />
       </Section>
 
       <Box className=" justify-self-center">
@@ -37,9 +46,7 @@ export default function aboutme() {
         </h1>
       </Box>
       <Section className="w-full lg:w-3/5  justify-self-center">
-        {/* <Box> */}
         <TechSkillCard />
-        {/* </Box> */}
       </Section>
 
       <Box className=" justify-self-center">
