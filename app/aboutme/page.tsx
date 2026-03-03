@@ -1,14 +1,12 @@
 "use client";
-import { Box, Section, Separator } from "@radix-ui/themes";
-import Avatar from "../components/Avatar";
-import { Pictures, skills } from "../content/db";
+import { Box, Link, Section, Separator, Text } from "@radix-ui/themes";
 import { useLanguage } from "../lib/LanguageContext";
 import Slide from "../components/Slide";
-import { useRouter } from "next/navigation";
 import TechSkillCard from "../components/TechSkillCard";
 import BackButton from "../components/BackButton";
 import SoftSkillCard from "../components/SoftSkillCard";
 import DownloadButton from "../components/DownloadCVButton";
+import SocialCard from "../components/SocialCard";
 
 export default function aboutme() {
   const { t } = useLanguage();
@@ -55,12 +53,28 @@ export default function aboutme() {
         </h1>
       </Box>
       <Section className="w-full lg:w-3/5  justify-self-center">
-        {/* <Box> */}
         <SoftSkillCard />
-        {/* </Box> */}
       </Section>
+
+      <Box className=" justify-self-center">
+        <h1 className="font-extrabold text-4xl lg:text-7xl">
+          {t.hero.contactMeTitle}
+        </h1>
+      </Box>
+      <Box className=" justify-self-center">
+        <Text>
+          {t.hero.contactMeContent} <br />
+          <Link href="mailto:ricardoguardiolahn@gmail.com">
+            ricardoguardiolahn@gmail.com
+          </Link>
+        </Text>
+      </Box>
+      <Box className=" justify-self-center">
+        <SocialCard />
+      </Box>
+
       <Box className="justify-self-center">
-        <BackButton title={"Back"} path={"/"} />
+        <BackButton title={t.hero.backButton} path={"/"} />
       </Box>
     </Section>
   );

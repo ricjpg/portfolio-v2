@@ -20,16 +20,15 @@ const ProjectCardList: React.FC<ItemProjectProps> = ({ limit }) => {
     <div
       className="flex flex-col justify-self-center px-3
       lg:grid lg:grid-cols-2
-    gap-10 items-center lg:max-w-5/8"
+    gap-10 items-center lg:w-5/8"
     >
       {limitedItems.map((item) => (
         <Card
-          size="2"
+          size="4"
           key={item.title}
           className="w-full
           shrink-0 hover:scale-101 duration-200 ease-in-out 
-          rounded-2xl mt-5 align-bottom shadow-xl
-          "
+          rounded-2xl mt-5 align-bottom shadow-xl"
           variant="surface"
         >
           <Inset clip="padding-box" side="top" pb="current">
@@ -62,12 +61,12 @@ const ProjectCardList: React.FC<ItemProjectProps> = ({ limit }) => {
       ))}
       {/* <div> */}
       <Card
-        size="2"
+        size="3"
         className="w-full
           shrink-0 hover:scale-101 duration-200 ease-in-out 
           rounded-2xl mt-5 align-bottom shadow-xl
-          "
-        variant="surface"
+          outline-amber-300 outline-1"
+        variant="classic"
       >
         <Inset side="top" pb="current">
           <a href={`/projects/`}>
@@ -81,12 +80,11 @@ const ProjectCardList: React.FC<ItemProjectProps> = ({ limit }) => {
             />
 
             <Text className="flex flex-col gap-2 px-5">
-              <h3 className="font-extrabold text-3xl mt-3">Mas Proyectos</h3>
+              <h3 className="font-extrabold text-3xl mt-3">
+                {t.hero.moreProjectsTitle}
+              </h3>
               <Text className="text-wrap font-extralight text-sm line-clamp-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-                quos necessitatibus ducimus adipisci. Laudantium amet quasi,
-                quas voluptates nulla rerum ipsam repellat laboriosam quo
-                nostrum, dolor rem totam aut aspernatur?
+                {t.hero.moreProjectsContent}
               </Text>
             </Text>
           </a>

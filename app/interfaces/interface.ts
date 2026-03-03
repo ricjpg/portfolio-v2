@@ -50,6 +50,12 @@ export interface HeroStrings {
   techSkill: string;
   softSkill: string;
   typeEd: TypeEducation[];
+  backButton: string;
+  downloadCV: string;
+  moreProjectsTitle: string;
+  moreProjectsContent: string;
+  contactMeTitle: string;
+  contactMeContent: string;
 }
 
 export interface EducationProps {
@@ -70,6 +76,7 @@ export interface Translations {
     hero: HeroStrings;
     education: EducationProps[];
     softSkills: SoftSkillProp[];
+    social: Social[];
   };
   es: {
     skills: SkillSetProps[];
@@ -78,6 +85,7 @@ export interface Translations {
     hero: HeroStrings;
     education: EducationProps[];
     softSkills: SoftSkillProp[];
+    social: Social[];
   };
 }
 

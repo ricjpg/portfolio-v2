@@ -1,7 +1,9 @@
 import { DownloadIcon } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
+import { useLanguage } from "../lib/LanguageContext";
 
 const DownloadButton: React.FC = () => {
+  const { t } = useLanguage();
   const handleDownload = () => {
     const link = document.createElement("a");
     link.href = "/cv.pdf";
@@ -17,7 +19,7 @@ const DownloadButton: React.FC = () => {
       className="max-w-1/2"
       onClick={handleDownload}
     >
-      <DownloadIcon /> Download my resume
+      <DownloadIcon /> {t.hero.downloadCV}
     </Button>
   );
 };

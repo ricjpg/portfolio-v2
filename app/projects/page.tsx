@@ -69,11 +69,11 @@ export default async function ProjectsPage() {
   return (
     <div className="py-10">
       <div className="flex items-center justify-evenly">
-        <Text className="font-extrabold text-3xl lg:text-7xl">Proyectos</Text>
+        <Text className="font-extrabold text-3xl lg:text-7xl">Projects</Text>
         <Button
           color="crimson"
           variant="outline"
-          size={"3"}
+          size={"4"}
           ml={"2"}
           className="max-w-1/2 "
           asChild

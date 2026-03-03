@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Section } from "@radix-ui/themes";
+import { Box, Button, Section, Separator } from "@radix-ui/themes";
 import {
   CursorArrowIcon,
   DividerHorizontalIcon,
@@ -13,6 +13,8 @@ import ProjectList from "./components/ProjectCard";
 import CodeCard from "./components/Slide";
 import { useRouter } from "next/navigation";
 import DownloadButton from "./components/DownloadCVButton";
+import Slide from "./components/Slide";
+import TechSkillCard from "./components/TechSkillCard";
 
 export default function Home() {
   const router = useRouter();
@@ -47,13 +49,32 @@ export default function Home() {
                 className="max-w-1/2 cursor-grab"
                 onClick={getToknowMe}
               >
-                <CursorArrowIcon /> Get to know me!
+                <CursorArrowIcon /> {t.hero.aboutme}
               </Button>
               <DownloadButton />
             </div>
           </div>
         </div>
       </div>
+      <Section className="w-full flex flex-col lg:flex-row justify-self-center lg:w-3/5">
+        <Box className="w-full ">
+          <Slide type={t.hero.typeEd[0].type} />
+        </Box>
+      </Section>
+
+      <Box className=" justify-self-center">
+        <h1 className="font-extrabold text-4xl lg:text-7xl">
+          {t.hero.techSkill}
+        </h1>
+      </Box>
+      <Section>
+        <TechSkillCard />
+      </Section>
+      <Box className=" justify-self-center">
+        <h1 className="font-extrabold text-4xl lg:text-7xl">
+          {t.hero.recentProjects}
+        </h1>
+      </Box>
       <Section>
         <ProjectList limit={3} />
       </Section>

@@ -165,6 +165,13 @@ export const translations: Translations = {
           title: "Certifications",
         },
       ],
+      backButton: "Go back",
+      downloadCV: "Download my resume",
+      moreProjectsTitle: "More projects",
+      moreProjectsContent:
+        "Check out other projects Ive recently worked on or collaborated on.",
+      contactMeTitle: "Get in touch",
+      contactMeContent: `I'm currently looking for new opportunities in System Engineering, web development and Cloud architecture.`,
     },
     education: [
       {
@@ -232,6 +239,28 @@ export const translations: Translations = {
         title: "Leadership",
         description:
           "I lead by example, motivating others through clarity, organization, and a results-oriented mindset while supporting team growth.",
+      },
+    ],
+    social: [
+      {
+        name: "mail",
+        url: "mailto:ricardoguardiolahn@gmail.com",
+        icon: "https://s.magecdn.com/social/tc-mail.svg",
+      },
+      {
+        name: "youtube",
+        url: "https://www.youtube.com/@rictsx",
+        icon: "https://s.magecdn.com/social/tc-youtube.svg",
+      },
+      {
+        name: "github",
+        url: "https://www.github.com/ricjpg",
+        icon: "https://s.magecdn.com/social/tc-github.svg",
+      },
+      {
+        name: "linkedIn",
+        url: "https://www.linkedin.com/in/ricnull",
+        icon: "https://s.magecdn.com/social/tc-linkedin.svg",
       },
     ],
   },
@@ -369,6 +398,13 @@ export const translations: Translations = {
           title: "Certificaciones",
         },
       ],
+      backButton: "Atras",
+      downloadCV: "Descarga mi CV",
+      moreProjectsTitle: "Mas proyectos",
+      moreProjectsContent:
+        "Mira otros proyectos en los que he trabajado o colaborado recientemente",
+      contactMeTitle: "Ponte en contacto!",
+      contactMeContent: `Actualmente estoy buscando nuevas oportunidades en Ingeniería de Sistemas, desarrollo web y Arquitectura de Nube.`,
     },
     education: [
       {
@@ -438,6 +474,28 @@ export const translations: Translations = {
           "Lidero con el ejemplo, motivando a otros mediante claridad, organización y orientación a resultados, mientras impulso el crecimiento del equipo.",
       },
     ],
+    social: [
+      {
+        name: "mail",
+        url: "mailto:ricardoguardiolahn@gmail.com",
+        icon: "https://s.magecdn.com/social/tc-mail.svg",
+      },
+      {
+        name: "youtube",
+        url: "https://www.youtube.com/@rictsx",
+        icon: "https://s.magecdn.com/social/tc-youtube.svg",
+      },
+      {
+        name: "github",
+        url: "https://www.github.com/ricjpg",
+        icon: "https://s.magecdn.com/social/tc-github.svg",
+      },
+      {
+        name: "linkedIn",
+        url: "https://www.linkedin.com/in/ricnull",
+        icon: "https://s.magecdn.com/social/tc-linkedin.svg",
+      },
+    ],
   },
 };
 
@@ -446,6 +504,7 @@ export const skills = translations.en.skills;
 export const softSkill = translations.en.softSkills;
 export const projectsList = translations.en.projects;
 export const summaryContent = translations.en.summary;
+// export const social = translations.en.social;
 
 export const Pictures: PicProps[] = [
   {
