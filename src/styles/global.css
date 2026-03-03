@@ -1,9 +1,0 @@
-@import "tailwindcss";
-
-body {
-  @apply bg-linear-to-r from-[#000000] to-[#001602];
-}
-
-h1 {
-  @apply text-5xl text-white font-bold;
-}
