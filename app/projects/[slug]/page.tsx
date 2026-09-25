@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import { MDXComponents } from "mdx/types";
+import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
+import type { MDXComponents } from "mdx/types";
+import type { ComponentProps } from "react";
+import rehypePrettyCode from "rehype-pretty-code";
 import { Link } from "@radix-ui/themes";
 
 // Tipos para el frontmatter
@@ -23,41 +25,74 @@ interface ProjectPageProps {
   }>;
 }
 
+type CodeProps = ComponentProps<"code"> & {
+  "data-language"?: string;
+};
+
+const mdxRemoteOptions: MDXRemoteProps["options"] = {
+  mdxOptions: {
+    rehypePlugins: [
+      [
+        rehypePrettyCode,
+        {
+          theme: {
+            light: "github-light",
+            dark: "github-dark",
+          },
+          keepBackground: true,
+          bypassInlineCode: true,
+        },
+      ],
+    ],
+  },
+};
+
 // Componentes personalizados para MDX
 const components: MDXComponents = {
-  h1: (props: any) => (
+  h1: (props: ComponentProps<"h1">) => (
     <h1 className="text-4xl font-bold mb-6 mt-8" {...props} />
   ),
-  h2: (props: any) => (
+  h2: (props: ComponentProps<"h2">) => (
     <h2 className="text-3xl font-semibold mb-4 mt-6" {...props} />
   ),
-  h3: (props: any) => (
+  h3: (props: ComponentProps<"h3">) => (
     <h3 className="text-2xl font-semibold mb-3 mt-4" {...props} />
   ),
-  p: (props: any) => <p className="mb-4 leading-relaxed" {...props} />,
-  ul: (props: any) => (
+  p: (props: ComponentProps<"p">) => (
+    <p className="mb-4 leading-relaxed" {...props} />
+  ),
+  ul: (props: ComponentProps<"ul">) => (
     <ul className="list-disc list-inside mb-4 ml-4" {...props} />
   ),
-  ol: (props: any) => (
+  ol: (props: ComponentProps<"ol">) => (
     <ol className="list-decimal list-inside mb-4 ml-4" {...props} />
   ),
-  li: (props: any) => <li className="mb-2" {...props} />,
-  code: (props: any) => (
+  li: (props: ComponentProps<"li">) => <li className="mb-2" {...props} />,
+  code: ({ className, ...props }: CodeProps) => (
     <code
-      className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm"
+      className={
+        props["data-language"]
+          ? className
+          : [
+              "bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm text-gray-900 dark:text-gray-100",
+              className,
+            ]
+              .filter(Boolean)
+              .join(" ")
+      }
       {...props}
     />
   ),
-  pre: (props: any) => (
+  pre: (props: ComponentProps<"pre">) => (
     <pre
       className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto mb-4"
       {...props}
     />
   ),
-  a: (props: any) => (
+  a: (props: ComponentProps<"a">) => (
     <a className="text-blue-600 hover:text-blue-800 underline" {...props} />
   ),
-  blockquote: (props: any) => (
+  blockquote: (props: ComponentProps<"blockquote">) => (
     <blockquote
       className="border-l-4 border-gray-300 pl-4 italic my-4"
       {...props}
@@ -201,7 +236,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       {/* Contenido MDX */}
       <article className="prose prose-lg dark:prose-invert max-w-none">
-        <MDXRemote source={content} components={components} />
+        <MDXRemote
+          source={content}
+          components={components}
+          options={mdxRemoteOptions}
+        />
       </article>
       <Link
         href="/projects"

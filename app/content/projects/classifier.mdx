@@ -1,53 +1,40 @@
 ---
-title: "Dogs and Cat Classifier in Real Time"
-description: "Plataforma digital para clasificar perros y gatos en tiempo real utilizando inteligencia artificial y redes convolucionales."
+title: "Dog and Cat Classifier in Real Time"
+description: "Plataforma para clasificar perros y gatos en tiempo real mediante inteligencia artificial y redes neuronales convolucionales."
 date: "2023-10-10"
 tags: ["JavaScript", "Python", "HTML", "CSS", "CNN", "TensorFlow"]
 slug: classifier
 ---
 
-# Dogs and Cat Classifier in Real Time
+# Dog and Cat Classifier in Real Time
 
 ![Classifier Banner](../../../public/images/classifier.png)
 
-<br />
-<br />
+# Problem Statement
 
-# 🐾 Problem Statement
+In many scenarios, such as animal shelters, smart surveillance systems, and educational tools, automatically identifying whether an animal is a dog or a cat from an image or live webcam feed can be highly valuable. However, manual labeling is time-consuming, inefficient, and prone to human error, especially when dealing with large datasets or real-time video streams.
 
-In many contexts—such as animal shelters, smart surveillance systems, or educational tools—automatically identifying whether an animal is a cat or a dog from images or a live webcam feed can be both useful and challenging. Manually labeling images is inefficient and prone to human error, especially when working with large datasets or real-time video.
+# Solution
 
-<br />
+To address this challenge, we developed a real-time image classification system capable of distinguishing between dogs and cats using Convolutional Neural Networks (CNNs) and TensorFlow. The system processes static images and live webcam input, classifying each frame as either a dog or a cat with minimal latency.
 
-# 💡 Solution
+Using Python and TensorFlow, we trained a CNN on a labeled dataset of dog and cat images. The model learns spatial patterns and feature hierarchies from the images, allowing it to detect subtle visual differences between the two classes. Once trained, the model was exported and incorporated into a lightweight web application built with JavaScript, HTML, and CSS, enabling real-time predictions directly from the browser.
 
-To address this, we built a **real-time image classification system** capable of distinguishing between dogs and cats using **Convolutional Neural Networks (CNNs)** and **TensorFlow**. The system processes input either from static images or a live webcam stream, and instantly classifies the detected object as either a dog or a cat.
+# Technologies Used
 
-Using **Python** and **TensorFlow**, we trained a CNN on a dataset of labeled dog and cat images. The model extracts and learns spatial hierarchies of features from the input images, improving its accuracy in distinguishing subtle differences between the two classes.
+- Python for model training, preprocessing, and export
+- TensorFlow for building and training the CNN
+- Convolutional Neural Networks for image feature extraction and classification
+- HTML and CSS for building the user interface
+- JavaScript for frontend interaction and webcam integration
 
-Once trained, the model was exported and integrated into a lightweight web application using **JavaScript**, **HTML**, and **CSS**, allowing users to upload images or use their webcam directly from a browser. This frontend communicates with the model via TensorFlow.js or a backend Python API, enabling predictions in real time.
-
-<br />
-
-# ⚙️ Technologies Used
-
-- **Python** – for model training, preprocessing, and export
-- **TensorFlow** – for building and training the CNN
-- **CNN (Convolutional Neural Networks)** – core architecture for image classification
-- **HTML + CSS** – for building the web interface
-- **JavaScript** – for handling frontend interactivity and webcam integration
-
-<br />
-
-# 🚀 Highlights
+# Key Features
 
 - Real-time classification using a webcam
-- Lightweight and responsive frontend UI
-- Custom-trained CNN model with TensorFlow
-- End-to-end integration of machine learning with a web interface
+- Lightweight and responsive web interface
+- Custom-trained CNN model
+- End-to-end integration between machine learning and browser-based interaction
 
-<br />
+# Notes
 
-# 📝 Notes
-
-This project demonstrates how machine learning models can be deployed and used in interactive environments, bridging the gap between AI research and user-friendly applications. It also showcases practical use of TensorFlow and Python for real-time inference on the web.
+This project demonstrates how machine learning models can be deployed in interactive environments, bridging the gap between AI research and user-facing applications. It also highlights the practical use of TensorFlow and Python for real-time inference in web-based systems.
