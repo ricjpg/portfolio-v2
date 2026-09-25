@@ -14,7 +14,7 @@ import CodeCard from "./components/Slide";
 import { useRouter } from "next/navigation";
 import DownloadButton from "./components/DownloadCVButton";
 import Slide from "./components/Slide";
-import TechSkillCard from "./components/TechSkillCard";
+import { PortfolioTechnologyCarousel } from "./components/TechnologyCarousel";
 
 export default function Home() {
   const router = useRouter();
@@ -67,8 +67,8 @@ export default function Home() {
           {t.hero.techSkill}
         </h1>
       </Box>
-      <Section>
-        <TechSkillCard />
+      <Section className="w-full">
+        <PortfolioTechnologyCarousel />
       </Section>
       <Box className=" justify-self-center">
         <h1 className="font-extrabold text-4xl lg:text-7xl">

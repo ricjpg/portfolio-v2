@@ -68,3 +68,39 @@ body {
 .dark [data-theme*=" "] span {
   color: var(--shiki-dark);
 }
+
+.technology-carousel__viewport {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  scrollbar-width: none;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.technology-carousel__track {
+  display: flex;
+  width: max-content;
+}
+
+.technology-carousel__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.technology-carousel__group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 1rem;
+  padding-inline-end: 1rem;
+}
