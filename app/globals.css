@@ -39,6 +39,20 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-funnel,
+.title {
+  font-family: "Funnel Display", "Segoe UI", sans-serif !important;
+  letter-spacing: -0.04em;
+}
+
 .light {
   background-image: url("/img/bg-light.svg");
   background-size: cover;
