@@ -170,6 +170,7 @@ export const translations: Translations = {
       moreProjectsTitle: "More projects",
       moreProjectsContent:
         "Check out other projects Ive recently worked on or collaborated on.",
+      viewAllProjects: "View all projects",
       contactMeTitle: "Get in touch",
       contactMeContent: `I'm currently looking for new opportunities in System Engineering, web development and Cloud architecture.`,
     },
@@ -403,6 +404,7 @@ export const translations: Translations = {
       moreProjectsTitle: "Mas proyectos",
       moreProjectsContent:
         "Mira otros proyectos en los que he trabajado o colaborado recientemente",
+      viewAllProjects: "Ver todos los proyectos",
       contactMeTitle: "Ponte en contacto!",
       contactMeContent: `Actualmente estoy buscando nuevas oportunidades en Ingeniería de Sistemas, desarrollo web y Arquitectura de Nube.`,
     },

@@ -2,10 +2,9 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { Metadata } from "next";
-import { useLanguage } from "../lib/LanguageContext";
+import Link from "next/link";
 import ProjectList from "../components/ProjectCard";
 import { Button, Text } from "@radix-ui/themes";
-import { HomeIcon } from "@radix-ui/react-icons";
 
 interface ProjectMeta {
   title: string;
@@ -64,7 +63,7 @@ async function getAllProjects(): Promise<ProjectMeta[]> {
 
 // Componente de la página
 export default async function ProjectsPage() {
-  const projects = await getAllProjects();
+  await getAllProjects();
 
   return (
     <div className="py-10">
@@ -78,10 +77,10 @@ export default async function ProjectsPage() {
           className="max-w-1/2 "
           asChild
         >
-          <a href="/">Back</a>
+          <Link href="/">Back</Link>
         </Button>
       </div>
-      <ProjectList limit={6} />
+      <ProjectList limit={6} className="lg:w-full" />
     </div>
   );
 }

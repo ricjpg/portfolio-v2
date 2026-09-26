@@ -47,8 +47,7 @@ export default function Home() {
                 variant="solid"
                 size={"3"}
                 className="max-w-1/2 cursor-grab"
-                onClick={getToknowMe}
-              >
+                onClick={getToknowMe}>
                 <CursorArrowIcon /> {t.hero.aboutme}
               </Button>
               <DownloadButton />
@@ -72,11 +71,11 @@ export default function Home() {
       </Section>
       <Box className=" justify-self-center">
         <h1 className="font-extrabold text-4xl lg:text-7xl">
-          {t.hero.recentProjects}
+          <a href="/projects">{t.hero.recentProjects}</a>
         </h1>
       </Box>
-      <Section>
-        <ProjectList limit={3} />
+      <Section className="justify-items-center">
+        <ProjectList limit={5} columns={3} size="lg" />
       </Section>
     </Section>
   );

@@ -54,6 +54,7 @@ export interface HeroStrings {
   downloadCV: string;
   moreProjectsTitle: string;
   moreProjectsContent: string;
+  viewAllProjects: string;
   contactMeTitle: string;
   contactMeContent: string;
 }
