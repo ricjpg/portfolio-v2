@@ -81,7 +81,11 @@ export interface ProjectsPageStrings {
   noResultsTitle: string;
   noResultsContent: string;
   back: string;
+}
+
+export interface ProjectPageStrings {
   backToProjects: string;
+  onThisPage: string;
 }
 
 export interface Translations {
@@ -94,6 +98,7 @@ export interface Translations {
     softSkills: SoftSkillProp[];
     social: Social[];
     projectsPage: ProjectsPageStrings;
+    projectPage: ProjectPageStrings;
   };
   es: {
     skills: SkillSetProps[];
@@ -104,6 +109,7 @@ export interface Translations {
     softSkills: SoftSkillProp[];
     social: Social[];
     projectsPage: ProjectsPageStrings;
+    projectPage: ProjectPageStrings;
   };
 }
 

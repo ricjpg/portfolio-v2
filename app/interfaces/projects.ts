@@ -30,12 +30,32 @@ export interface ProjectFrontmatter {
 
   /** Autor del proyecto (opcional) */
   author?: string;
+
+  /** Nivel de encabezado más bajo que aparece en el índice (opcional) */
+  toc_min_heading_level?: number;
+
+  /** Nivel de encabezado más alto que aparece en el índice (opcional) */
+  toc_max_heading_level?: number;
 }
 
 /**
- * Un proyecto en un idioma concreto: su frontmatter y su contenido MDX
+ * Entrada del índice de un artículo
+ */
+export interface TableOfContentsItem {
+  /** Id del encabezado en el artículo */
+  id: string;
+  /** Texto visible del encabezado */
+  text: string;
+  /** Profundidad del encabezado (1 = h1) */
+  level: number;
+}
+
+/**
+ * Un proyecto en un idioma concreto: su frontmatter, su contenido MDX
+ * y el índice de sus encabezados
  */
 export interface ProjectTranslation {
   frontmatter: ProjectFrontmatter;
   content: string;
+  headings: TableOfContentsItem[];
 }

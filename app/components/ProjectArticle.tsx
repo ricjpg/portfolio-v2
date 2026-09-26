@@ -1,49 +1,32 @@
 "use client";
 
-import type { ReactNode } from "react";
-import Link from "next/link";
+import { useRef, type ReactNode } from "react";
+import BackToProjects from "./BackToProjects";
+import TableOfContents from "./TableOfContents";
 import { useLanguage } from "../lib/LanguageContext";
 import type { Language } from "../interfaces/interface";
-import type { ProjectFrontmatter } from "../interfaces/projects";
+import type {
+  ProjectFrontmatter,
+  TableOfContentsItem,
+} from "../interfaces/projects";
 
 interface ProjectArticleProps {
   translations: Record<Language, ProjectFrontmatter | null>;
   articles: Record<Language, ReactNode>;
-}
-
-function BackToProjects() {
-  const { t } = useLanguage();
-
-  return (
-    <Link
-      href="/projects"
-      className="group mb-8 inline-flex items-center text-sm font-medium text-gray-700 hover:text-black hover:scale-110 transition-all">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={2}
-        stroke="currentColor"
-        className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-        />
-      </svg>
-      {t.projectsPage.backToProjects}
-    </Link>
-  );
+  headings: Record<Language, TableOfContentsItem[]>;
 }
 
 export default function ProjectArticle({
   translations,
   articles,
+  headings,
 }: ProjectArticleProps) {
   const { language } = useLanguage();
+  const articleRef = useRef<HTMLElement>(null);
   const frontmatter =
     translations[language] ?? translations.en ?? translations.es;
   const article = articles[language] ?? articles.en ?? articles.es;
+  const tableOfContents = headings[language] ?? headings.en ?? headings.es ?? [];
 
   if (!frontmatter || !article) {
     return null;
@@ -59,36 +42,58 @@ export default function ProjectArticle({
         timeZone: "UTC",
       }).format(publishedAt);
 
+  const hasTableOfContents = tableOfContents.length > 0;
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <BackToProjects />
+    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
+      <BackToProjects className="mb-6 lg:mb-8" />
 
-      <header className="mb-8">
-        <h1 className="text-5xl font-bold mb-4">{frontmatter.title}</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400 mb-4">
-          {frontmatter.description}
-        </p>
-        <div className="flex items-center gap-4 text-sm text-gray-500 flex-wrap">
-          {formattedDate && (
-            <time dateTime={frontmatter.date}>{formattedDate}</time>
-          )}
-          <div className="flex gap-2 flex-wrap">
-            {frontmatter.tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-xs">
-                {tag}
-              </span>
-            ))}
-          </div>
+      <div
+        className={
+          hasTableOfContents
+            ? "lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-12"
+            : "mx-auto max-w-3xl"
+        }>
+        {hasTableOfContents && (
+          <aside className="mb-10 lg:mb-0 lg:sticky lg:top-24 lg:self-start">
+            <TableOfContents
+              items={tableOfContents}
+              containerRef={articleRef}
+            />
+          </aside>
+        )}
+
+        <div className="min-w-0">
+          <header className="mb-10 border-b border-gray-200 pb-8 dark:border-gray-800">
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              {frontmatter.title}
+            </h1>
+            <p className="mt-3 text-lg text-gray-600 dark:text-gray-400">
+              {frontmatter.description}
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3 text-sm text-gray-500 dark:text-gray-400">
+              {formattedDate && (
+                <time dateTime={frontmatter.date}>{formattedDate}</time>
+              )}
+              <div className="flex flex-wrap gap-2">
+                {frontmatter.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </header>
+
+          <article ref={articleRef} className="max-w-3xl">
+            {article}
+          </article>
+
+          <BackToProjects className="mt-12" />
         </div>
-      </header>
-
-      <article className="prose prose-lg dark:prose-invert max-w-none">
-        {article}
-      </article>
-
-      <BackToProjects />
+      </div>
     </div>
   );
 }

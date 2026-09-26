@@ -3,12 +3,13 @@
 import { notFound } from "next/navigation";
 import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
 import type { MDXComponents } from "mdx/types";
-import type { ComponentProps } from "react";
+import { isValidElement, type ComponentProps, type ReactNode } from "react";
 import rehypePrettyCode from "rehype-pretty-code";
 import ProjectArticle from "../../components/ProjectArticle";
 import {
   getProjectSlugs,
   getProjectTranslations,
+  slugifyHeading,
 } from "../../lib/mdx";
 import type { Language } from "../../interfaces/interface";
 import type { ProjectTranslation } from "../../interfaces/projects";
@@ -41,16 +42,58 @@ const mdxRemoteOptions: MDXRemoteProps["options"] = {
   },
 };
 
+/** Texto plano de los hijos de un encabezado, para derivar su id */
+const headingText = (children: ReactNode): string => {
+  if (typeof children === "string" || typeof children === "number") {
+    return String(children);
+  }
+
+  if (Array.isArray(children)) {
+    return children.map(headingText).join("");
+  }
+
+  if (isValidElement(children)) {
+    return headingText(
+      (children.props as { children?: ReactNode }).children as ReactNode,
+    );
+  }
+
+  return "";
+};
+
+type HeadingProps = ComponentProps<"h2">;
+
+/** El id comparte fuente de verdad con el índice: lib/mdx slugifyHeading */
+const headingId = (children: ReactNode) => slugifyHeading(headingText(children));
+
 // Componentes personalizados para MDX
 const components: MDXComponents = {
-  h1: (props: ComponentProps<"h1">) => (
-    <h1 className="text-4xl font-bold mb-6 mt-8" {...props} />
+  h1: ({ children, ...props }: ComponentProps<"h1">) => (
+    <h1
+      id={headingId(children)}
+      tabIndex={-1}
+      className="mt-8 mb-4 text-3xl font-bold scroll-mt-24"
+      {...props}>
+      {children}
+    </h1>
   ),
-  h2: (props: ComponentProps<"h2">) => (
-    <h2 className="text-3xl font-semibold mb-4 mt-6" {...props} />
+  h2: ({ children, ...props }: HeadingProps) => (
+    <h2
+      id={headingId(children)}
+      tabIndex={-1}
+      className="mt-8 mb-3 text-2xl font-semibold scroll-mt-24"
+      {...props}>
+      {children}
+    </h2>
   ),
-  h3: (props: ComponentProps<"h3">) => (
-    <h3 className="text-2xl font-semibold mb-3 mt-4" {...props} />
+  h3: ({ children, ...props }: ComponentProps<"h3">) => (
+    <h3
+      id={headingId(children)}
+      tabIndex={-1}
+      className="mt-6 mb-2 text-xl font-semibold scroll-mt-24"
+      {...props}>
+      {children}
+    </h3>
   ),
   p: (props: ComponentProps<"p">) => (
     <p className="mb-4 leading-relaxed" {...props} />
@@ -91,6 +134,9 @@ const components: MDXComponents = {
       className="border-l-4 border-gray-300 pl-4 italic my-4"
       {...props}
     />
+  ),
+  hr: (props: ComponentProps<"hr">) => (
+    <hr className="my-10 border-gray-200 dark:border-gray-800" {...props} />
   ),
 };
 
@@ -157,6 +203,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       articles={{
         en: renderArticle(translations.en),
         es: renderArticle(translations.es),
+      }}
+      headings={{
+        en: translations.en?.headings ?? [],
+        es: translations.es?.headings ?? [],
       }}
     />
   );

@@ -278,7 +278,10 @@ export const translations: Translations = {
       noResultsContent:
         "Try another keyword or remove some filters to see more work.",
       back: "Back",
+    },
+    projectPage: {
       backToProjects: "Back to projects",
+      onThisPage: "On this page",
     },
   },
   es: {
@@ -528,7 +531,10 @@ export const translations: Translations = {
       noResultsContent:
         "Prueba con otra palabra clave o quita algunos filtros para ver más trabajo.",
       back: "Volver",
+    },
+    projectPage: {
       backToProjects: "Volver a proyectos",
+      onThisPage: "En esta página",
     },
   },
 };
