@@ -16,7 +16,7 @@ export interface ProjectFrontmatter {
   /** Tags/etiquetas del proyecto */
   tags: string[];
 
-  /** Slug para la URL (debe coincidir con el nombre del archivo) */
+  /** Slug base para la URL, sin sufijo de idioma */
   slug: string;
 
   /** URL de imagen de portada (opcional) */
@@ -33,29 +33,9 @@ export interface ProjectFrontmatter {
 }
 
 /**
- * Interfaz para el proyecto completo con contenido
+ * Un proyecto en un idioma concreto: su frontmatter y su contenido MDX
  */
-export interface Project {
-  /** Metadata del proyecto */
+export interface ProjectTranslation {
   frontmatter: ProjectFrontmatter;
-
-  /** Contenido MDX en formato string */
   content: string;
-}
-
-/**
- * Props para el componente de página de proyecto individual
- */
-export interface ProjectPageProps {
-  params: {
-    slug: string;
-  };
-}
-
-/**
- * Props para el componente de tarjeta de proyecto
- */
-export interface ProjectCardProps {
-  project: ProjectFrontmatter;
-  className?: string;
 }

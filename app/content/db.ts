@@ -278,6 +278,7 @@ export const translations: Translations = {
       noResultsContent:
         "Try another keyword or remove some filters to see more work.",
       back: "Back",
+      backToProjects: "Back to projects",
     },
   },
   es: {
@@ -527,6 +528,7 @@ export const translations: Translations = {
       noResultsContent:
         "Prueba con otra palabra clave o quita algunos filtros para ver más trabajo.",
       back: "Volver",
+      backToProjects: "Volver a proyectos",
     },
   },
 };

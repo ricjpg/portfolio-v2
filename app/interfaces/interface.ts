@@ -81,6 +81,7 @@ export interface ProjectsPageStrings {
   noResultsTitle: string;
   noResultsContent: string;
   back: string;
+  backToProjects: string;
 }
 
 export interface Translations {

@@ -1,0 +1,149 @@
+---
+title: "Smart Cache"
+description: "Data pipeline and API with intelligent caching to improve performance and scalability."
+date: "2025-10-10"
+toc_min_heading_level: 1
+toc_max_heading_level: 5
+tags: ["FastApi", "Azure", "Docker", "Python", "SQL", "Redis"]
+slug: smart-cache-en
+---
+
+![Smart Cache Banner](../../../public/images/smart-cache-low.gif)
+
+# General objective
+
+The project aimed to develop a backend solution focused on performance, scalability, and cloud deployment. The main idea was to migrate large volumes of data, expose them through a secure and optimized API, and improve query responsiveness by using an intelligent cache invalidation strategy.
+
+# Phase 1: Data preparation and migration
+
+The first step was to build the cloud database that would feed the application. For this project, the Spotify Tracks DB dataset was selected, a dataset with more than 200,000 records, which made it suitable for evaluating scalability and performance under load.
+
+The migration was carried out using Azure Data Factory. The process included:
+
+- Uploading the CSV file to Azure Blob Storage
+- Extracting the data from storage
+- Transforming it according to the required schema
+- Loading the information into a specific table in Azure SQL Database
+
+This stage was essential because it established the foundation for query and analysis services.
+
+# Phase 2: API development and authentication
+
+Once the data was stored in the cloud, the API was developed with FastAPI, following backend best practices and security standards. The solution was integrated with Firebase to manage authentication and authorization while exposing endpoints for querying, filtering, and creating records.
+
+Main technologies used:
+
+- FastAPI
+- Python
+- Firebase
+- Azure SQL
+
+# Phase 3: Performance monitoring
+
+To observe the behavior of the API in production, Azure Application Insights was incorporated. This tool enabled the collection of telemetry, request traces, response times, and endpoint errors. This made it possible to identify bottlenecks and measure the impact of caching on latency.
+
+# Phase 4: Redis caching implementation
+
+The most relevant part of the project was the implementation of a caching layer with Redis to optimize the heaviest queries. The `/features` endpoint returned the first 100,000 records from the `spotify.features` table, approximately 15 MB of data. Without caching, this response could be expensive in both time and resource consumption.
+
+The strategy consisted of storing the full response under the key:
+
+```text
+spotify:features:all
+```
+
+On the first request, the data was loaded from the database and stored in cache. Subsequent calls checked the key and returned the cached response from Redis, significantly reducing response time.
+
+The same logic was applied to filtered queries through the endpoint:
+
+```text
+/features/custom?arg=Pop
+```
+
+In this case, the response was cached with a key based on the received parameter, for example:
+
+```text
+spotify:features:Pop
+```
+
+# Phase 5: Automatic cache invalidation
+
+The system also implemented a cache invalidation policy to maintain data consistency. The cache keys expired after 3600 seconds, equivalent to one hour. Additionally, when a new record was added through the `/features/new` endpoint, the keys related to that genre were removed to avoid serving stale data.
+
+For example, if a record with the genre `Dance` was inserted, the following key was removed:
+
+```text
+spotify:features:Dance
+```
+
+This ensured that the next filtered request for that genre generated a fresh response from the database and then stored the updated result in cache.
+
+# Phase 6: Cloud deployment with Docker
+
+The application was packaged in a Docker container to simplify deployment in Azure Container Registry. The Dockerfile configured the required environment, installed dependencies, and exposed the application port.
+
+Example configuration:
+
+```dockerfile
+FROM python:3.10-slim
+WORKDIR /app
+RUN apt-get update && \
+    apt-get install -y curl apt-transport-https gnupg gcc g++ make && \
+    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
+    apt-get update && \
+    ACCEPT_EULA=Y apt-get install -y msodbcsql17 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+RUN test -f .env && rm .env || echo "no .env file found"
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+Afterward, the image was pushed to the Azure container registry with:
+
+```bash
+docker push acrapicache.azurecr.io/api-cache:latest
+```
+
+# Relevant endpoints
+
+## Security
+
+```text
+{domain}/signup
+{domain}/login
+```
+
+- `POST`: user registration
+- `POST`: login and token generation
+
+## Resources
+
+```text
+{domain}/features
+{domain}/features/custom?arg=genre
+{domain}/features/new
+```
+
+- `GET`: returns the first records in the table
+- `GET`: returns a filtered result set
+- `POST`: creates a new record in the database and requires authentication
+
+## Misc
+
+```text
+{domain}/
+{domain}/api/version
+```
+
+- `GET`: API greeting endpoint
+- `GET`: current service version
+
+# Important links
+
+- [API deployed](https://api-cache-hfeva3d2bfcbehhu.eastus-01.azurewebsites.net/)
+- [GitHub repository](https://github.com/ricjpg/pipeline-cache)

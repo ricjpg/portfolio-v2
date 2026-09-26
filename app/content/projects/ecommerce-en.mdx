@@ -1,0 +1,115 @@
+---
+title: "E-commerce infrastructure"
+description: "Cloud architecture for an e-commerce platform focused on security, scalability, and analytics."
+date: "2025-07-04"
+tags: ["Terraform", "Azure", "Cloud"]
+slug: ecommerce-en
+---
+
+# Proposed solution: cloud architecture for e-commerce
+
+This proposal presents an Azure-based architecture designed for a business e-commerce platform. The solution is built to support scalable growth, maintain high security standards, and ensure continuous availability for critical operations.
+
+## Main objectives
+
+- Scalability: the infrastructure must grow with business demand
+- Security: application of cloud-native practices and strong access policies
+- Availability: maintain operational continuity for critical services
+- Observability: simplify monitoring, traceability, and incident resolution
+
+# Proposed architecture
+
+The solution was structured into three main layers, allowing clear separation of responsibilities and improved maintainability:
+
+```text
+Security & Identity  ->  Core Application  ->  Data & Analytics
+```
+
+![General Diagram](../../../public/images/general-diagram.png)
+
+## Repository 1: security and identity
+
+This repository focuses on the security layer and identity management. Its main responsibility is to protect infrastructure and control resource access through authentication, authorization, and compliance policies.
+
+It includes:
+
+- Security policies and conditional access
+- Authentication for users and clients
+- Azure Key Vault for secrets and certificates
+- Network Security Groups and firewall rules
+- Custom domain and SSL configuration
+
+## Repository 2: core application
+
+This repository contains the business logic and service components of the digital platform. It includes the main elements required to deliver the purchasing experience, internal administration, and operational services.
+
+Key elements include:
+
+- Front-office portal
+- Back-office portal
+- REST API
+- Azure Service Bus and Queue Storage
+- Azure Functions
+- Notification service
+- Application Insights for monitoring and observability
+
+![Core App Architecture](../../../public/images/core-app-arq.png)
+
+## Repository 3: data and analytics
+
+This repository groups the storage and data analytics ecosystem. It is responsible for transaction management, file storage, and preparation of data for reporting and advanced analytics.
+
+It includes:
+
+- Azure Blob Storage for multimedia content
+- Transactional and cache databases
+- ETL pipelines
+- Synapse Analytics
+- Power BI for business reporting
+- Data Factory
+- Backup and recovery policies
+
+![Database Architecture](../../../public/images/database-arq.png)
+
+# Architecture justification
+
+## Single responsibility principle
+
+Each repository has a specific and well-defined function. This separation improves organization, maintainability, and reduces the risk of cross-impact changes.
+
+### Security and identity
+
+It focuses exclusively on protection and access management because these changes usually require more rigorous review and stronger controls due to regulatory and audit requirements.
+
+### Core application
+
+It combines business logic and functional services because these components naturally share deployments, dependencies, and integration testing.
+
+### Data and analytics
+
+It keeps the storage and processing ecosystem under a single technical vision, since these elements share retention, security, and access policies.
+
+## Low coupling and high cohesion
+
+The design aims to minimize dependencies between repositories while increasing internal cohesion within each layer. This allows each domain to evolve without compromising overall system stability.
+
+- Security and identity: high cohesion due to the direct relationship between policies, certificates, and access
+- Core application: justified functional coupling between frontend, backend, and integration services
+- Data and analytics: cohesion in storage, ETL, and reporting management
+
+# Deployment evidence
+
+![Azure Resource Group](../../../public/images/azure-rg.png)
+
+# Terminal evidence
+
+![Terminal 1](../../../public/images/terminal-1.png)
+![Terminal 2](../../../public/images/terminal-2.png)
+![Terminal 3](../../../public/images/terminal-3.png)
+![Terminal 4](../../../public/images/terminal-4.png)
+
+# Repositories
+
+- [Infrastructure Security](https://github.com/MikeWinchester/infrastructure-security)
+- [Infrastructure Analytics](https://github.com/MikeWinchester/infrastructure-analytics)
+- [Infrastructure Applications](https://github.com/ricjpg/app-infrastructure)
