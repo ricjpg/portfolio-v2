@@ -1,86 +1,21 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import { Metadata } from "next";
-import Link from "next/link";
-import ProjectList from "../components/ProjectCard";
-import { Button, Text } from "@radix-ui/themes";
+import type { Metadata } from "next";
+import ProjectExplorer from "../components/ProjectExplorer";
 
-interface ProjectMeta {
-  title: string;
-  description: string;
-  date: string;
-  tags: string[];
-  slug: string;
-}
-
-// // Metadata estática para SEO
 export const metadata: Metadata = {
-  title: "Proyectos | Mi Portfolio",
+  title: "Projects | Ricardo Guardiola",
   description:
-    "Explora mis proyectos y trabajos destacados en desarrollo web y cloud.",
+    "Explore my projects: web applications, cloud infrastructure and data systems, with search and technology filters.",
   openGraph: {
-    title: "Proyectos | Mi Portfolio",
-    description: "Explora mis proyectos y trabajos destacados",
+    title: "Projects | Ricardo Guardiola",
+    description: "Explore my projects and the technologies behind them.",
     type: "website",
   },
 };
 
-// Función para obtener todos los proyectos
-
-async function getAllProjects(): Promise<ProjectMeta[]> {
-  try {
-    const contentDirectory = path.join(process.cwd(), "app/content/projects");
-
-    if (!fs.existsSync(contentDirectory)) {
-      return [];
-    }
-
-    const filenames = fs.readdirSync(contentDirectory);
-    const mdxFiles = filenames.filter((filename) => /\.mdx?$/.test(filename));
-
-    const projects = mdxFiles.map((filename) => {
-      const slug = filename.replace(/\.mdx?$/, "");
-      const fullPath = path.join(contentDirectory, filename);
-      const fileContents = fs.readFileSync(fullPath, "utf8");
-      const { data } = matter(fileContents);
-
-      return {
-        ...data,
-        slug,
-      } as ProjectMeta;
-    });
-
-    // Ordena por fecha (más reciente primero)
-    return projects.sort((a, b) => {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    });
-  } catch (error) {
-    console.error("Error loading projects:", error);
-    return [];
-  }
-}
-
-// Componente de la página
-export default async function ProjectsPage() {
-  await getAllProjects();
-
+export default function ProjectsPage() {
   return (
-    <div className="py-10">
-      <div className="flex items-center justify-evenly">
-        <Text className="font-extrabold text-3xl lg:text-7xl">Projects</Text>
-        <Button
-          color="crimson"
-          variant="outline"
-          size={"4"}
-          ml={"2"}
-          className="max-w-1/2 "
-          asChild
-        >
-          <Link href="/">Back</Link>
-        </Button>
-      </div>
-      <ProjectList limit={6} className="lg:w-full" />
-    </div>
+    <main className="mx-auto flex w-full max-w-6xl flex-col px-4 pt-16 pb-10 sm:px-6 sm:pt-10">
+      <ProjectExplorer />
+    </main>
   );
 }

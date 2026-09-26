@@ -12,10 +12,12 @@ export type ProjectCardSize = "sm" | "md" | "lg";
 export type ProjectCardColumns = 1 | 2 | 3 | 4;
 
 export interface ProjectCardListProps {
-  limit: number;
+  limit?: number;
   className?: string;
   columns?: ProjectCardColumns;
   size?: ProjectCardSize;
+  items?: ProjectProps[];
+  showMoreLink?: boolean;
 }
 
 interface ProjectCardViewProps {
@@ -199,13 +201,15 @@ function ProjectCardView({
 }
 
 const ProjectCardList: React.FC<ProjectCardListProps> = ({
-  limit,
+  limit = 0,
   className,
   columns = 2,
   size = "md",
+  items,
+  showMoreLink = true,
 }) => {
   const { language, t } = useLanguage();
-  const sortedItems = [...t.projects].sort((a, b) => {
+  const sortedItems = [...(items ?? t.projects)].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
   const limitedItems = limit > 0 ? sortedItems.slice(0, limit) : sortedItems;
@@ -230,16 +234,18 @@ const ProjectCardList: React.FC<ProjectCardListProps> = ({
         />
       ))}
 
-      <ProjectCardView
-        title={t.hero.moreProjectsTitle}
-        description={t.hero.moreProjectsContent}
-        href="/projects"
-        imageSrc={FALLBACK_IMAGE}
-        imageAlt={t.hero.moreProjectsTitle}
-        language={language}
-        size={size}
-        action={t.hero.viewAllProjects}
-      />
+      {showMoreLink && (
+        <ProjectCardView
+          title={t.hero.moreProjectsTitle}
+          description={t.hero.moreProjectsContent}
+          href="/projects"
+          imageSrc={FALLBACK_IMAGE}
+          imageAlt={t.hero.moreProjectsTitle}
+          language={language}
+          size={size}
+          action={t.hero.viewAllProjects}
+        />
+      )}
     </div>
   );
 };

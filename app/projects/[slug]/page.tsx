@@ -189,16 +189,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <Link
         href="/projects"
-        className="group mb-8 inline-flex items-center text-sm font-medium text-gray-700 hover:text-black hover:scale-110 transition-all"
-      >
+        className="group mb-8 inline-flex items-center text-sm font-medium text-gray-700 hover:text-black hover:scale-110 transition-all">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={2}
           stroke="currentColor"
-          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-        >
+          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -225,8 +223,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             {frontmatter.tags.map((tag) => (
               <span
                 key={tag}
-                className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-xs"
-              >
+                className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-xs">
                 {tag}
               </span>
             ))}
@@ -244,16 +241,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </article>
       <Link
         href="/projects"
-        className="group mb-8 inline-flex items-center text-sm font-medium text-gray-700 hover:text-black hover:scale-110 transition-all"
-      >
+        className="group mb-8 inline-flex items-center text-sm font-medium text-gray-700 hover:text-black hover:scale-110 transition-all">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={2}
           stroke="currentColor"
-          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-        >
+          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"

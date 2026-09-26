@@ -264,6 +264,21 @@ export const translations: Translations = {
         icon: "https://s.magecdn.com/social/tc-linkedin.svg",
       },
     ],
+    projectsPage: {
+      title: "Projects",
+      subtitle:
+        "Search my work by keyword or narrow it down by the technologies I used.",
+      searchLabel: "Search projects",
+      searchPlaceholder: "Search by name, description or technology",
+      filterLabel: "Filter by technology",
+      clearFilters: "Clear filters",
+      resultsOne: "1 project",
+      resultsMany: "{count} projects",
+      noResultsTitle: "No projects found",
+      noResultsContent:
+        "Try another keyword or remove some filters to see more work.",
+      back: "Back",
+    },
   },
   es: {
     skills: [
@@ -498,6 +513,21 @@ export const translations: Translations = {
         icon: "https://s.magecdn.com/social/tc-linkedin.svg",
       },
     ],
+    projectsPage: {
+      title: "Proyectos",
+      subtitle:
+        "Busca mi trabajo por palabra clave o filtra por las tecnologías que utilicé.",
+      searchLabel: "Buscar proyectos",
+      searchPlaceholder: "Busca por nombre, descripción o tecnología",
+      filterLabel: "Filtrar por tecnología",
+      clearFilters: "Limpiar filtros",
+      resultsOne: "1 proyecto",
+      resultsMany: "{count} proyectos",
+      noResultsTitle: "No se encontraron proyectos",
+      noResultsContent:
+        "Prueba con otra palabra clave o quita algunos filtros para ver más trabajo.",
+      back: "Volver",
+    },
   },
 };
 

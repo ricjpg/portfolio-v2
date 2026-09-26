@@ -69,6 +69,20 @@ export interface EducationProps {
   url?: string;
 }
 
+export interface ProjectsPageStrings {
+  title: string;
+  subtitle: string;
+  searchLabel: string;
+  searchPlaceholder: string;
+  filterLabel: string;
+  clearFilters: string;
+  resultsOne: string;
+  resultsMany: string;
+  noResultsTitle: string;
+  noResultsContent: string;
+  back: string;
+}
+
 export interface Translations {
   en: {
     skills: SkillSetProps[];
@@ -78,6 +92,7 @@ export interface Translations {
     education: EducationProps[];
     softSkills: SoftSkillProp[];
     social: Social[];
+    projectsPage: ProjectsPageStrings;
   };
   es: {
     skills: SkillSetProps[];
@@ -87,6 +102,7 @@ export interface Translations {
     education: EducationProps[];
     softSkills: SoftSkillProp[];
     social: Social[];
+    projectsPage: ProjectsPageStrings;
   };
 }
 
