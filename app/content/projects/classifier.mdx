@@ -1,40 +1,40 @@
 ---
-title: "Dog and Cat Classifier in Real Time"
-description: "Plataforma para clasificar perros y gatos en tiempo real mediante inteligencia artificial y redes neuronales convolucionales."
+title: "Clasificador de perros y gatos en tiempo real"
+description: "Sistema inteligente para identificar perros y gatos en imágenes y video en vivo mediante redes neuronales convolucionales."
 date: "2023-10-10"
 tags: ["JavaScript", "Python", "HTML", "CSS", "CNN", "TensorFlow"]
 slug: classifier
 ---
 
-# Dog and Cat Classifier in Real Time
+# Clasificador de perros y gatos en tiempo real
 
 ![Classifier Banner](../../../public/images/classifier.png)
 
-# Problem Statement
+# Descripción del proyecto
 
-In many scenarios, such as animal shelters, smart surveillance systems, and educational tools, automatically identifying whether an animal is a dog or a cat from an image or live webcam feed can be highly valuable. However, manual labeling is time-consuming, inefficient, and prone to human error, especially when dealing with large datasets or real-time video streams.
+Este proyecto abordó la necesidad de automatizar la identificación visual de animales mediante inteligencia artificial. En contextos como refugios de animales, vigilancia inteligente o herramientas educativas, es necesario distinguir rápidamente si una imagen o un video en vivo corresponde a un perro o a un gato. La clasificación manual resulta lenta, propensa a errores y difícil de escalar cuando se trabaja con grandes volúmenes de datos.
 
-# Solution
+# Solución propuesta
 
-To address this challenge, we developed a real-time image classification system capable of distinguishing between dogs and cats using Convolutional Neural Networks (CNNs) and TensorFlow. The system processes static images and live webcam input, classifying each frame as either a dog or a cat with minimal latency.
+Se desarrolló un sistema de clasificación en tiempo real basado en redes neuronales convolucionales (CNN), entrenadas con TensorFlow y Python. La aplicación puede procesar imágenes estáticas y entrada de cámara en vivo, identificando en cada cuadro si el sujeto es un perro o un gato con una latencia mínima.
 
-Using Python and TensorFlow, we trained a CNN on a labeled dataset of dog and cat images. The model learns spatial patterns and feature hierarchies from the images, allowing it to detect subtle visual differences between the two classes. Once trained, the model was exported and incorporated into a lightweight web application built with JavaScript, HTML, and CSS, enabling real-time predictions directly from the browser.
+El flujo del proyecto incluyó la preparación del conjunto de datos, el entrenamiento del modelo, la validación de resultados y la exportación del modelo para su integración en una interfaz web ligera desarrollada con JavaScript, HTML y CSS. Gracias a esta integración, la predicción se ejecuta directamente desde el navegador, sin requerir un proceso de inferencia complejo en el backend.
 
-# Technologies Used
+# Tecnología utilizada
 
-- Python for model training, preprocessing, and export
-- TensorFlow for building and training the CNN
-- Convolutional Neural Networks for image feature extraction and classification
-- HTML and CSS for building the user interface
-- JavaScript for frontend interaction and webcam integration
+- Python para la preparación de datos, entrenamiento y exportación del modelo
+- TensorFlow para la construcción y entrenamiento de la CNN
+- Redes neuronales convolucionales para la extracción de características visuales
+- HTML y CSS para la interfaz de usuario
+- JavaScript para la interacción con la cámara y la experiencia web
 
-# Key Features
+# Funcionalidades principales
 
-- Real-time classification using a webcam
-- Lightweight and responsive web interface
-- Custom-trained CNN model
-- End-to-end integration between machine learning and browser-based interaction
+- Clasificación en tiempo real desde webcam
+- Interfaz ligera, responsive y fácil de usar
+- Modelo personalizado entrenado para dos clases
+- Integración completa entre machine learning e interacción del usuario
 
-# Notes
+# Resultados y valor del proyecto
 
-This project demonstrates how machine learning models can be deployed in interactive environments, bridging the gap between AI research and user-facing applications. It also highlights the practical use of TensorFlow and Python for real-time inference in web-based systems.
+El desarrollo demuestra cómo un modelo de inteligencia artificial puede trasladarse de un entorno experimental a una solución práctica y accesible para usuarios finales. Además, permite visualizar de manera directa la aplicación de TensorFlow y Python en sistemas de inferencia en tiempo real, reforzando la conexión entre investigación aplicada y productos digitales interactivos.

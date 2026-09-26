@@ -1,6 +1,6 @@
 ---
-title: "Smart cache"
-description: "Pipeline de Datos y API con Caché Inteligente."
+title: "Smart Cache"
+description: "Pipeline de datos y API con caché inteligente para mejorar el rendimiento y la escalabilidad."
 date: "2025-10-10"
 toc_min_heading_level: 1
 toc_max_heading_level: 5
@@ -8,154 +8,85 @@ tags: ["FastApi", "Azure", "Docker", "Python", "SQL", "Redis"]
 slug: smart-cache
 ---
 
-![classNameifier Banner](../../../public/images/smart-cache-low.gif)
+![Smart Cache Banner](../../../public/images/smart-cache-low.gif)
 
-<br />
+# Objetivo general
 
-# Objetivo General
+El proyecto tuvo como propósito desarrollar una solución de backend con enfoque en rendimiento, escalabilidad y despliegue en la nube. La idea principal era migrar grandes volúmenes de datos, exponerlos mediante una API segura y optimizada, y mejorar la experiencia de consulta mediante una estrategia de caché con invalidación automática.
 
-<>
-  Desarrollar una solución integral de backend que demuestre la capacidad de
-  migrar datos a gran escala, exponerlos a través de una API segura y
-  optimizada, y desplegarla en un entorno de nube productivo. El proyecto
-  culmina con la implementación de un sistema de monitoreo y una estrategia de
-  caché con invalidación automática.
-</>
-<br />
-<br />
+# Fase 1: Preparación y migración de datos
 
-# Fase 1: Preparación y Migración de Datos
+El primer paso fue construir la base de datos en la nube que alimentaría la plataforma. Para esta prueba se utilizó el dataset de Spotify Tracks DB, disponible en Kaggle y con más de 200 mil registros, lo que lo hacía adecuado para evaluar rendimiento y comportamiento bajo carga.
 
-<>
+La migración se realizó mediante Azure Data Factory. El proceso consistió en:
 
-El primer paso es construir la base de datos en la nube que alimentará nuestra aplicación.
+- Subir el archivo CSV a Azure Blob Storage
+- Extraer los datos desde el almacenamiento
+- Transformarlos según el formato requerido
+- Cargar la información en una tabla específica de Azure SQL Database
 
-<br />
-**Selección del Dataset:** Para el desarrollo de este proyecto seleccione el
-dataset **Spotify Tracks DB** - el cual puedes encontrar en el siguiente link:
+Este punto fue clave, porque estableció la base para el servicio de consulta y análisis posterior.
 
-<br />- [🔗 Spotify Tracks
-DB](https://www.kaggle.com/datasets/zaheenhamidani/ultimate-spotify-tracks-db)
-este cuenta com mas de 200mil registros, lo que no servira para las pruebas de
-tiempo.
-<br />
+# Fase 2: Desarrollo de API y autenticación
 
-**Migración de Datos con Azure Data Factory:** <br/>
-Utilizando  **Azure Data Factory** creamos un pipeline que extraiga los datos del dataset seleccionado (previamente
-subido a un Azure Blob Storage como un archivo .csv). Transformamos y cargamos estos
-datos en una tabla específica dentro de una base de datos provisionada en  **Azure Database SQL**
+Una vez almacenados los datos, se desarrolló la API con FastAPI, aplicando buenas prácticas de backend y seguridad. La solución se integró con Firebase para manejar aspectos de autenticación y autorización, además de ofrecer endpoints para consultar, filtrar y registrar información.
 
-</>
-<br />
-<br />
+Las principales tecnologías en esta fase fueron:
 
-# Fase 2: Desarrollo de API y Autenticación 🔐
+- FastAPI
+- Python
+- Firebase
+- Azure SQL
 
-<>
+# Fase 3: Monitoreo de rendimiento
 
-Con los datos en la nube, procedemos a la construccion de nuestro backend, aplicando
-buenas prácticas de desarrollo y seguridad.
+Para observar el comportamiento de la API en producción, se incorporó Azure Application Insights. Esta herramienta permitió recoger telemetría, tiempos de respuesta, trazas de solicitudes y errores en los endpoints. Gracias a esto, fue posible identificar cuellos de botella y evaluar el impacto de la caché en la latencia.
 
-<br />
-## **Tecnología:** - FastAPI Python - Firebase
+# Fase 4: Implementación de caché con Redis
 
-</>
-<br />
-<br />
+La parte más relevante del proyecto fue la implementación de una capa de caché con Redis para optimizar las consultas más pesadas. El endpoint `/features` devolvía los primeros 100,000 registros de la tabla `spotify.features`, aproximadamente 15 MB de información. Sin cacheo, esta respuesta podía resultar costosa tanto en tiempo como en uso de recursos.
 
-# Fase 3: Monitoreo de Rendimiento
+La estrategia consistió en guardar la respuesta completa bajo la clave:
 
-<>
-
-Utilizamos el servicio de Azure Applications Insights para observar el comportamiento de la API, con esto podemos capturar
-telemetría, trazas de solicitudes, tiempos de respuesta y posibles errores en los request a los diferentes endpoints.
-
-</>
-<br />
-<br />
-
-# Fase 4: Implementación de Caché con Redis (El Reto)
-
-<>
-
-Implementamos una base de datos de cache (**Azure cache database**) para mejorar los tiempos de respuesta al endpoint `/features`
-Este endpoint es responsable de devolver los primeros 100,000 registros de la base de datos spotify.features, que es aproximadamente
-15mb, esto se hizo meramente con propositos didacticos, ya en en un entorno real/profesional, esto deberia de estar paginado para
-no sobrecargar la respuesta.
-Una vez llamado por primera vez este endpoint, se realiza un proceso de escritura en la base de datos de cache con la clave `spotify:features:all`
-indicanto que de la tabla features, este responde con toda la data y no esta filtrada, de esta manera en la siguiente llamada al endpoint
-se realiza la verificacion de la clave `spotify:features:all` en la base de datos de cache para poder entregar la respuesta desde esta base de datos
-
-<br />
-
-Con este mismo metodo podemos cachear las respuestas en el endpoint
-
-```js
-/features/custom?=arg
+```text
+spotify:features:all
 ```
 
-el cual recibe un argumento que es encargado de
-filtrar la respuesta de esta consulta, por ejemplo: al pasar el argumento `arg=Pop` nos retornada todos los registros de los cuales el generado
-sea Pop, al mismo tiempo se creara una key para la base da datos de cache con este argumento, para este caso: `spotify:features:Pop`
+Cuando el endpoint era consultado por primera vez, se realizaba la carga desde la base de datos y se almacenaba en caché. Las llamadas posteriores verificaban la existencia de la clave y devolvían la respuesta desde Redis, reduciendo significativamente el tiempo de respuesta.
 
-</>
-<br />
+La misma lógica se aplicó a consultas filtradas mediante el endpoint:
 
-<br />
-
-# Fase 5: Invalidación de Caché
-
-<>
-
-Estas key en la base de datos de cache seran eliminadas despues de 3600 segundos, el equivalente a una hora, este parametro podria ser modificado
-para orientarlo con los objetivos del negocio. Tambien estas llaves son eliminadas cuando se carga un nuevo registro del mismo genero desde el
-endpoint
-
-```js
-/features/new
+```text
+/features/custom?arg=Pop
 ```
 
-Supongamos que cargamos el siguiente payload:
+En ese caso, la respuesta se cacheaba con una clave basada en el argumento recibido, por ejemplo:
 
-```json {1}
-{
-  "genre": "Dance",
-  "artist_name": "Lana Del Rey",
-  "track_name": "Pretty When You Cry",
-  "track_id": "6PnluwP0fjGnpIBsqTdUTq",
-  "popularity": "60",
-  "duration_ms": "234147"
-}
+```text
+spotify:features:Pop
 ```
 
-Esto eliminara la llave si acaso existe en la base de datos de cache
+# Fase 5: Invalidación automática del caché
 
-```json
+El sistema también implementó una política de invalidación para mantener la consistencia de los datos. Las claves de caché tenían un tiempo de expiración de 3600 segundos, equivalente a una hora. Además, cuando se agregaba un nuevo registro a través del endpoint `/features/new`, se eliminaban las claves relacionadas con ese género para evitar devolver datos desactualizados.
+
+Por ejemplo, si se enviaba un registro con el género `Dance`, se eliminaba la clave:
+
+```text
 spotify:features:Dance
 ```
 
-para que cuando se haga el llamo al endpoint /features/custom?=Dance no se devuelva una respuesta que no contenga todos los datos
-esto conlleva a que cuando se haga el primer llamado a este endpoint la respuesta sea lenta, debido a que no esta cacheada y Tambien
-debe de hacer un proceso de escritura en la base de datos de cache, pero la segunda y posteriores llamadas seran significativamente
-mas rapidas.
+Esto aseguraba que la siguiente consulta filtrada por ese género volviera a generar la respuesta desde la base de datos y la volviera a cachear con la información actualizada.
 
-</>
-<br />
+# Fase 6: Despliegue en la nube con Docker
 
-# Fase 6: Despliegue en la Nube con Docker 🐳
+La aplicación fue empaquetada en un contenedor Docker para facilitar su despliegue en Azure Container Registry. El Dockerfile configuraba el entorno necesario, instalaba dependencias y exponía el puerto del servicio.
 
-<>
-Finalmente vamos a empaquetar la aplicacion en una imagen de docker para poder desplegarla en un Azure container Registry
+Ejemplo de configuración:
 
-Creamos un Dockerfile en la raiz del directorio donde esta ubicada nuestra aplicacion y configuramos el entorno,
-hacemos un update, copiamos nuestra app y seteamos nuestras variables de entorno, luego de eso exponemos un puerto de la siguiente manera:
-
-```jsx
-
+```dockerfile
 FROM python:3.10-slim
-
 WORKDIR /app
-
 RUN apt-get update && \
     apt-get install -y curl apt-transport-https gnupg gcc g++ make && \
     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
@@ -164,78 +95,56 @@ RUN apt-get update && \
     ACCEPT_EULA=Y apt-get install -y msodbcsql17 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
 COPY requirements.txt .
-
 RUN pip install --no-cache-dir -r requirements.txt
-
 COPY . .
-
 RUN test -f .env && rm .env || echo "no .env file found"
-
 EXPOSE 8000
-
-CMD [ "uvicorn" , "main:app", "--host" , "0.0.0.0" , "--port" , "8000" ]
-
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
-utilizamos los siguientes comandos para poder subir nuestra imagen de docker al container registry:
+Posteriormente, la imagen se empujó al registro de contenedores de Azure con el comando:
 
 ```bash
 docker push acrapicache.azurecr.io/api-cache:latest
 ```
 
-</>
-<br />
-<br />
+# Endpoints relevantes
 
-<>
-<ol >
-Rutas importantes:
-<li className='text-green-500'>
-Security
-```jsx
-{domain}/signup <- METHOD_POST (Para el registro) 
-{domain}/login <- METHOD_POST (devuelve un token)
+## Seguridad
 
-````
-</li>
-<li className='text-green-500'>
-Resources
-```jsx
-{domain}/features <- METHOD_GET (devuelve los primero 100k registros)
-{domain}/features/custom?=arg <- METHOD_GET (Devuleve una lista filtrada por el argumento arg)
-{domain}/features/new <- METHOD_POST (Crea un nuevo registro en la db) Requiere Autenticacion y Autorizacion
-
-````
-
-</li>
-<li className='text-green-500'>
-MISC
-```jsx
-{domain}/ <- METHOD_GET (Devulve un saludo) Requiere Autenticacion
-{domain}/api/version <- METHOD_GET (devuelve la version de la API)
-
-````
-
-</li>
-</ol>
-</>
-
-<>
-## 🔗 Enlaces importantes:
-
-<br />
-<ol className='text-green-500 font-mono font-bold'>
-  <li >
-    {" "}
-    [🔗 Enlace de la API](https://api-cache-hfeva3d2bfcbehhu.eastus-01.azurewebsites.net/)
-  </li>
-  <li>
-    {" "}
-    [🔗 Enlace del Repositorio en GitHub](https://github.com/ricjpg/pipeline-cache)
-  </li>
-</ol>
-</>
+```text
+{domain}/signup
+{domain}/login
 ```
-````
+
+- `POST`: registro de usuario
+- `POST`: inicio de sesión y obtención de token
+
+## Recursos
+
+```text
+{domain}/features
+{domain}/features/custom?arg=genre
+{domain}/features/new
+```
+
+- `GET`: devuelve los primeros registros de la tabla
+- `GET`: devuelve una respuesta filtrada por criterio
+- `POST`: crea un nuevo registro en la base de datos y requiere autenticación
+
+## MISC
+
+```text
+{domain}/
+{domain}/api/version
+```
+
+- `GET`: saludo de la API
+- `GET`: versión actual del servicio
+
+# Enlaces importantes
+
+- [API desplegada](https://api-cache-hfeva3d2bfcbehhu.eastus-01.azurewebsites.net/)
+- [Repositorio en GitHub](https://github.com/ricjpg/pipeline-cache)
+  `

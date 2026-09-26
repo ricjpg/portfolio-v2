@@ -1,6 +1,6 @@
 ---
 title: "PROSENE Web App"
-description: "Plataforma digital inclusiva para la gestión eficiente de solicitudes de estudiantes con necesidades especiales."
+description: "Plataforma digital inclusiva para la gestión eficiente de solicitudes estudiantiles con necesidades especiales."
 date: "2025-10-10"
 tags: ["Vue.js", "FastAPI", "PostgreSQL", "Accessibility", "UNAH"]
 slug: prosene
@@ -8,46 +8,40 @@ slug: prosene
 
 ![PROSENE Banner](../../../public/images/prosene.png "PROSENE UNAH")
 
-<br />
-<br />
+# Contexto del problema
 
-## 🧩 Context: Identifying the Problem
+El Programa de Servicios a Estudiantes con Necesidades Especiales (PROSENE) de la Universidad Nacional Autónoma de Honduras (UNAH) enfrentaba dificultades importantes en la gestión y seguimiento de solicitudes. Los estudiantes debían acudir físicamente a las oficinas para presentar sus requerimientos, lo que representaba una barrera para quienes tenían limitaciones de movilidad u otras necesidades de accesibilidad. Este proceso manual generaba retrasos, duplicidad de información y una baja trazabilidad de las solicitudes.
 
-The **Programa de Servicios a Estudiantes con Necesidades Especiales (PROSENE)**, a support unit within the Universidad Nacional Autónoma de Honduras (UNAH), faced significant challenges in communication and service management. Students requiring assistance had to physically visit PROSENE’s offices to submit requests—a serious barrier, particularly for individuals with disabilities. This analog process created delays, accessibility issues, and inefficiencies in request tracking and response.
+# Solución desarrollada
 
-<br />
+Se diseñó una aplicación web que permite a los estudiantes enviar solicitudes de apoyo desde cualquier lugar, sin necesidad de acudir de forma presencial. La plataforma ofrece a los funcionarios de PROSENE una visión centralizada de las peticiones y facilita la gestión de cada caso.
 
-## 💡 Solution: A Digital and Inclusive Platform
+Entre las capacidades principales se encuentran:
 
-To address this problem, we developed a **web application** that enables students to easily submit service requests online. The platform allows PROSENE staff to:
+- Registro de solicitudes estudiantiles en línea
+- Seguimiento del estado y historial de cada caso
+- Comunicación más ágil entre estudiantes y personal administrativo
+- Mejora de accesibilidad y reducción de fricción operativa
+- Centralización de la información para una respuesta más eficiente
 
-- Receive and manage student requests in real time.
-- Track the status and history of all requests.
-- Provide timely feedback and updates to students.
-- Improve accessibility, transparency, and efficiency.
+La solución se construyó pensando en un enfoque inclusivo, que reduzca la dependencia de procesos presenciales y fortalezca la atención personalizada.
 
-By digitalizing the process, the platform ensures students receive quicker support and reduces the need for in-person visits, aligning with accessibility best practices.
+# Tecnologías utilizadas
 
-<br />
+- Frontend: Vue.js, HTML y CSS
+- Backend: Python y FastAPI
+- Autenticación: JWT
+- Base de datos: PostgreSQL en AWS RDS
+- Despliegue: Vercel para el frontend y AWS RDS para la base de datos
 
-## 🛠️ Technologies Used
+# Impacto y resultados
 
-- **Frontend:** Vue.js, HTML, CSS
-- **Backend:** Python, FastAPI, JWT Authentication
-- **Database:** PostgreSQL (deployed via AWS RDS)
-- **Deployment:** Vercel (Frontend) + AWS RDS (Database)
+- Mejora significativa en la accesibilidad para estudiantes con necesidades especiales
+- Reducción del tiempo de respuesta y atención
+- Automatización de procesos antes realizados de forma manual
+- Implementación de autenticación y control de roles
+- Desarrollo full stack con despliegue real y enfoque en UX
 
-<br />
+# Valor del proyecto
 
-## 🚀 Impact and Highlights
-
-- Enhanced accessibility for students with special needs.
-- Streamlined communication between students and PROSENE staff.
-- Full-stack development with real deployment, authentication, and role-based access control.
-- Built using Agile practices and version control with Git.
-
-<br />
-
-## 🔗 Notes
-
-This project was developed as part of a university initiative to solve real problems on campus through technology. It stands as a practical example of accessible digital transformation and inclusive UX design.
+Este proyecto surgió como una iniciativa universitaria orientada a resolver un problema real dentro del campus. Representa una clara muestra de transformación digital con enfoque en inclusión, accesibilidad y mejora de los servicios institucionales.

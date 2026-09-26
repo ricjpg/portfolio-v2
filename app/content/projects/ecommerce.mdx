@@ -1,208 +1,115 @@
 ---
-title: "E-commerce infrastructure"
-description: "Plataforma de E-commerce y Analítica."
+title: "Infraestructura de e-commerce"
+description: "Arquitectura cloud para una plataforma de comercio electrónico con enfoque en seguridad, escalabilidad y analítica."
 date: "2025-07-04"
 tags: ["Terraform", "Azure", "Cloud"]
 slug: ecommerce
 ---
 
-<br />
+# Propuesta de solución: arquitectura cloud para e-commerce
 
-# Propuesta de Solución: Arquitectura Cloud para Plataforma E-commerce
+Esta propuesta presenta una arquitectura en Azure orientada a una plataforma de comercio electrónico empresarial. La solución está diseñada para soportar crecimiento escalable, mantener altos estándares de seguridad y garantizar disponibilidad continua para operaciones críticas.
 
-<br />
+## Objetivos principales
 
-Esta propuesta presenta una arquitectura cloud escalable y segura para una plataforma de e-commerce empresarial, implementada sobre Azure. La solución está diseñada siguiendo principios de microservicios, con separación clara de responsabilidades y alta disponibilidad.
+- Escalabilidad: la infraestructura debe crecer con la demanda del negocio
+- Seguridad: aplicación de prácticas cloud-native y políticas de acceso robustas
+- Disponibilidad: asegurar continuidad operativa para servicios críticos
+- Observabilidad: facilitar el monitoreo, la trazabilidad y la resolución de incidentes
 
-### Objetivos Principales:
+# Arquitectura propuesta
 
--- **Escalabilidad**: Arquitectura que soporta crecimiento orgánico del negocio
+La solución se estructuró en tres capas principales que permiten separar responsabilidades y mejorar la mantenibilidad del sistema:
 
--- **Seguridad**: Implementación de mejores prácticas de seguridad cloud-native
-
--- **Disponibilidad**: Garantizar 99.9% de uptime para operaciones críticas
-
-<br />
-
-# Arquitectura de Solución
-
-La arquitectura propuesta se estructura en tres capas principales que proporcionan separación clara de responsabilidades:
-
-<br />
-
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Security &    │───▶│  Core           │───▶│  Data &         │
-│   Identity      │    │  Application    │    │  Analytics      │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+```text
+Security & Identity  ->  Core Application  ->  Data & Analytics
 ```
 
 ![General Diagram](../../../public/images/general-diagram.png)
 
-<br />
+## Repositorio 1: seguridad e identidad
 
-## **Repositorio 1:** Security & Identity (`ecommerce-security-infra`)
+Este repositorio se enfoca en la capa de seguridad y la gestión de identidad. Su responsabilidad principal es proteger la infraestructura y controlar el acceso a los recursos mediante políticas centradas en autenticación, autorización y cumplimiento.
 
-Responsabilidad: Gestión de identidad, autenticación y seguridad perimetral.
-Recursos incluidos:
+Incluye:
 
--- Políticas de seguridad y acceso condicional
+- Políticas de seguridad y acceso condicional
+- Autenticación para usuarios y clientes
+- Azure Key Vault para secretos y certificados
+- Network Security Groups y reglas de firewall
+- Configuración de dominios personalizados y SSL
 
--- Configuración de autenticación para usuarios y clientes
+## Repositorio 2: aplicación central
 
--- Key Vault para secretos y certificados
+Este repositorio concentra la lógica de negocio y los servicios de la plataforma digital. Incluye los componentes principales para ofrecer la experiencia de compra, administración interna y servicios de operación.
 
--- Network Security Groups y reglas de firewall
+Entre sus elementos destacan:
 
--- Configuración de dominios personalizados y SSL
+- Portal de front office
+- Portal de back office
+- API RESTful
+- Azure Service Bus y Queue Storage
+- Azure Functions
+- Servicio de notificaciones
+- Application Insights para monitoreo y observabilidad
 
-<br />
+![Core App Architecture](../../../public/images/core-app-arq.png)
 
-## **Repositorio 2:** Core Application (`ecommerce-application-infra`)
+## Repositorio 3: datos y analítica
 
-**Responsabilidad**: Aplicaciones principales, APIs y servicios de negocio.
-Recursos incluidos:
+Este repositorio agrupa todo el ecosistema de almacenamiento y análisis de datos. Está orientado a gestionar información transaccional, almacenamiento de archivos y preparación de datos para reporting y analítica avanzada.
 
--- Portal UI para FrontOffice
+Incluye:
 
--- Portal UI para BackOffice
+- Azure Blob Storage para contenido multimedia
+- Base de datos transaccional y de caché
+- Pipelines ETL
+- Synapse Analytics
+- Power BI para reporting de negocio
+- Data Factory
+- Políticas de respaldo y recuperación
 
--- Backend RESTful-API
+![Database Architecture](../../../public/images/database-arq.png)
 
--- Service Bus y Queue Storage
+# Justificación de la arquitectura
 
--- Azure Functions
+## Principio de responsabilidad única
 
--- Notification Service
+Cada repositorio cumple una función específica y bien definida. Esta separación mejora la organización del código, facilita el mantenimiento y reduce el riesgo de cambios cruzados.
 
--- Application Insights y configuración de monitoreo aplicativo
+### Seguridad e identidad
 
-<br />
-![General Diagram](../../../public/images/core-app-arq.png)
-<br />
-<br />
+Se centra exclusivamente en protección y acceso, dado que sus cambios suelen requerir revisiones más rigurosas y un mayor nivel de control debido a requisitos regulatorios y de auditoría.
 
-## **Repositorio 3:** Data & Analytics (`ecommerce-data-infra`)
+### Aplicación central
 
-Responsabilidad: Almacenamiento, procesamiento y análisis de datos.
-Recursos incluidos:
+Agrupa la lógica de negocio y los servicios funcionales. La convivencia de estos componentes es necesaria porque comparten despliegues, dependencias y pruebas de integración.
 
--- Azure Blob Storage (multimedia)
+### Datos y analítica
 
--- Base de datos (DB Cache, DB Transaccional)
+Mantiene el ecosistema de almacenamiento y procesamiento de datos bajo una misma visión técnica, ya que estos elementos comparten políticas de retención, seguridad y acceso.
 
--- ETL pipelines y procesamiento de datos
+## Acoplamiento débil y cohesión alta
 
--- Synapse Analytics
+Se busca minimizar dependencias entre repositorios y aumentar la cohesión interna de cada capa. Este enfoque permite evolucionar cada dominio sin comprometer la estabilidad de los demás.
 
--- Power BI (Deshabilitado por temas de costos)
+- Seguridad e identidad: alta cohesión por la relación directa entre políticas, certificación y acceso
+- Aplicación central: acoplamiento funcional justificado entre frontend, backend y servicios de integración
+- Datos y analítica: cohesión en la gestión de almacenamiento, ETL y reporting
 
--- Data Factory (si aplica)
+# Evidencia de despliegue
 
--- Backup y recovery policies
+![Azure Resource Group](../../../public/images/azure-rg.png)
 
-<br />
-![General Diagram](../../../public/images/database-arq.png)
-<br />
-<br />
+# Evidencia en terminal
 
-# Justificacion:
+![Terminal 1](../../../public/images/terminal-1.png)
+![Terminal 2](../../../public/images/terminal-2.png)
+![Terminal 3](../../../public/images/terminal-3.png)
+![Terminal 4](../../../public/images/terminal-4.png)
 
-Análisis de Principios de Arquitectura Aplicados
+# Repositorios
 
-1. Principio de Responsabilidad Única (Single Responsibility Principle)
-
--- Cada repositorio tiene una responsabilidad específica y bien definida.
-
-<br />
-
-Security & Identity: Se enfoca exclusivamente en la capa de seguridad porque:
-
--- Los cambios de seguridad requieren revisiones más rigurosas
-
--- Las políticas de compliance y auditoría son específicas para seguridad
-
--- Los ciclos de actualización son más lentos y controlados
-
-<br />
-
-Core Application: Concentra la lógica de negocio porque:
-
--- Los servicios están altamente acoplados funcionalmente
-
--- Requieren despliegues coordinados y frecuentes
-
--- Los desarrolladores necesitan visibilidad completa del stack aplicativo
-
--- Las pruebas de integración abarcan todos estos componentes
-
-<br />
-
-Data & Analytics: Agrupa todo el ecosistema de datos porque:
-
--- Los datos tienen ciclos de vida y políticas de retención específicas
-
--- Los patrones de acceso y performance son similares
-
-<br />
-
-# Acoplamiento Débil y Cohesión Alta
-
-Minimizar dependencias entre repositorios mientras maximizamos la cohesión interna.
-
-<br />
-**Security & Identity (Alta cohesión):**
-
--- Un cambio en autenticación típicamente requiere ajustes en políticas y certificados
-
--- La configuración de dominios SSL está íntimamente relacionada con la gestión de certificados
-
-<br />
-
-## Core Application (Acoplamiento funcional justificado):
-
--- El Portal backoffice y Backend API son interdependientes por diseño
-
--- Service Bus conecta múltiples servicios y debe configurarse atomicamente
-
--- Azure Functions y Notification Service comparten patrones de configuración
-
-<br />
-
-## Data & Analytics (Cohesión de dominio):
-
--- Blob Storage, bases de datos y ETL forman un pipeline de datos coherente
-
--- Las políticas de backup deben aplicarse consistentemente a todos los almacenes
-
--- Power BI requiere permisos coordinados con Synapse Analytics (Deshabilitado por temas de costos)
-
--- La configuración de red para datos debe ser uniforme por seguridad
-
-<br />
-<br />
-
-# Evidencia de los despliegues:
-
-![azure-rg](../../../public/images/azure-rg.png)
-
-<br />
-
-# Evidencia en la terminal:
-
-![terminal](../../../public/images/terminal-1.png)
-![terminal](../../../public/images/terminal-2.png)
-![terminal](../../../public/images/terminal-3.png)
-![terminal](../../../public/images/terminal-4.png)
-
-<br />
-
-# Repositorios:
-
-<br />
-
--- **[Infrastructure Security](https://github.com/MikeWinchester/infrastructure-security)**
-
--- **[Infrastructure Analytics](https://github.com/MikeWinchester/infrastructure-analytics)**
-
--- **[Infrastructure Applications](https://github.com/ricjpg/app-infrastructure)**
+- [Infrastructure Security](https://github.com/MikeWinchester/infrastructure-security)
+- [Infrastructure Analytics](https://github.com/MikeWinchester/infrastructure-analytics)
+- [Infrastructure Applications](https://github.com/ricjpg/app-infrastructure)
