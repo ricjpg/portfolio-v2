@@ -11,14 +11,7 @@ const DownloadButton: React.FC = () => {
     link.click();
   };
   return (
-    <Button
-      color="crimson"
-      variant="outline"
-      size={"3"}
-      ml={"2"}
-      className="max-w-1/2"
-      onClick={handleDownload}
-    >
+    <Button color="crimson" variant="outline" size={"3"} onClick={handleDownload}>
       <DownloadIcon /> {t.hero.downloadCV}
     </Button>
   );

@@ -24,10 +24,6 @@ const FENCE_PATTERN = /^\s*(?:```|~~~)/;
 const DEFAULT_MIN_HEADING_LEVEL = 1;
 const DEFAULT_MAX_HEADING_LEVEL = 6;
 
-/**
- * Identificador de un encabezado. Es la única fuente de verdad para el
- * `id` que se renderiza en el artículo y para el enlace del índice.
- */
 export function slugifyHeading(text: string): string {
   return text
     .toLowerCase()
@@ -38,10 +34,6 @@ export function slugifyHeading(text: string): string {
     .replace(/\s+/g, "-");
 }
 
-/**
- * Encabezados del contenido MDX en orden de aparición, ignorando los
- * que viven dentro de bloques de código.
- */
 export function extractHeadings(
   content: string,
   minLevel = DEFAULT_MIN_HEADING_LEVEL,
@@ -103,11 +95,6 @@ function readTranslation(
     ),
   };
 }
-
-/**
- * Slugs de proyectos disponibles, sin el sufijo de idioma
- * (por ejemplo "poke-q" para "poke-q-en.mdx" y "poke-q-es.mdx").
- */
 export function getProjectSlugs(): string[] {
   if (!fs.existsSync(PROJECTS_PATH)) {
     console.warn(`Directory not found: ${PROJECTS_PATH}`);
@@ -124,10 +111,6 @@ export function getProjectSlugs(): string[] {
   return [...new Set(slugs)].sort();
 }
 
-/**
- * Contenido de un proyecto en cada idioma. Las traducciones que faltan
- * se devuelven como null para que la interfaz pueda aplicar un fallback.
- */
 export function getProjectTranslations(
   slug: string,
 ): Record<Language, ProjectTranslation | null> {

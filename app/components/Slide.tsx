@@ -1,15 +1,12 @@
 import {
   Card,
-  Code,
   Text,
   Heading,
   Separator,
-  Badge,
   Link,
 } from "@radix-ui/themes";
 import { useLanguage } from "../lib/LanguageContext";
-import { translations } from "../content/db";
-import { useRouter } from "next/navigation";
+import { TimelineEntryProps } from "../interfaces/interface";
 
 interface textProp {
   type: string;
@@ -18,16 +15,13 @@ interface textProp {
   institution?: string;
   period?: string;
   perks?: string[];
+  items?: TimelineEntryProps[];
 }
 
-interface urlProp {
-  url: string;
-}
-
-const Slide: React.FC<textProp> = ({ type }) => {
+const Slide: React.FC<textProp> = ({ type, items }) => {
   const { t } = useLanguage();
-  const education = [...t.education];
-  const kind = education.filter((education) => education.type == type);
+  const entries = items ?? t.education;
+  const kind = entries.filter((entry) => entry.type == type);
 
   return (
     <div className="">
@@ -47,15 +41,27 @@ const Slide: React.FC<textProp> = ({ type }) => {
             </div>
             <div className="p-3 ">
               <p className="text-blue-600 text-sm font-bold">{item.period}</p>
-              <Link
-                weight={"bold"}
-                href={item.url}
-                color="indigo"
-                size="8"
-                className="font-extrabold "
-              >
-                {item.title}
-              </Link>
+              {item.url ? (
+                <Link
+                  weight={"bold"}
+                  href={item.url}
+                  color="indigo"
+                  size="8"
+                  className="font-extrabold "
+                >
+                  {item.title}
+                </Link>
+              ) : (
+                <Text
+                  weight="bold"
+                  color="indigo"
+                  size="8"
+                  className="font-extrabold "
+                >
+                  {item.title}
+                </Text>
+              )}
+
               <br />
               <Text color="gray" className="text-md font-extralight">
                 {item.institution}

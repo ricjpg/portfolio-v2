@@ -1,5 +1,3 @@
-// app/projects/[slug]/page.tsx
-
 import { notFound } from "next/navigation";
 import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
 import type { MDXComponents } from "mdx/types";
@@ -42,7 +40,6 @@ const mdxRemoteOptions: MDXRemoteProps["options"] = {
   },
 };
 
-/** Texto plano de los hijos de un encabezado, para derivar su id */
 const headingText = (children: ReactNode): string => {
   if (typeof children === "string" || typeof children === "number") {
     return String(children);
@@ -63,10 +60,9 @@ const headingText = (children: ReactNode): string => {
 
 type HeadingProps = ComponentProps<"h2">;
 
-/** El id comparte fuente de verdad con el índice: lib/mdx slugifyHeading */
-const headingId = (children: ReactNode) => slugifyHeading(headingText(children));
+const headingId = (children: ReactNode) =>
+  slugifyHeading(headingText(children));
 
-// Componentes personalizados para MDX
 const components: MDXComponents = {
   h1: ({ children, ...props }: ComponentProps<"h1">) => (
     <h1
@@ -142,7 +138,6 @@ const components: MDXComponents = {
 
 const DEFAULT_LANGUAGE: Language = "en";
 
-/** Renderiza un idioma en el servidor para que el cliente solo elija cuál mostrar */
 const renderArticle = (translation: ProjectTranslation | null) =>
   translation ? (
     <MDXRemote
@@ -152,7 +147,6 @@ const renderArticle = (translation: ProjectTranslation | null) =>
     />
   ) : null;
 
-// Generar metadata dinámica para SEO
 export async function generateMetadata({ params }: ProjectPageProps) {
   const { slug } = await params;
   const translations = getProjectTranslations(slug);
@@ -180,12 +174,10 @@ export async function generateMetadata({ params }: ProjectPageProps) {
   };
 }
 
-// Generar rutas estáticas en build time
 export async function generateStaticParams() {
   return getProjectSlugs().map((slug) => ({ slug }));
 }
 
-// Componente de la página
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   const translations = getProjectTranslations(slug);

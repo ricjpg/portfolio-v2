@@ -11,7 +11,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Leer el valor del localStorage cuando el componente se monta
     const storedAppearance = localStorage.getItem("appearance") as Appearance;
     if (storedAppearance) {
       setAppearance(storedAppearance);
@@ -33,8 +32,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       accentColor="indigo"
       grayColor="slate"
       panelBackground="translucent"
-      radius="large"
-    >
+      radius="large">
       <ThemeContext.Provider value={{ appearance, toggleTheme }}>
         {children}
       </ThemeContext.Provider>

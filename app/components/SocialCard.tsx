@@ -1,4 +1,4 @@
-import { Card, Inset, Progress, Text } from "@radix-ui/themes";
+import { Card } from "@radix-ui/themes";
 import { useLanguage } from "../lib/LanguageContext";
 import Image from "next/image";
 
@@ -15,7 +15,7 @@ const SocialCard = () => {
           <a href={`${item.url}`}>
             <Image
               src={`${item.icon}`}
-              alt="background"
+              alt={item.name}
               width={300}
               height={300}
               loading="eager"

@@ -1,11 +1,4 @@
-import type {
-  SkillSetProps,
-  Social,
-  ProjectProps,
-  SummaryProps,
-  Translations,
-  PicProps,
-} from "../interfaces/interface";
+import type { Social, Translations, PicProps } from "../interfaces/interface";
 
 export const SocialList: Social[] = [
   {
@@ -164,6 +157,10 @@ export const translations: Translations = {
           type: "Certificate",
           title: "Certifications",
         },
+        {
+          type: "Work Experience",
+          title: "Work Experience",
+        },
       ],
       backButton: "Go back",
       downloadCV: "Download my resume",
@@ -213,6 +210,18 @@ export const translations: Translations = {
           "Agility and Professional Leadership",
         ],
         url: "https://app.aluracursos.com/program/certificate/8e8f0d61-363f-4619-ad15-848c3bda3bee",
+      },
+    ],
+    experience: [
+      {
+        type: "Work Experience",
+        title: "Full Stack Developer",
+        period: "April 2026 - August 2026",
+        institution: "LynxLabs · Research and Development",
+        perks: [
+          "Closed test coverage gaps in a multi-tenant Rails e-commerce backend, writing the missing specs with RSpec and Factory Bot so the team could refactor with confidence.",
+          "Migrated features to a new enterprise multi-tenant back office built with React and TanStack Query, covering each change with unit tests and Playwright end-to-end tests.",
+        ],
       },
     ],
     softSkills: [
@@ -282,6 +291,14 @@ export const translations: Translations = {
     projectPage: {
       backToProjects: "Back to projects",
       onThisPage: "On this page",
+    },
+    contactPage: {
+      title: "Tell me about your project",
+      subtitle:
+        "Have an idea, a problem to solve, or a team that needs a hand? Write me a few lines about what you are building and I will gladly help.",
+      emailTitle: "Send me an email",
+      socialTitle: "Elsewhere",
+      email: "ricardoguardiolahn@gmail.com",
     },
   },
   es: {
@@ -417,6 +434,10 @@ export const translations: Translations = {
           type: "Certificado",
           title: "Certificaciones",
         },
+        {
+          type: "Experiencia Laboral",
+          title: "Experiencia Laboral",
+        },
       ],
       backButton: "Atras",
       downloadCV: "Descarga mi CV",
@@ -466,6 +487,18 @@ export const translations: Translations = {
           "Agilidad y protagonismo profesional",
         ],
         url: "https://app.aluracursos.com/program/certificate/8e8f0d61-363f-4619-ad15-848c3bda3bee",
+      },
+    ],
+    experience: [
+      {
+        type: "Experiencia Laboral",
+        title: "Full Stack Developer",
+        period: "abril 2026 - agosto 2026",
+        institution: "LynxLabs · Investigación y Desarrollo",
+        perks: [
+          "Cubrí huecos de cobertura de pruebas en un backend multi-tenant de e-commerce en Rails, escribiendo las pruebas que faltaban con RSpec y Factory Bot para que el equipo pudiera refactorizar con confianza.",
+          "Migré funcionalidades a un nuevo back office empresarial multi-tenant construido con React y TanStack Query, cubriendo cada cambio con pruebas unitarias y end-to-end de Playwright.",
+        ],
       },
     ],
     softSkills: [
@@ -535,6 +568,14 @@ export const translations: Translations = {
     projectPage: {
       backToProjects: "Volver a proyectos",
       onThisPage: "En esta página",
+    },
+    contactPage: {
+      title: "Cuéntame sobre tu proyecto",
+      subtitle:
+        "¿Tienes una idea, un problema que resolver o un equipo que necesita apoyo? Escríbeme unas líneas sobre lo que estás construyendo y con gusto te ayudo.",
+      emailTitle: "Envíame un correo",
+      socialTitle: "En otros sitios",
+      email: "ricardoguardiolahn@gmail.com",
     },
   },
 };

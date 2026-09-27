@@ -6,7 +6,6 @@ import type { TableOfContentsItem } from "../interfaces/projects";
 
 interface TableOfContentsProps {
   items: TableOfContentsItem[];
-  /** Element that contains the headings being tracked */
   containerRef: RefObject<HTMLElement | null>;
 }
 
@@ -42,7 +41,6 @@ export default function TableOfContents({
         current = heading.id;
       }
 
-      // Al final del documento la última sección siempre es la actual
       const atBottom =
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 2;

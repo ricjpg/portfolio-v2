@@ -59,7 +59,7 @@ export interface HeroStrings {
   contactMeContent: string;
 }
 
-export interface EducationProps {
+export interface TimelineEntryProps {
   type: string;
   title?: string;
   degree?: string;
@@ -88,28 +88,40 @@ export interface ProjectPageStrings {
   onThisPage: string;
 }
 
+export interface ContactPageStrings {
+  title: string;
+  subtitle: string;
+  emailTitle: string;
+  socialTitle: string;
+  email: string;
+}
+
 export interface Translations {
   en: {
     skills: SkillSetProps[];
     projects: ProjectProps[];
     summary: SummaryProps;
     hero: HeroStrings;
-    education: EducationProps[];
+    education: TimelineEntryProps[];
+    experience: TimelineEntryProps[];
     softSkills: SoftSkillProp[];
     social: Social[];
     projectsPage: ProjectsPageStrings;
     projectPage: ProjectPageStrings;
+    contactPage: ContactPageStrings;
   };
   es: {
     skills: SkillSetProps[];
     projects: ProjectProps[];
     summary: SummaryProps;
     hero: HeroStrings;
-    education: EducationProps[];
+    education: TimelineEntryProps[];
+    experience: TimelineEntryProps[];
     softSkills: SoftSkillProp[];
     social: Social[];
     projectsPage: ProjectsPageStrings;
     projectPage: ProjectPageStrings;
+    contactPage: ContactPageStrings;
   };
 }
 

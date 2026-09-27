@@ -26,7 +26,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Obtener idioma del localStorage o del navegador
     const stored = localStorage.getItem("language") as Language | null;
     const browserLang = navigator.language.split("-")[0] as Language;
     const initialLang = stored || (browserLang === "es" ? "es" : "en");

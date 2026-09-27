@@ -1,82 +1,103 @@
 "use client";
 
-import { Box, Button, Section, Separator } from "@radix-ui/themes";
-import {
-  CursorArrowIcon,
-  DividerHorizontalIcon,
-  DownloadIcon,
-} from "@radix-ui/react-icons";
+import Link from "next/link";
+import { Button } from "@radix-ui/themes";
+import { ArrowRightIcon, CursorArrowIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons";
 import { useLanguage } from "./lib/LanguageContext";
 import Avatar from "./components/Avatar";
-import { Pictures, projectsList } from "./content/db";
+import { Pictures } from "./content/db";
 import ProjectList from "./components/ProjectCard";
-import CodeCard from "./components/Slide";
-import { useRouter } from "next/navigation";
-import DownloadButton from "./components/DownloadCVButton";
 import Slide from "./components/Slide";
+import DownloadButton from "./components/DownloadCVButton";
 import { PortfolioTechnologyCarousel } from "./components/TechnologyCarousel";
 
 export default function Home() {
-  const router = useRouter();
-
-  const getToknowMe = () => {
-    router.push("/aboutme"); // Redirige a /aboutme
-  };
   const { t } = useLanguage();
-  return (
-    <Section className="place-items-center">
-      <div className="w-full lg:w-5/8 p-2">
-        <div>
-          <p className="font-bold text-blue-500">{t.hero.greeting}</p>
-          <DividerHorizontalIcon />
-        </div>
-        <h1 className="text-center text-7xl font-extrabold lg:text-[170px] font-funnel">
-          Ricardo Guardiola
-        </h1>
-        <div className="flex flex-col lg:flex-row lg:gap-5 lg:items-center-safe">
-          <div className="my-5 place-items-center-safe">
-            <Avatar items={Pictures} />
-          </div>
-          <div>
-            <p className="italic font-serif mt-5 text-lg">{t.summary.title}</p>
-            <DividerHorizontalIcon />
-            <span className="mt-5 font-extralight">{t.summary.content}</span>
-            <DividerHorizontalIcon />
-            <div className="">
-              <Button
-                variant="solid"
-                size={"3"}
-                className="max-w-1/2 cursor-grab"
-                onClick={getToknowMe}>
-                <CursorArrowIcon /> {t.hero.aboutme}
-              </Button>
-              <DownloadButton />
-            </div>
-          </div>
-        </div>
-      </div>
-      <Section className="w-full flex flex-col lg:flex-row justify-self-center lg:w-3/5">
-        <Box className="w-full ">
-          <Slide type={t.hero.typeEd[0].type} />
-        </Box>
-      </Section>
 
-      <Box className=" justify-self-center">
-        <h1 className="font-extrabold text-4xl lg:text-7xl">
+  return (
+    <main className="mx-auto flex w-full max-w-6xl flex-col px-4 sm:px-6">
+      <section className="grid items-center gap-12 pt-28 sm:pt-32 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-20 lg:pt-36">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">
+            {t.hero.greeting}
+          </p>
+
+          <h1 className="mt-4 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+            Ricardo Guardiola
+          </h1>
+
+          <p className="mt-8 text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
+            {t.summary.title}
+          </p>
+
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-gray-600 dark:text-gray-300">
+            {t.summary.content}
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Button asChild size="3">
+              <Link href="/aboutme">
+                <CursorArrowIcon aria-hidden />
+                {t.hero.aboutme}
+              </Link>
+            </Button>
+            <DownloadButton />
+            <Button asChild size="3" variant="soft">
+              <Link href="/contact">
+                <EnvelopeClosedIcon aria-hidden />
+                {t.hero.contactMeTitle}
+              </Link>
+            </Button>
+          </div>
+        </div>
+
+        <div className="justify-self-center lg:justify-self-end">
+          <Avatar items={Pictures} size={300} />
+        </div>
+      </section>
+
+      <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
+        <Slide type={t.hero.typeEd[0].type} />
+      </section>
+
+      <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
+        <Slide type={t.hero.typeEd[2].type} items={t.experience} />
+      </section>
+
+      <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
           {t.hero.techSkill}
-        </h1>
-      </Box>
-      <Section className="w-full">
-        <PortfolioTechnologyCarousel />
-      </Section>
-      <Box className=" justify-self-center">
-        <h1 className="font-extrabold text-4xl lg:text-7xl">
-          <a href="/projects">{t.hero.recentProjects}</a>
-        </h1>
-      </Box>
-      <Section className="justify-items-center">
-        <ProjectList limit={5} columns={3} size="lg" />
-      </Section>
-    </Section>
+        </h2>
+
+        <div className="-mx-4 mt-4 sm:-mx-6">
+          <PortfolioTechnologyCarousel />
+        </div>
+      </section>
+
+      <section className="mt-16 border-t border-gray-200 pt-12 pb-16 sm:mt-20 sm:pb-24 dark:border-gray-800">
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+            {t.hero.recentProjects}
+          </h2>
+
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400">
+            {t.hero.viewAllProjects}
+            <ArrowRightIcon aria-hidden />
+          </Link>
+        </div>
+
+        <div className="mt-8">
+          <ProjectList
+            limit={5}
+            columns={3}
+            size="lg"
+            showMoreLink={false}
+            className="lg:w-full"
+          />
+        </div>
+      </section>
+    </main>
   );
 }
