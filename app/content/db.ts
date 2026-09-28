@@ -134,7 +134,7 @@ export const translations: Translations = {
           "Modern quotation management platform for creating, tracking, and exporting client quotes with secure multi-tenant workflows in the cloud.",
         img: "quotes-3.png",
         href: "/projects/quotation",
-        date: "2025-10-06T14:30:00.000Z",
+        date: "2026-09-06T14:30:00.000Z",
         stack: [
           "Workers",
           "Cloudflare",
@@ -231,6 +231,28 @@ export const translations: Translations = {
         perks: [
           "Closed test coverage gaps in a multi-tenant Rails e-commerce backend, writing the missing specs with RSpec and Factory Bot so the team could refactor with confidence.",
           "Migrated features to a new enterprise multi-tenant back office built with React and TanStack Query, covering each change with unit tests and Playwright end-to-end tests.",
+        ],
+      },
+      {
+        type: "Work Experience",
+        title: "Operations Assistant",
+        period: "January 2020 - January 2023",
+        institution: "PPCCVM",
+        perks: [
+          "Was in charge of preparing payrolls and maintaining accurate employee records for the organization.",
+          "Reviewed and verified attendance records and documentation required for government part-time job compliance.",
+          "Organized personnel paperwork and operational documentation, ensuring proper records and smooth administrative follow-up.",
+        ],
+      },
+      {
+        type: "Work Experience",
+        title: "IT Support",
+        period: "October 2017 - December 2019",
+        institution: "PPCCVM",
+        perks: [
+          "Provided technical support to staff and departments for hardware, software, and network issues, helping keep daily operations running smoothly.",
+          "Installed, configured, and maintained computers, printers, and office equipment to ensure reliable workplace productivity.",
+          "Managed user access, basic troubleshooting, backups, and system maintenance tasks across the organization.",
         ],
       },
     ],
@@ -426,7 +448,7 @@ export const translations: Translations = {
           "Sistema moderno para crear, gestionar y exportar cotizaciones de clientes con flujos seguros multi-tenant en la nube.",
         img: "quotes-3.png",
         href: "/projects/quotation",
-        date: "2025-10-06T14:30:00.000Z",
+        date: "2026-09-06T14:30:00.000Z",
         stack: [
           "Cloudflare",
           "Workers",
@@ -523,6 +545,28 @@ export const translations: Translations = {
         perks: [
           "Cubrí huecos de cobertura de pruebas en un backend multi-tenant de e-commerce en Rails, escribiendo las pruebas que faltaban con RSpec y Factory Bot para que el equipo pudiera refactorizar con confianza.",
           "Migré funcionalidades a un nuevo back office empresarial multi-tenant construido con React y TanStack Query, cubriendo cada cambio con pruebas unitarias y end-to-end de Playwright.",
+        ],
+      },
+      {
+        type: "Experiencia Laboral",
+        title: "Operative Assistant",
+        period: "enero 2020 - enero 2023",
+        institution: "PPCCVM",
+        perks: [
+          "Estuve a cargo de la elaboración de nóminas y el mantenimiento de registros precisos del personal de la organización.",
+          "Revisé y validé registros de asistencia y documentación requerida para el cumplimiento de trabajos de medio tiempo auspiciados por el programa.",
+          "Organicé la documentación administrativa y del personal, asegurando registros correctos y un seguimiento operativo fluido.",
+        ],
+      },
+      {
+        type: "Experiencia Laboral",
+        title: "IT Support",
+        period: "octubre 2017 - diciembre 2019",
+        institution: "PPCCVM",
+        perks: [
+          "Brindé soporte técnico a personal y departamentos para solucionar problemas de hardware, software y red, manteniendo operativa la jornada diaria.",
+          "Instalé, configuré y mantuve computadoras, impresoras y equipos de oficina para asegurar una productividad confiable en el trabajo.",
+          "Gestioné accesos de usuario, soporte básico, respaldos y tareas de mantenimiento para mantener los sistemas funcionando correctamente.",
         ],
       },
     ],
