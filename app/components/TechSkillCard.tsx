@@ -24,7 +24,7 @@ const TechSkillCard = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
 
     observer.observe(node);
@@ -38,8 +38,7 @@ const TechSkillCard = () => {
           key={skill.tittle}
           variant="surface"
           size="3"
-          className="w-full grow basis-[23rem]"
-        >
+          className="w-full grow basis-[23rem]">
           <h3 className="text-base font-bold">{skill.tittle}</h3>
 
           <div className="mt-4 flex flex-col gap-4">

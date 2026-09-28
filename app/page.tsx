@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import { Button } from "@radix-ui/themes";
-import { ArrowRightIcon, CursorArrowIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons";
+import {
+  ArrowRightIcon,
+  CursorArrowIcon,
+  EnvelopeClosedIcon,
+} from "@radix-ui/react-icons";
 import { useLanguage } from "./lib/LanguageContext";
 import Avatar from "./components/Avatar";
 import { Pictures } from "./content/db";
@@ -90,7 +94,7 @@ export default function Home() {
 
         <div className="mt-8">
           <ProjectList
-            limit={5}
+            limit={6}
             columns={3}
             size="lg"
             showMoreLink={false}
