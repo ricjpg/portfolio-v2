@@ -2,6 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 import BackToProjects from "./BackToProjects";
+import BackToTop from "./BackToTop";
 import TableOfContents from "./TableOfContents";
 import { useLanguage } from "../lib/LanguageContext";
 import type { Language } from "../interfaces/interface";
@@ -65,7 +66,10 @@ export default function ProjectArticle({
 
         <div className="min-w-0">
           <header className="mb-10 border-b border-gray-200 pb-8 dark:border-gray-800">
-            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <h1
+              tabIndex={-1}
+              className="text-3xl font-bold tracking-tight sm:text-4xl"
+            >
               {frontmatter.title}
             </h1>
             <p className="mt-3 text-lg text-gray-600 dark:text-gray-400">
@@ -94,6 +98,8 @@ export default function ProjectArticle({
           <BackToProjects className="mt-12" />
         </div>
       </div>
+
+      <BackToTop />
     </div>
   );
 }

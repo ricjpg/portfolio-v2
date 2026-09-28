@@ -327,6 +327,7 @@ export const translations: Translations = {
     },
     projectPage: {
       backToProjects: "Back to projects",
+      backToTop: "Back to top",
       onThisPage: "On this page",
     },
     contactPage: {
@@ -641,6 +642,7 @@ export const translations: Translations = {
     },
     projectPage: {
       backToProjects: "Volver a proyectos",
+      backToTop: "Volver arriba",
       onThisPage: "En esta página",
     },
     contactPage: {

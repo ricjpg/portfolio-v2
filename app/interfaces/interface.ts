@@ -85,6 +85,7 @@ export interface ProjectsPageStrings {
 
 export interface ProjectPageStrings {
   backToProjects: string;
+  backToTop: string;
   onThisPage: string;
 }
 
