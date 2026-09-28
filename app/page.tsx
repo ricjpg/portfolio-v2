@@ -60,12 +60,28 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
-        <Slide type={t.hero.typeEd[0].type} />
+      <section className="mt-16 border-t border-gray-200 pt-6 sm:mt-20 dark:border-gray-800">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          {t.hero.typeEd[0].title}
+        </h2>
+
+        <div className="mt-6">
+          <Slide type={t.hero.typeEd[0].type} showType={false} />
+        </div>
       </section>
 
-      <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
-        <Slide type={t.hero.typeEd[2].type} items={t.experience} />
+      <section className="mt-16 border-t border-gray-200 pt-6 sm:mt-20 dark:border-gray-800">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          {t.hero.typeEd[2].title}
+        </h2>
+
+        <div className="mt-6">
+          <Slide
+            type={t.hero.typeEd[2].type}
+            items={t.experience}
+            showType={false}
+          />
+        </div>
       </section>
 
       <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
