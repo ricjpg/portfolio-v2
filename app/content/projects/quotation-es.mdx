@@ -1,0 +1,200 @@
+---
+title: "Plataforma de cotizaciones"
+description: "Una plataforma moderna para gestionar cotizaciones, crear documentos, hacer seguimiento y exportar ofertas de clientes con flujos seguros multi-tenant en la nube."
+date: "2025-10-06"
+toc_min_heading_level: 1
+toc_max_heading_level: 5
+tags:
+  [
+    "Cloudflare",
+    "Workers",
+    "BaaS",
+    "Hono",
+    "React",
+    "TypeScript",
+    "SQLite",
+    "Drizzle",
+    "PDF",
+    "Authentication",
+    "Quotation",
+  ]
+slug: quotation-es
+---
+
+# Plataforma de cotizaciones
+
+Cuando construyes software para operaciones reales de negocio, el problema más difícil rara vez es la interfaz. Muchas veces es la complejidad invisible detrás de ella: organizar datos de clientes, validar estados de cotización, mantener registros consistentes y asegurar que la operación pueda escalar sin perder confianza.
+
+Este proyecto comenzó como un esfuerzo enfocado en resolver exactamente ese problema: crear un sistema que permitiera a una empresa administrar clientes, generar cotizaciones, exportarlas como documentos PDF profesionales y mantener un flujo multi-tenant limpio sin el peso de una plataforma empresarial tradicional.
+
+La plataforma está diseñada para sentirse como un sistema moderno de cotizaciones: simple y práctico para uso diario, pero lo suficientemente estructurada para soportar flujos reales de operación, validación y generación de documentos profesionales.
+
+## El problema
+
+La mayoría de las pequeñas y medianas operaciones aún manejan las cotizaciones con herramientas fragmentadas. Hojas de cálculo, cadenas de correo, cálculos manuales repetidos y un seguimiento inconsistente provocan:
+
+- información duplicada de clientes
+- lógica inconsistente de impuestos y precios
+- retrasos en la generación de documentos
+- poca visibilidad del estado de las cotizaciones
+- colaboración difícil entre usuarios y áreas del negocio
+- limitada portabilidad cuando un equipo necesita pasar de herramientas locales a una solución en la nube
+
+Para una empresa que depende de cotizaciones de clientes, estos problemas se acumulan rápidamente. Una cotización no es solo un documento; representa una oferta comercial, un compromiso operativo y, a veces, el primer paso hacia la generación de ingresos.
+
+El verdadero desafío no era crear un dashboard bonito. Era construir un flujo de negocio confiable que pudiera manejar registros, validación y generación de documentos de forma escalable y mantenible.
+
+## El enfoque
+
+Abordé el proyecto como un problema real de diseño de sistemas.
+
+En lugar de sumar funciones sin criterio, me enfoqué en unos principios clave:
+
+1. Mantener la aplicación simple de usar.
+2. Separar la lógica de negocio de la presentación.
+3. Proteger cada operación con alcance por tenant.
+4. Facilitar la renderización consistente de documentos.
+5. Usar una stack ligera, portable y moderna.
+
+El resultado es un sistema de gestión de cotizaciones con arquitectura orientada a tenants, una capa API clara, gestión de clientes y cotizaciones, y flujos de generación de PDF que pueden usarse directamente desde la aplicación.
+
+## Arquitectura y flujo principal
+
+El proyecto está estructurado alrededor de un frontend moderno y un runtime de API que maneja las operaciones de datos del negocio.
+
+### Frontend
+
+La aplicación web es una interfaz con React + TypeScript impulsada por Vite. La UI usa un sistema de componentes limpio y un lenguaje visual basado en shadcn/ui, con Tailwind para estilos. Incluye:
+
+- vista general del dashboard
+- gestión de clientes
+- creación y edición de cotizaciones
+- cambios de estado para las cotizaciones
+- exportación a PDF
+- configuración por tenant
+- flujo de autenticación
+
+Esto hace que la app sea responsiva y familiar para usuarios web modernos, mientras mantiene el código base fácil de mantener.
+
+### Capa API
+
+El backend está construido con Hono, un framework web ligero ideal para runtimes tipo edge y APIs. Expone rutas para:
+
+- autenticación
+- acceso por tenant
+- operaciones de cotización
+- operaciones de clientes
+
+La aplicación sigue un patrón claro donde cada solicitud es validada en función del contexto activo del tenant, asegurando que el acceso esté correctamente controlado.
+
+### Persistencia y modelo de datos
+
+Los datos están modelados con Drizzle ORM y SQLite, lo que hace que el proyecto sea ligero y fácil de razonar, mientras conserva una definición sólida del esquema. El modelo cubre:
+
+- usuarios y registros de autenticación
+- empresas y tenants
+- registros de clientes
+- layouts y plantillas
+- cotizaciones y líneas de cotización
+- configuraciones del tenant
+
+Esto encaja muy bien con una app que no necesita la complejidad de una base de datos distribuida enorme, pero sí se beneficia de un esquema relacional real y acceso a datos tipado.
+
+### Runtime en la nube
+
+El proyecto está diseñado para funcionar en un entorno serverless y cercano al edge mediante Cloudflare Workers. Esto ofrece una combinación sólida de:
+
+- bajo costo operativo
+- distribución global
+- despliegues rápidos
+- hosting integrado para APIs y activos de la app
+
+Al ejecutar la aplicación en Workers, el sistema puede mantenerse ágil y aún así ser apropiado para casos de uso empresariales pequeños.
+
+## El problema clave resuelto: consistencia operativa
+
+El desafío principal no era crear una sola funcionalidad. Era crear un sistema operativo consistente donde las reglas del negocio se mantuvieran vigentes.
+
+Algunos ejemplos:
+
+- los números de cotización deben ser únicos dentro de cada tenant
+- los datos del cliente deben permanecer asociados a la empresa correcta
+- los totales e impuestos deben recalcularse correctamente cuando cambian las líneas
+- las transiciones de estado como borrador, enviado, aceptado, rechazado y vencido deben mantenerse coherentes
+- la configuración del tenant no debe filtrarse entre usuarios
+
+Aquí es donde el diseño correcto del sistema paga la pena. La app no trata las cotizaciones como registros aislados de la UI; en cambio, respeta propiedad, ciclo de vida y límites de validación.
+
+El backend valida los payloads entrantes, calcula subtotales e impuestos de forma consistente y maneja la lógica de expiración automática para cotizaciones vencidas. Eso le da estabilidad más allá de una interfaz CRUD básica.
+
+## Generación de PDF y valor de negocio
+
+Una de las funciones más destacadas es que una cotización no solo se almacena, sino que también puede exportarse como PDF profesional. La generación del documento se realiza mediante pdf-lib y un layout personalizado que incluye:
+
+- identidad y datos de contacto de la empresa
+- información del cliente
+- metadatos de la cotización
+- líneas de productos
+- impuestos y totales
+- branding final de la empresa
+
+Esto convierte la app de un simple administrador interno en una herramienta operativa que produce documentos directamente para clientes.
+
+Desde el punto de vista del negocio, esto significa menos trabajo manual, menos envío de archivos ad hoc y más consistencia en cómo se presentan las cotizaciones.
+
+## Autenticación y modelo de tenant
+
+Una parte crítica del sistema es la arquitectura de autenticación y tenant.
+
+El proyecto usa Better Auth para la autenticación de usuarios y luego vincula cada usuario a un modelo de tenant o empresa. Esto permite que el acceso esté bien acotado, de modo que cada usuario solo vea y modifique los datos relacionados con su empresa.
+
+Esto es importante porque una aplicación multi-tenant no puede depender solo de validaciones del frontend. La garantía real debe vivir en el backend, y este proyecto aplica ese patrón de forma explícita.
+
+## ¿Por qué esta stack?
+
+Elegí esta stack intencionalmente:
+
+- React + TypeScript: desarrollo UI predecible y excelente tooling
+- Vite: experiencia de desarrollo rápida y pipeline de build simple
+- Hono: enrutamiento ligero y estructura amigable con runtimes edge
+- Drizzle ORM: acceso SQL tipado con una capa modelo limpia
+- SQLite / esquema compatible con D1: equilibrio entre simplicidad y estructura
+- Cloudflare Workers: modelo de despliegue moderno con baja complejidad operativa
+- shadcn/ui + Tailwind: estilo de interfaz listo para producción
+- pdf-lib: generación práctica de PDFs sin herramientas empresariales pesadas
+- Better Auth: autenticación segura integrada sin boilerplate innecesario
+
+Esta stack no está sobre-diseñada, pero sí es moderna y suficiente para cubrir los requisitos reales de un sistema de negocio funcional.
+
+## Lo que aprendí
+
+La lección más grande de este proyecto es que un flujo empresarial aparentemente pequeño puede convertirse en un sistema completo cuando se consideran los detalles:
+
+- propiedad de usuarios
+- validación
+- estados de negocio
+- generación de PDF
+- límites por tenant
+- consistencia de datos
+
+Lo que parece una herramienta simple de cotizaciones en realidad es un motor de flujo operativo para comercio.
+
+Por eso el proyecto tiene valor: resuelve los aspectos aburridos pero críticos de operar un negocio. Reduce fricción, mantiene los registros estructurados y hace que los documentos para clientes sean más fáciles de generar y confiar.
+
+## Reflexión final
+
+Esta plataforma de cotizaciones es un ejemplo práctico de cómo un producto pequeño puede construirse a partir de un problema de negocio claro, no solo de un dashboard genérico.
+
+Combina patrones modernos de frontend, un backend sólido y un runtime cloud-native para crear un sistema de gestión de cotizaciones sencillo de usar, pero poderoso suficiente para cubrir necesidades reales del mundo operativo.
+
+El proyecto no se trata de mostrar una stack complicada, sino de demostrar que la arquitectura correcta puede transformar un proceso manual en un producto confiable.
+
+Ese es el verdadero valor.
+
+## Capturas de Pantalla
+
+![Pantalla principal de la plataforma de cotizaciones](/img/quotes-1.png)
+
+![Formulario de creación de cotización](/img/quotes-2.png)
+
+![PDF final imprimible](/img/quotes-3.png)

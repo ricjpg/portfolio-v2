@@ -1,0 +1,200 @@
+---
+title: "Quotation Platform"
+description: "A modern quotation management platform for creating, tracking, and exporting client quotes with secure multi-tenant workflows in the cloud."
+date: "2025-10-06"
+toc_min_heading_level: 1
+toc_max_heading_level: 5
+tags:
+  [
+    "Workers",
+    "Cloudflare",
+    "BaaS",
+    "React",
+    "TypeScript",
+    "Hono",
+    "SQLite",
+    "Drizzle",
+    "PDF",
+    "Authentication",
+    "Quotation",
+  ]
+slug: quotation-en
+---
+
+# Quotation Platform
+
+When you build software for real business operations, the hardest problem is rarely the interface. It is often the invisible complexity behind it: organizing customer data, validating quote states, keeping records consistent, and making sure operations can scale without losing trust.
+
+This project started as a focused effort to solve that exact problem: create a system that enables a business to manage clients, generate quotations, export them as professional PDF documents, and maintain a clean multi-tenant workflow without the overhead of a heavy enterprise stack.
+
+The platform is designed to feel like a modern quotation system: simple enough for everyday business use, but structured enough to support real operational workflows, validation, and professional document generation.
+
+## The problem
+
+Most small and medium operations still handle quotation management with fragmented tools. Different spreadsheets, email chains, repeated manual calculations, and inconsistent tracking lead to:
+
+- duplicated client information
+- inconsistent tax and pricing logic
+- delays in generating quote documents
+- poor visibility into quote status
+- difficult collaboration across users and business units
+- limited portability when a team needs to move from local tools to a cloud setup
+
+For a business that depends on customer quotes, those issues compound quickly. A quote is not just a document; it represents a commercial offer, an operational commitment, and sometimes the first step toward revenue.
+
+The real challenge was not to build a pretty dashboard. It was to build a reliable business workflow that could handle records, validation, and document generation in a scalable and maintainable way.
+
+## The approach
+
+I approached the project as a practical systems design problem.
+
+Instead of blindly adding features, I focused on a few core principles:
+
+1. Keep the application simple to use.
+2. Separate business logic from presentation.
+3. Secure every tenant-scoped operation.
+4. Make it easy to render documents consistently.
+5. Use a stack that is light, portable, and modern.
+
+The result is a quote management system with a tenant-aware architecture, a clean API layer, client and quote management, and PDF generation workflows that can be used directly from the app.
+
+## Architecture and core workflow
+
+The project is structured around a modern frontend and a server-side API runtime that handles business data operations.
+
+### Frontend
+
+The web app is a React + TypeScript interface powered by Vite. The UI uses a clean component system and a design language from shadcn/ui, with Tailwind for styling. It includes:
+
+- dashboard overview
+- client management
+- quote creation and editing
+- status transitions for quotes
+- PDF export
+- tenant configuration
+- authentication flow
+
+This makes the app responsive and familiar for modern web users while keeping the codebase maintainable.
+
+### API layer
+
+The backend is built with Hono, a lightweight web framework designed for edge-style runtimes and APIs. It exposes routes for:
+
+- authentication
+- tenant access
+- quote operations
+- client operations
+
+The application follows a clear pattern where every request is checked against the active tenant context, ensuring access is controlled properly.
+
+### Persistence and data model
+
+Data is modeled with Drizzle ORM and SQLite, which makes the project lightweight and easy to reason about while still giving a strong schema definition approach. The schema covers:
+
+- users and authentication records
+- companies and tenants
+- client records
+- layouts and templates
+- quotes and quote lines
+- tenant settings
+
+This is a strong fit for an app that does not need the complexity of a large distributed database, but still benefits from a real relational schema and type-safe data access.
+
+### Cloud runtime
+
+The project is designed for a serverless and edge-friendly environment through Cloudflare Workers. That gives a strong combination of:
+
+- low operational overhead
+- global distribution
+- fast deployment cycles
+- integrated environment-friendly hosting for APIs and app assets
+
+By running the app on Workers, the system can stay lean while still being production-friendly for small business use cases.
+
+## The key problem solved: operational consistency
+
+The central challenge was not creating one feature. It was creating a consistent operational system where business rules stay in place.
+
+A few examples:
+
+- quote numbers must be unique within a tenant
+- client data must stay associated to the correct company
+- quote totals and taxes must be recalculated correctly when line items change
+- status transitions such as draft, sent, accepted, rejected, and expired must stay coherent
+- tenant configuration must not leak across users
+
+This is where a proper system design pays off. The app does not treat quotes as isolated UI records. Instead, it respects ownership, lifecycle, and validation boundaries.
+
+The backend validates incoming payloads, computes subtotal and tax values consistently, and handles automatic expiration logic for quotes past their validity date. That gives the project stability beyond a simple CRUD interface.
+
+## PDF generation and business value
+
+One of the standout features is that a quotation is not only stored, but can also be exported as a professional PDF. The PDF generation is handled through pdf-lib and a custom document layout that includes:
+
+- company identity and contact data
+- client information
+- quote metadata
+- itemized product rows
+- tax and totals
+- final company branding
+
+This turns the app from a small internal manager into an operational tool that directly produces customer-facing documents.
+
+In business terms, this means less manual work, less sending of ad hoc files, and more consistency in how quotations are presented.
+
+## Authentication and tenant model
+
+A critical part of the system is the auth and tenant architecture.
+
+The project uses Better Auth for user authentication and then binds each authenticated user to a tenant/company model. This allows correct scoping across the app, meaning the current user only sees and modifies their relevant company data.
+
+This is important because a multi-tenant application cannot rely on frontend-only checks. The real guarantee must live in the backend, and this project enforces that access pattern explicitly.
+
+## Why this stack
+
+I chose this stack intentionally:
+
+- React + TypeScript: predictable UI development and great tooling
+- Vite: fast developer experience and simple build pipeline
+- Hono: lightweight API routing and edge-friendly structure
+- Drizzle ORM: typed SQL access with a clean model layer
+- SQLite / D1-friendly schema: good balance between simplicity and structure
+- Cloudflare Workers: modern deployment model with low operational complexity
+- shadcn/ui + Tailwind: production-friendly interface styling
+- pdf-lib: practical PDF generation without heavy enterprise tooling
+- Better Auth: secure authentication integrated into the app without custom boilerplate chaos
+
+This stack is not over-engineered, but it is modern enough to support the real requirements of a serviceable business system.
+
+## What I learned
+
+The biggest lesson from this project is that a seemingly small business workflow can become a full system when you account for the details:
+
+- user ownership
+- validation
+- business states
+- PDF generation
+- tenant boundaries
+- data consistency
+
+What looks like a quote tool at first is really a workflow engine for commercial operations.
+
+That is why the project is valuable: it solves the boring but critical parts of running a business. It reduces friction, keeps records structured, and makes customer-facing documents easier to generate and trust.
+
+## Final reflection
+
+This quotation platform is a practical example of how a small software product can be built around a clear business problem, not just a generic dashboard.
+
+It combines modern frontend patterns, a strong backend model, and a cloud-native runtime to create a quote management system that is simple to use but powerful enough to handle real-world operational needs.
+
+The project is less about showing off a complicated stack and more about proving that the right architecture can turn a manual process into a reliable product.
+
+That is the real win.
+
+## Screen shots
+
+![Quotation Platform main page](/img/quotes-1.png)
+
+![Quotation creation form](/img/quotes-2.png)
+
+![Final printable PDF](/img/quotes-3.png)

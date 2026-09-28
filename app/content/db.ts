@@ -127,6 +127,25 @@ export const translations: Translations = {
         date: "2025-08-07T14:30:00.000Z",
         stack: ["Python", "Azure", "Serverless", "React/radix"],
       },
+      {
+        slug: "/quotation",
+        title: "Quotation Platform",
+        description:
+          "Modern quotation management platform for creating, tracking, and exporting client quotes with secure multi-tenant workflows in the cloud.",
+        img: "quotes-3.png",
+        href: "/projects/quotation",
+        date: "2025-10-06T14:30:00.000Z",
+        stack: [
+          "Workers",
+          "Cloudflare",
+          "React",
+          "TypeScript",
+          "SQLite",
+          "Drizzle",
+          "Hono",
+          "PDF",
+        ],
+      },
     ],
     summary: {
       title: "Professional Summary",
@@ -399,6 +418,25 @@ export const translations: Translations = {
         href: "/projects/poke-q",
         date: "2025-08-07T14:30:00.000Z",
         stack: ["Python", "Azure", "Serverless", "React/radix"],
+      },
+      {
+        slug: "/quotation",
+        title: "Plataforma de cotizaciones",
+        description:
+          "Sistema moderno para crear, gestionar y exportar cotizaciones de clientes con flujos seguros multi-tenant en la nube.",
+        img: "quotes-3.png",
+        href: "/projects/quotation",
+        date: "2025-10-06T14:30:00.000Z",
+        stack: [
+          "Cloudflare",
+          "Workers",
+          "React",
+          "TypeScript",
+          "SQLite",
+          "Drizzle",
+          "Hono",
+          "PDF",
+        ],
       },
     ],
     summary: {
