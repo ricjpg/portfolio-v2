@@ -16,9 +16,10 @@ interface textProp {
   period?: string;
   perks?: string[];
   items?: TimelineEntryProps[];
+  showType?: boolean;
 }
 
-const Slide: React.FC<textProp> = ({ type, items }) => {
+const Slide: React.FC<textProp> = ({ type, items, showType = true }) => {
   const { t } = useLanguage();
   const entries = items ?? t.education;
   const kind = entries.filter((entry) => entry.type == type);
@@ -32,9 +33,11 @@ const Slide: React.FC<textProp> = ({ type, items }) => {
           key={item.title}
           className="m-2 hover:scale-103 transition-transform"
         >
-          <Text>
-            <Heading>{item.type}</Heading>
-          </Text>
+          {showType && (
+            <Text>
+              <Heading>{item.type}</Heading>
+            </Text>
+          )}
           <div className="flex">
             <div>
               <Separator orientation="vertical" size="4" color="iris" />

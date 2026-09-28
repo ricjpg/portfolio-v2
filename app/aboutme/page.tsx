@@ -1,81 +1,132 @@
 "use client";
-import { Box, Link, Section, Separator, Text } from "@radix-ui/themes";
+
+import Link from "next/link";
+import { Button } from "@radix-ui/themes";
+import { EnvelopeClosedIcon, ResetIcon } from "@radix-ui/react-icons";
 import { useLanguage } from "../lib/LanguageContext";
-import Slide from "../components/Slide";
-import TechSkillCard from "../components/TechSkillCard";
-import BackButton from "../components/BackButton";
-import SoftSkillCard from "../components/SoftSkillCard";
+import Avatar from "../components/Avatar";
 import DownloadButton from "../components/DownloadCVButton";
-import SocialCard from "../components/SocialCard";
+import Slide from "../components/Slide";
+import SoftSkillCard from "../components/SoftSkillCard";
+import TechSkillCard from "../components/TechSkillCard";
+import { Pictures } from "../content/db";
 
-export default function aboutme() {
+export default function AboutMe() {
   const { t } = useLanguage();
+
   return (
-    <Section className="p-3">
-      <h1 className="justify-self-center font-extrabold text-2xl lg:text-7xl">
-        {t.hero.aboutme}
-      </h1>
-      <Section className="w-full flex flex-col lg:flex-row justify-self-center lg:w-3/5">
-        <Box className="w-full lg:w-1/2">
-          <p className="font-extrabold text-4xl lg:font-6xl ">
-            {t.summary.title}
+    <main className="mx-auto flex w-full max-w-6xl flex-col px-4 sm:px-6">
+      <section className="grid items-center gap-12 pt-28 sm:pt-32 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16 lg:pt-36">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">
+            {t.hero.aboutme}
           </p>
-          <Separator color="orange" size="3" />
-          <p className="">{t.summary.content}</p>
-        </Box>
-        <Box className="w-full lg:w-1/2">
-          <Slide type={t.hero.typeEd[0].type} />
-          <DownloadButton />
-        </Box>
-      </Section>
 
-      <Box className=" justify-self-center">
-        <h1 className="font-extrabold text-4xl lg:text-7xl">
+          <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            {t.summary.title}
+          </h1>
+
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-gray-600 dark:text-gray-300">
+            {t.summary.content}
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <DownloadButton />
+            <Button asChild size="3" variant="soft">
+              <Link href="/contact">
+                <EnvelopeClosedIcon aria-hidden />
+                {t.hero.contactMeTitle}
+              </Link>
+            </Button>
+          </div>
+        </div>
+
+        <div className="justify-self-center lg:justify-self-end">
+          <Avatar items={Pictures} size={260} />
+        </div>
+      </section>
+
+      <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          {t.hero.typeEd[2].title}
+        </h2>
+
+        <div className="mt-6">
+          <Slide
+            type={t.hero.typeEd[2].type}
+            items={t.experience}
+            showType={false}
+          />
+        </div>
+      </section>
+
+      <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          {t.hero.typeEd[0].title}
+        </h2>
+
+        <div className="mt-6">
+          <Slide type={t.hero.typeEd[0].type} showType={false} />
+        </div>
+      </section>
+
+      <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
           {t.hero.typeEd[1].title}
-        </h1>
-      </Box>
-      <Section className="w-full lg:w-3/5  justify-self-center">
-        <Slide type={t.hero.typeEd[1].type} />
-      </Section>
+        </h2>
 
-      <Box className=" justify-self-center">
-        <h1 className="font-extrabold text-4xl lg:text-7xl">
+        <div className="mt-6">
+          <Slide type={t.hero.typeEd[1].type} showType={false} />
+        </div>
+      </section>
+
+      <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
           {t.hero.techSkill}
-        </h1>
-      </Box>
-      <Section className="w-full lg:w-3/5  justify-self-center">
-        <TechSkillCard />
-      </Section>
+        </h2>
 
-      <Box className=" justify-self-center">
-        <h1 className="font-extrabold text-4xl lg:text-7xl">
+        <div className="mt-6">
+          <TechSkillCard />
+        </div>
+      </section>
+
+      <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
           {t.hero.softSkill}
-        </h1>
-      </Box>
-      <Section className="w-full lg:w-3/5  justify-self-center">
-        <SoftSkillCard />
-      </Section>
+        </h2>
 
-      <Box className=" justify-self-center">
-        <h1 className="font-extrabold text-4xl lg:text-7xl">
-          {t.hero.contactMeTitle}
-        </h1>
-      </Box>
-      <Box className=" justify-self-center">
-        <Text>
-          {t.hero.contactMeContent} <br />
-          <Link href="mailto:ricardoguardiolahn@gmail.com">
-            ricardoguardiolahn@gmail.com
+        <div className="mt-6">
+          <SoftSkillCard />
+        </div>
+      </section>
+
+      <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          {t.contactPage.title}
+        </h2>
+
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-gray-600 dark:text-gray-300">
+          {t.contactPage.subtitle}
+        </p>
+
+        <div className="mt-6">
+          <Button asChild size="3" variant="soft">
+            <Link href="/contact">
+              <EnvelopeClosedIcon aria-hidden />
+              {t.hero.contactMeTitle}
+            </Link>
+          </Button>
+        </div>
+      </section>
+
+      <section className="mt-16 border-t border-gray-200 py-12 sm:mt-20 sm:pb-20 dark:border-gray-800">
+        <Button asChild size="3" variant="soft">
+          <Link href="/">
+            <ResetIcon aria-hidden />
+            {t.hero.backButton}
           </Link>
-        </Text>
-      </Box>
-      <Box className=" justify-self-center">
-        <SocialCard />
-      </Box>
-
-      <Box className="justify-self-center">
-        <BackButton title={t.hero.backButton} path={"/"} />
-      </Box>
-    </Section>
+        </Button>
+      </section>
+    </main>
   );
 }

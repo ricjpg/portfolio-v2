@@ -30,7 +30,7 @@ export const translations: Translations = {
         tittle: "Frontend Development",
         skills: [
           { name: "HTML+CSS", level: 60 },
-          { name: "JavaScript", level: 60 },
+          { name: "TypeScript", level: 60 },
           { name: "React", level: 65 },
           { name: "AstroJS", level: 65 },
         ],
@@ -45,13 +45,13 @@ export const translations: Translations = {
         ],
       },
       {
-        tittle: "DevOps and cloud",
+        tittle: "Cloud",
         skills: [
           { name: "Terraform", level: 50 },
           { name: "AzureCloud", level: 50 },
           { name: "AWS", level: 50 },
           { name: "CI/CD", level: 50 },
-          { name: "Cloudflare tunnels and pages", level: 60 },
+          { name: "Cloudflare", level: 60 },
         ],
       },
       {
@@ -62,15 +62,6 @@ export const translations: Translations = {
           { name: "MySQL", level: 70 },
           { name: "PostgreSQL", level: 70 },
           { name: "PL/SQL", level: 50 },
-        ],
-      },
-      {
-        tittle: "Other technologies",
-        skills: [
-          { name: "Jira", level: 70 },
-          { name: "Mermaid Diagram", level: 70 },
-          { name: "Notion", level: 70 },
-          { name: "Figma", level: 70 },
         ],
       },
     ],
@@ -151,7 +142,7 @@ export const translations: Translations = {
       typeEd: [
         {
           type: "University",
-          title: "University Title",
+          title: "Education",
         },
         {
           type: "Certificate",
@@ -250,6 +241,11 @@ export const translations: Translations = {
         description:
           "I lead by example, motivating others through clarity, organization, and a results-oriented mindset while supporting team growth.",
       },
+      {
+        title: "Continuous Learning",
+        description:
+          "I keep learning beyond the classroom, turning new technologies and methodologies into working solutions through hands-on projects.",
+      },
     ],
     social: [
       {
@@ -307,7 +303,7 @@ export const translations: Translations = {
         tittle: "Desarrollo Frontend",
         skills: [
           { name: "HTML+CSS", level: 60 },
-          { name: "JavaScript", level: 60 },
+          { name: "TypeScript", level: 60 },
           { name: "React", level: 65 },
           { name: "AstroJS", level: 65 },
         ],
@@ -322,13 +318,13 @@ export const translations: Translations = {
         ],
       },
       {
-        tittle: "DevOps",
+        tittle: "Cloud",
         skills: [
           { name: "Terraform", level: 50 },
           { name: "AzureCloud", level: 50 },
           { name: "AWS", level: 55 },
           { name: "CI/CD", level: 50 },
-          { name: "Cloudflare tunnels and pages", level: 60 },
+          { name: "Cloudflare", level: 60 },
         ],
       },
       {
@@ -339,15 +335,6 @@ export const translations: Translations = {
           { name: "MySQL", level: 70 },
           { name: "PostgreSQL", level: 70 },
           { name: "PL/SQL", level: 50 },
-        ],
-      },
-      {
-        tittle: "Otras tecnologías",
-        skills: [
-          { name: "Jira", level: 70 },
-          { name: "Mermaid Diagram", level: 70 },
-          { name: "Notion", level: 70 },
-          { name: "Figma", level: 70 },
         ],
       },
     ],
@@ -428,7 +415,7 @@ export const translations: Translations = {
       typeEd: [
         {
           type: "Educacion Superior",
-          title: "Titulo de Educacion Superior",
+          title: "Educación",
         },
         {
           type: "Certificado",
@@ -526,6 +513,11 @@ export const translations: Translations = {
         title: "Liderazgo",
         description:
           "Lidero con el ejemplo, motivando a otros mediante claridad, organización y orientación a resultados, mientras impulso el crecimiento del equipo.",
+      },
+      {
+        title: "Aprendizaje Continuo",
+        description:
+          "Sigo aprendiendo más allá del aula, convirtiendo nuevas tecnologías y metodologías en soluciones que funcionan a través de proyectos prácticos.",
       },
     ],
     social: [
