@@ -14,6 +14,9 @@ import ProjectList from "./components/ProjectCard";
 import Slide from "./components/Slide";
 import DownloadButton from "./components/DownloadCVButton";
 import { PortfolioTechnologyCarousel } from "./components/TechnologyCarousel";
+import HeadingLink from "./components/HeadingLink";
+
+const LINKEDIN_URL = "https://www.linkedin.com/in/ricnull";
 
 export default function Home() {
   const { t } = useLanguage();
@@ -27,7 +30,7 @@ export default function Home() {
           </p>
 
           <h1 className="mt-4 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-            Ricardo Guardiola
+            <HeadingLink href={LINKEDIN_URL}>Ricardo Guardiola</HeadingLink>
           </h1>
 
           <p className="mt-8 text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">
@@ -62,7 +65,7 @@ export default function Home() {
 
       <section className="mt-16 border-t border-gray-200 pt-6 sm:mt-20 dark:border-gray-800">
         <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          {t.hero.typeEd[0].title}
+          <HeadingLink href="/aboutme">{t.hero.typeEd[0].title}</HeadingLink>
         </h2>
 
         <div className="mt-6">
@@ -72,7 +75,7 @@ export default function Home() {
 
       <section className="mt-16 border-t border-gray-200 pt-6 sm:mt-20 dark:border-gray-800">
         <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          {t.hero.typeEd[2].title}
+          <HeadingLink href="/aboutme">{t.hero.typeEd[2].title}</HeadingLink>
         </h2>
 
         <div className="mt-6">
@@ -86,7 +89,7 @@ export default function Home() {
 
       <section className="mt-16 border-t border-gray-200 pt-12 sm:mt-20 dark:border-gray-800">
         <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          {t.hero.techSkill}
+          <HeadingLink href="/aboutme">{t.hero.techSkill}</HeadingLink>
         </h2>
 
         <div className="-mx-4 mt-4 sm:-mx-6">
@@ -97,7 +100,7 @@ export default function Home() {
       <section className="mt-16 border-t border-gray-200 pt-12 pb-16 sm:mt-20 sm:pb-24 dark:border-gray-800">
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            {t.hero.recentProjects}
+            <HeadingLink href="/projects">{t.hero.recentProjects}</HeadingLink>
           </h2>
 
           <Link
