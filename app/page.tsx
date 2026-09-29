@@ -30,7 +30,10 @@ export default function Home() {
           </p>
 
           <h1 className="mt-4 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-            <HeadingLink href={LINKEDIN_URL}>Ricardo Guardiola</HeadingLink>
+            <HeadingLink href={LINKEDIN_URL}>
+              Ricardo Guardiola
+              <span className="name-caret" aria-hidden="true" />
+            </HeadingLink>
           </h1>
 
           <p className="mt-8 text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">

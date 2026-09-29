@@ -134,3 +134,30 @@ h6,
     transition-delay: 0ms;
   }
 }
+
+.name-caret {
+  display: inline-block;
+  width: 0.25em;
+  height: 0.7em;
+  margin-inline-start: 0.12em;
+  background-color: currentColor;
+  animation: name-caret-blink 1.1s step-end infinite;
+}
+
+@keyframes name-caret-blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name-caret {
+    animation: none;
+  }
+}
