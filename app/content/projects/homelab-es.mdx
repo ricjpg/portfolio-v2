@@ -1,0 +1,173 @@
+---
+title: "Homelab: Servidor Multimedia Self-Hosted"
+description: "Construcción de un servidor multimedia casero con hardware reciclado, Proxmox, LXC, Docker y un stack completo de aplicaciones open source para reemplazar plataformas de streaming comerciales."
+date: "2025-11-29"
+toc_min_heading_level: 1
+toc_max_heading_level: 5
+tags:
+  [
+    "Linux",
+    "Docker",
+    "Proxmox",
+    "Self-Hosting",
+    "Networking",
+    "Open Source",
+    "Jellyfin",
+    "Homelab",
+  ]
+slug: homelab-media-server
+---
+
+# Objetivo general
+
+Este proyecto consistió en construir un servidor multimedia self-hosted sobre hardware reciclado, eliminando la dependencia de plataformas de streaming comerciales como Netflix, Spotify y Disney+. El resultado es un sistema completamente automatizado, con interfaz propia, capaz de organizar, enriquecer y reproducir contenido multimedia a cualquier dispositivo de la red local — sin mensualidades, sin restricciones de catálogo y con control total sobre los datos.
+
+## Contexto tecnológico
+
+- **Hipervisor**: Proxmox VE sobre hardware reciclado (PC de escritorio)
+- **Virtualización**: Contenedores LXC con Debian 12
+- **Orquestación de contenedores**: Docker + Docker Compose
+- **Gestor de películas**: Radarr
+- **Gestor de series**: Sonarr
+- **Gestor de indexadores**: Prowlarr
+- **Cliente de descargas**: qBittorrent
+- **Gestor de subtítulos**: Bazarr
+- **Servidor multimedia**: Jellyfin
+- **Gestor de solicitudes**: Jellyseerr
+- **Reverse proxy**: Nginx Proxy Manager
+- **DNS / Ad-blocking**: Pi-hole
+- **Red**: Bridge network personalizada (`media-network`) vía Docker
+
+# Solución implementada
+
+El sistema opera como un pipeline completamente automatizado: desde que un usuario solicita una película hasta que aparece disponible en la interfaz de reproducción, sin intervención manual. Todos los servicios corren como contenedores Docker dentro de un LXC Debian en Proxmox, comparten volúmenes comunes y se comunican entre sí por nombre de servicio a través de una red bridge interna.
+
+## Arquitectura base: Proxmox + LXC
+
+La decisión de usar **Proxmox VE** como hipervisor respondió a la necesidad de aprovechar al máximo el hardware disponible sin sacrificar aislamiento entre servicios. A diferencia de una máquina virtual completa, los contenedores **LXC** comparten el kernel del host, lo que resulta en un overhead mínimo y arranques casi inmediatos.
+
+La arquitectura final en Proxmox quedó dividida en tres contenedores LXC independientes:
+
+```table
+| LXC          | Sistema   | Rol                             |
+| ------------ | --------- | ------------------------------- |
+| `lxc-pihole` | Debian 12 | DNS local + bloqueo de anuncios |
+| `lxc-proxy`  | Debian 12 | Reverse proxy + SSL             |
+| `lxc-media`  | Debian 12 | Stack multimedia completo       |
+```
+
+Esta separación permite respaldar, apagar o recrear cada servicio de forma independiente sin afectar a los demás.
+
+### Configuración del LXC para Docker
+
+Un detalle crítico al correr Docker dentro de LXC es habilitar el soporte de **nesting** y, en caso de requerir transcodificación por hardware, mapear los dispositivos `/dev/dri` desde el host hacia el contenedor. Esto se configura en las opciones del contenedor desde la interfaz de Proxmox antes de iniciarlo.
+
+## Orquestación con Docker Compose
+
+Todos los servicios del servidor multimedia se declaran en un único archivo `docker-compose.yml`. La ventaja de este enfoque es que el stack completo se levanta con un solo comando, la configuración es reproducible y versionable, y las dependencias entre servicios quedan explícitas.
+
+```yaml
+networks:
+  media-network:
+    driver: bridge
+```
+
+Todos los contenedores comparten la misma red bridge (`media-network`), lo que les permite referenciarse entre sí por nombre de servicio en lugar de IPs — por ejemplo, Radarr puede comunicarse con qBittorrent en `qbittorrent:5080` sin configuración adicional.
+
+### Volúmenes compartidos
+
+Un punto de diseño importante fue la coherencia en el mapeo de volúmenes entre servicios. Los directorios de medios y descargas se montan con la misma ruta interna en cada contenedor que los necesita:
+
+```yaml
+# qBittorrent descarga aquí
+- /media/downloads:/downloads
+- /media/peliculas:/movies
+
+# Radarr mueve/renombra desde descargas hacia películas
+- /media/peliculas:/movies
+- /media/downloads:/downloads
+
+# Jellyfin lee en modo solo lectura
+- /media/peliculas:/data/movies:ro
+```
+
+Esto garantiza que cuando Radarr mueve un archivo descargado hacia la biblioteca de películas, Jellyfin lo detecta automáticamente en su ruta correcta sin requerir configuración adicional.
+
+## El pipeline automatizado
+
+El flujo completo del sistema, de punta a punta, funciona de la siguiente forma:
+
+```
+Jellyseerr (solicitud del usuario)
+    ↓
+Radarr / Sonarr (búsqueda mediante Prowlarr)
+    ↓
+qBittorrent (descarga del torrent)
+    ↓
+Radarr / Sonarr (renombrado y organización del archivo)
+    ↓
+Bazarr (descarga automática de subtítulos)
+    ↓
+Jellyfin (disponible para reproducción)
+```
+
+Una vez configurado, el único paso manual es hacer la solicitud en Jellyseerr. Todo lo demás ocurre de forma automática.
+
+### Prowlarr como capa de indexadores
+
+En lugar de configurar los mismos trackers manualmente en Radarr y en Sonarr por separado, **Prowlarr** actúa como un proxy central de indexadores. Se configuran una sola vez en Prowlarr y se sincronizan automáticamente hacia ambos gestores. Esto reduce la configuración duplicada y centraliza la gestión de fuentes.
+
+### Transcodificación por hardware en Jellyfin
+
+Para evitar saturar la CPU al reproducir contenido en dispositivos que no soportan el formato original (por ejemplo, H.265/HEVC en un Smart TV antiguo), Jellyfin aprovecha la GPU integrada del host a través del mapeo de dispositivos en Docker:
+
+```yaml
+jellyfin:
+  devices:
+    - /dev/dri:/dev/dri
+```
+
+Esto habilita la aceleración por hardware vía **Intel Quick Sync** (o VA-API), delegando la transcodificación a la GPU y manteniendo el uso de CPU en niveles mínimos incluso con varios streams simultáneos.
+
+## Acceso limpio mediante Reverse Proxy
+
+Con ocho servicios corriendo en puertos distintos (`:8096`, `:7878`, `:8989`, `:9696`…), recordar cada uno es impráctico. **Nginx Proxy Manager** resuelve esto con una interfaz gráfica para crear Proxy Hosts que mapean subdominios hacia cada servicio:
+
+```table
+| Subdominio       | Servicio   | Puerto interno |
+| ---------------- | ---------- | -------------- |
+| `jellyfin.local` | Jellyfin   | 8096           |
+| `radarr.local`   | Radarr     | 7878           |
+| `sonarr.local`   | Sonarr     | 8989           |
+| `request.local`  | Jellyseerr | 5055           |
+```
+
+Nginx Proxy Manager también gestiona la renovación automática de certificados **Let's Encrypt**, permitiendo acceso HTTPS tanto en red local como, opcionalmente, de forma remota.
+
+## Pi-hole: DNS local con bloqueo de anuncios
+
+En un LXC separado corre **Pi-hole**, configurado como servidor DNS primario en el router. Esto bloquea publicidad y trackers a nivel de red para todos los dispositivos del hogar — sin instalar extensiones en cada navegador ni en cada dispositivo. Es la misma filosofía del proyecto aplicada al resto de la infraestructura: recuperar control sobre lo que entra y sale de la red.
+
+# Resultado
+
+El sistema quedó completamente operativo con:
+
+- Biblioteca de películas, series y música accesible desde cualquier dispositivo de la red local (TV, celular, tablet, PC) a través de la app de Jellyfin.
+- Solicitudes de contenido nuevo gestionadas desde Jellyseerr, con descarga y organización automáticas.
+- Subtítulos descargados automáticamente en el idioma configurado.
+- Acceso a cada servicio mediante subdominio limpio con HTTPS.
+- Bloqueo de anuncios activo para toda la red local vía Pi-hole.
+- Stack 100% reproducible — levantar todo desde cero es cuestión de `docker compose up -d`.
+
+# Capturas de pantalla
+
+![Homelab Media Server - Jellyfin](/img/homelab-1.png)
+
+![Homelab Media Server - Jellyseerr](/img/homelab-2.png)
+
+# Links relevantes
+
+- [Repositorio docker-compose](https://github.com/ricjpg/homelab-media)
+- [Documentación de Jellyfin](https://jellyfin.org/docs/)
+- [LinuxServer.io — imágenes Docker](https://docs.linuxserver.io/)
+- [TRaSH Guides — Radarr/Sonarr best practices](https://trash-guides.info/)
