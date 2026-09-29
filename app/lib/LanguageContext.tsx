@@ -21,18 +21,31 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined,
 );
 
+const SUPPORTED_LANGUAGES: Language[] = ["en", "es"];
+const DEFAULT_LANGUAGE: Language = "en";
+
+const detectLanguage = (): Language => {
+  const browserLanguage = navigator.language.split("-")[0];
+  return (
+    SUPPORTED_LANGUAGES.find((lang) => lang === browserLanguage) ??
+    DEFAULT_LANGUAGE
+  );
+};
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
+  const [language, setLanguage] = useState<Language>(DEFAULT_LANGUAGE);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("language") as Language | null;
-    const browserLang = navigator.language.split("-")[0] as Language;
-    const initialLang = stored || (browserLang === "es" ? "es" : "en");
 
-    setLanguage(initialLang);
+    setLanguage(stored ?? detectLanguage());
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   const changeLanguage = (lang: Language) => {
     setLanguage(lang);

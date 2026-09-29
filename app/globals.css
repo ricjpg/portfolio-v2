@@ -23,14 +23,12 @@
   --font-funnel: "Funnel Display", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    background-image: url("/img/bg-dark.svg");
-    /* background-size: cover;
-    background-repeat: no-repeat; */
-  }
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  background-image: url("/img/bg-dark.svg");
+  /* background-size: cover;
+  background-repeat: no-repeat; */
 }
 
 body {

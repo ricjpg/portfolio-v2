@@ -1,13 +1,16 @@
 "use client";
 
+import { useContext, useEffect, useState } from "react";
 import { Theme } from "@radix-ui/themes";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext } from "react";
 import { ThemeContextType, Appearance } from "../interfaces/interface";
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
+const DEFAULT_APPEARANCE: Appearance = "dark";
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [appearance, setAppearance] = useState<Appearance>("light");
+  const [appearance, setAppearance] = useState<Appearance>(DEFAULT_APPEARANCE);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -17,6 +20,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", appearance === "dark");
+  }, [appearance]);
 
   const toggleTheme = () => {
     setAppearance((prev) => {
@@ -42,7 +49,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 export function useTheme() {
   const context = useContext(ThemeContext);
-  if (!context) {
+  if (context === null) {
     throw new Error("useTheme must be used inside ThemeProvider");
   }
   return context;
