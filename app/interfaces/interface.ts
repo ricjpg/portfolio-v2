@@ -102,6 +102,7 @@ export interface Translations {
     skills: SkillSetProps[];
     projects: ProjectProps[];
     summary: SummaryProps;
+    summaryExtended: SummaryProps;
     hero: HeroStrings;
     education: TimelineEntryProps[];
     experience: TimelineEntryProps[];
@@ -115,6 +116,7 @@ export interface Translations {
     skills: SkillSetProps[];
     projects: ProjectProps[];
     summary: SummaryProps;
+    summaryExtended: SummaryProps;
     hero: HeroStrings;
     education: TimelineEntryProps[];
     experience: TimelineEntryProps[];

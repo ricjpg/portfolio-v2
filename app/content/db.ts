@@ -71,7 +71,7 @@ export const translations: Translations = {
         slug: "/prosene",
         title: "PROSENE",
         description:
-          "Accessible platform developed for PROSENE-UNAH, enabling students with special needs to submit and track requests online. Built with Vue.js, FastAPI and PostgreSQL, improving communication and management between students and special care program staff.",
+          "Inclusive platform for PROSENE-UNAH letting students with special needs submit and track requests online. Built with Vue.js, FastAPI and PostgreSQL, it replaced an in-person process full of delays and poor case traceability.",
         img: "prosene.png",
         href: "/projects/prosene",
         date: "2025-03-15T14:30:00.000Z",
@@ -81,7 +81,7 @@ export const translations: Translations = {
         slug: "/xatruch",
         title: "Xatruch",
         description:
-          "Comprehensive system for managing flights, routes, schedules and passengers for Xatruch airline. Developed with Java, Spring, Laravel and MySQL, allowing registration of domestic and international flights, aircraft control and role-based access, optimizing operational and administrative processes.",
+          "Full system for managing flights, routes, schedules, aircraft and passengers at Xatruch airline. Built with Java, Spring, Laravel and MySQL, it replaced error-prone spreadsheets with role-based access and centralized operational records.",
         img: "plane.jpg",
         href: "/projects/xatruch",
         date: "2023-09-15T14:30:00.000Z",
@@ -91,7 +91,7 @@ export const translations: Translations = {
         slug: "/classifier",
         title: "Cats and dogs classifier",
         description:
-          "Web application that uses neural networks and convolutional networks to classify whether what is seen by the camera is a cat or a dog. Developed in Python and web tools like HTML, CSS and JS",
+          "Web application that classifies in real time whether the camera sees a cat or a dog, using convolutional neural networks with Python and a browser interface built in HTML, CSS and JavaScript, trained on labelled image data.",
         img: "classifier.png",
         href: "/projects/classifier",
         date: "2024-03-15T14:30:00.000Z",
@@ -101,7 +101,7 @@ export const translations: Translations = {
         slug: "/ecommerce",
         title: "E-commerce Platform and Analytics",
         description:
-          "Infrastructure for an e-commerce platform managed with Terraform",
+          "Azure cloud architecture for an e-commerce platform, provisioned with Terraform across three layers: security and identity, core application, and data and analytics, built to scale while staying available and observable.",
         img: "general-diagram.png",
         href: "/projects/ecommerce",
         date: "2025-06-28T14:30:00.000Z",
@@ -111,7 +111,7 @@ export const translations: Translations = {
         slug: "/smart-cache",
         title: "Smart cache",
         description:
-          "Creation of a data pipeline and API with intelligent cache, developed in Python, deployed in Azure",
+          "Data pipeline and API serving over 200,000 records, migrated with Azure Data Factory and exposed with FastAPI. Uses an intelligent Redis cache invalidation strategy to improve query responsiveness and scale in Azure.",
         img: "smart-cache-low.gif",
         href: "/projects/smart-cache",
         date: "2025-07-22T14:30:00.000Z",
@@ -121,7 +121,7 @@ export const translations: Translations = {
         slug: "/poke-q",
         title: "Poke Queue",
         description:
-          "Asynchronous generation of CSV reports through consumption of PokeAPI, using Storage Account",
+          "Asynchronous service that generates CSV reports by consuming PokeAPI and writing them to Azure Storage. Uses queues and workers to process requests in the background, with a FastAPI backend and a Next.js interface.",
         img: "poke-q.gif",
         href: "/projects/poke-q",
         date: "2025-08-07T14:30:00.000Z",
@@ -131,7 +131,7 @@ export const translations: Translations = {
         slug: "/quotation",
         title: "Quotation Platform",
         description:
-          "Modern quotation management platform for creating, tracking, and exporting client quotes with secure multi-tenant workflows in the cloud.",
+          "Cloud platform for creating, tracking and exporting client quotes as PDF, with secure multi-tenant workflows. Built with Cloudflare Workers, Hono, React, TypeScript and SQLite to keep each tenant's data isolated.",
         img: "quotes-3.png",
         href: "/projects/quotation",
         date: "2026-09-06T14:30:00.000Z",
@@ -150,7 +150,7 @@ export const translations: Translations = {
         slug: "/homelab",
         title: "Homelab Media Server",
         description:
-          "Self-hosted media server built from recycled hardware with Proxmox, LXC, Docker, and a full open-source media stack.",
+          "Self-hosted media server assembled from recycled hardware, running Proxmox with LXC containers and Docker to serve the full open-source media stack, replacing commercial streaming with infrastructure I control.",
         img: "homelab-1.png",
         href: "/projects/homelab",
         date: "2025-11-29T14:30:00.000Z",
@@ -166,9 +166,14 @@ export const translations: Translations = {
       },
     ],
     summary: {
-      title: "Professional Summary",
+      title: "About me",
       content:
-        "Results-driven Systems Engineering student with a strong foundation in web and mobile application development. Proficient in frontend and backend technologies including React, FastAPI, Spring Boot, and various SQL databases. Adept at quickly learning new technologies and adapting to dynamic project requirements. Ability to manage multiple projects effectively while maintaining high standards of quality. Committed to continuous improvement and passionate about leveraging technology to solve real-world problems.",
+        "I'm a software engineer who likes understanding a system end to end — from the database schema to the pixel on screen. My background spans React/TypeScript and Ruby on Rails in production, plus personal projects built with Python/FastAPI, Java/Spring Boot, PHP/Laravel, Angular, and cloud infrastructure on Cloudflare and Azure. Outside of client work, I run a small homelab just to get my hands dirty with infrastructure — Docker, reverse proxies, the whole setup. I'm currently open to full-time opportunities, ideally on a remote or nearshore team, where I can keep building software that solves real problems.",
+    },
+    summaryExtended: {
+      title: "More about me",
+      content:
+        "I got into software engineering for the same reason I stayed: there's always a next problem worth solving. Most recently that meant working as a full-stack developer on LynxLabs' R&D team, and outside of that, building out a handful of personal projects across React, FastAPI, Spring Boot, and cloud platforms like AWS and Azure just to see how the pieces fit together. I'm finishing a Systems Engineering degree at UNAH and now looking for my next full-time role — ideally somewhere I can keep growing as an engineer while working on products that matter.",
     },
     hero: {
       greeting: "Hello, I'm",
@@ -207,9 +212,9 @@ export const translations: Translations = {
         degree: "Engineer",
         institution: "National Autonomous University of Honduras",
         perks: [
-          "Full-stack developer",
-          "Specialized in backend development",
-          "Committed to continuous improvement",
+          "3rd Place, Startup Challenge IS UNAH (Sept. 2025)",
+          "Software engineering coursework covering software development, databases, and networking, with an added focus on IT governance",
+          "Additional certifications: CCNA – Introduction to Networks (Cisco) and Oracle Next Education (Oracle/Alura)",
         ],
       },
       {
@@ -248,7 +253,8 @@ export const translations: Translations = {
         institution: "LynxLabs · Research and Development",
         perks: [
           "Closed test coverage gaps in a multi-tenant Rails e-commerce backend, writing the missing specs with RSpec and Factory Bot so the team could refactor with confidence.",
-          "Migrated features to a new enterprise multi-tenant back office built with React and TanStack Query, covering each change with unit tests and Playwright end-to-end tests.",
+          "Worked as a full-stack developer in the Research and Development department, primarily migrating an enterprise multi-tenant back office with React, TypeScript and TanStack Query, Router and Table, and shipping complete production modules built on scalable state management and data validation patterns.",
+          "Covered each change with unit tests and Playwright end-to-end tests, collaborating with a multidisciplinary engineering team.",
         ],
       },
       {
@@ -404,7 +410,7 @@ export const translations: Translations = {
         slug: "/prosene",
         title: "PROSENE",
         description:
-          "Plataforma accesible desarrollada para PROSENE-UNAH, que permite a estudiantes con necesidades especiales enviar y rastrear solicitudes en línea. Desarrollada con Vue.js, FastAPI y PostgreSQL, mejora la comunicación y gestión entre estudiantes y el personal del programa de atención especial.",
+          "Plataforma accesible para PROSENE-UNAH que permite a estudiantes con necesidades especiales enviar y rastrear solicitudes en línea. Construida con Vue.js, FastAPI y PostgreSQL, sustituyó un proceso presencial con retrasos y baja trazabilidad.",
         img: "prosene.png",
         href: "/projects/prosene",
         date: "2025-03-15T14:30:00.000Z",
@@ -414,7 +420,7 @@ export const translations: Translations = {
         slug: "/xatruch",
         title: "Xatruch",
         description:
-          "Sistema integral para la gestión de vuelos, rutas, horarios y pasajeros de la aerolínea Xatruch. Desarrollado con Java, Spring, Laravel y MySQL, permite registrar vuelos nacionales e internacionales, controlar aeronaves y ofrecer acceso por roles, optimizando procesos operativos y administrativos.",
+          "Sistema para gestionar vuelos, rutas, horarios, aeronaves y pasajeros de la aerolínea Xatruch. Desarrollado con Java, Spring, Laravel y MySQL, sustituyó hojas de cálculo propensas a errores con acceso por roles y registros centralizados.",
         img: "plane.jpg",
         href: "/projects/xatruch",
         date: "2023-09-15T14:30:00.000Z",
@@ -424,7 +430,7 @@ export const translations: Translations = {
         slug: "/classifier",
         title: "Clasificador de gatos y perros",
         description:
-          "Aplicación web que usa redes neuronales y redes convolucionales para clasificar si lo visto por la cámara es un gato o un perro. Desarrollado en Python y herramientas web como HTML, CSS y JS",
+          "Aplicación web que clasifica en tiempo real si la cámara observa un gato o un perro, usando redes neuronales convolucionales con Python e interfaz de navegador en HTML, CSS y JavaScript, entrenada con imágenes etiquetadas.",
         img: "classifier.png",
         href: "/projects/classifier",
         date: "2024-03-15T14:30:00.000Z",
@@ -434,7 +440,7 @@ export const translations: Translations = {
         slug: "/ecommerce",
         title: "Plataforma de E-commerce y Analítica",
         description:
-          "Infraestructura para una plataforma de e-commerce manejada con Terraform",
+          "Arquitectura en la nube para una plataforma de e-commerce, aprovisionada con Terraform en tres capas: seguridad e identidad, aplicación principal y datos y analítica, para escalar, garantizar disponibilidad y observar el sistema.",
         img: "general-diagram.png",
         href: "/projects/ecommerce",
         date: "2025-06-28T14:30:00.000Z",
@@ -444,7 +450,7 @@ export const translations: Translations = {
         slug: "/smart-cache",
         title: "Smart cache",
         description:
-          "Creación de un Pipeline de datos y API con cache inteligente, desarrollado en Python, desplegado en Azure",
+          "Pipeline de datos y API que sirve más de 200,000 registros, migrados con Azure Data Factory y expuestos con FastAPI. Usa una estrategia inteligente de invalidación de caché en Redis para mejorar la respuesta en Azure.",
         img: "smart-cache-low.gif",
         href: "/projects/smart-cache",
         date: "2025-07-22T14:30:00.000Z",
@@ -454,7 +460,7 @@ export const translations: Translations = {
         slug: "/poke-q",
         title: "Poke Queue",
         description:
-          "Generación asincrónica de reportes CSV mediante el consumo de PokeAPI, utilizando Storage Account",
+          "Servicio asíncrono que genera reportes CSV consumiendo PokeAPI y guardándolos en Azure Storage. Usa colas y workers para procesar las solicitudes en segundo plano, con backend FastAPI en Azure e interfaz Next.js.",
         img: "poke-q.gif",
         href: "/projects/poke-q",
         date: "2025-08-07T14:30:00.000Z",
@@ -464,7 +470,7 @@ export const translations: Translations = {
         slug: "/quotation",
         title: "Plataforma de cotizaciones",
         description:
-          "Sistema moderno para crear, gestionar y exportar cotizaciones de clientes con flujos seguros multi-tenant en la nube.",
+          "Plataforma en la nube para crear, gestionar y exportar cotizaciones en PDF, con flujos seguros multi-tenant. Construida con Cloudflare Workers, Hono, React, TypeScript y SQLite para mantener aislados los datos de cada inquilino.",
         img: "quotes-3.png",
         href: "/projects/quotation",
         date: "2026-09-06T14:30:00.000Z",
@@ -483,7 +489,7 @@ export const translations: Translations = {
         slug: "/homelab",
         title: "Servidor multimedia Homelab",
         description:
-          "Servidor multimedia autoalojado construido con hardware reciclado, Proxmox, LXC, Docker y un stack completo de software libre.",
+          "Servidor multimedia autoalojado armado con hardware reciclado, ejecutando Proxmox con contenedores LXC y Docker para servir un stack multimedia de software libre y sustituir servicios comerciales de streaming.",
         img: "homelab-1.png",
         href: "/projects/homelab",
         date: "2025-11-29T14:30:00.000Z",
@@ -499,9 +505,14 @@ export const translations: Translations = {
       },
     ],
     summary: {
-      title: "Resumen Profesional",
+      title: "Acerca de mi",
       content:
-        "Estudiante de Ingeniería en Sistemas orientado a resultados con una sólida base en desarrollo de aplicaciones web y móviles. Competente en tecnologías frontend y backend incluyendo React, FastAPI, Spring Boot, y varias bases de datos SQL. Hábil para aprender rápidamente nuevas tecnologías y adaptarse a requisitos dinámicos de proyectos. Capacidad para gestionar múltiples proyectos efectivamente manteniendo altos estándares de calidad. Comprometido con la mejora continua y apasionado por aprovechar la tecnología para resolver problemas del mundo real.",
+        "Soy ingeniero en sistemas y me gusta entender un sistema de principio a fin — desde el esquema de la base de datos hasta el pixel en pantalla. Mi experiencia abarca React/TypeScript y Ruby on Rails en producción, además de proyectos personales construidos con Python/FastAPI, Java/Spring Boot, PHP/Laravel, Angular e infraestructura en la nube con Cloudflare y Azure. Fuera del trabajo con clientes, mantengo un pequeño homelab solo por ensuciarme las manos con infraestructura — Docker, reverse proxies, todo el setup. Actualmente estoy en búsqueda de oportunidades de tiempo completo, idealmente en un equipo remoto o nearshore, donde pueda seguir construyendo software que resuelva problemas reales.",
+    },
+    summaryExtended: {
+      title: "Acerca de mi",
+      content:
+        "Entré a la ingeniería de software por la misma razón que me quedé: siempre hay un próximo problema que vale la pena resolver. Más recientemente eso significó trabajar como desarrollador Full-Stack en el equipo de I+D de LynxLabs, y fuera de eso, construir varios proyectos personales con React, FastAPI, Spring Boot y plataformas en la nube como AWS y Azure, solo por entender cómo encajan las piezas. Estoy terminando mi carrera de Ingeniería en Sistemas en la UNAH y actualmente busco mi próxima posición de tiempo completo — idealmente en un lugar donde pueda seguir creciendo como ingeniero mientras trabajo en productos que importan.",
     },
     hero: {
       greeting: "Hola, yo soy",
@@ -540,9 +551,9 @@ export const translations: Translations = {
         period: "2026",
         institution: "Universidad Nacional Autónoma de Honduras",
         perks: [
-          "Desarrollador Full-Stack",
-          "Orientado al desarrollo backend",
-          "Comprometido a la mejora continua",
+          "3er lugar, Startup Challenge IS UNAH (sept. 2025)",
+          "Formación en desarrollo de software, bases de datos y redes, con un componente adicional en gobierno de TI",
+          "Certificaciones complementarias: CCNA – Introducción a las Redes (Cisco) y Oracle Next Education (Oracle/Alura)",
         ],
       },
       {
@@ -581,7 +592,8 @@ export const translations: Translations = {
         institution: "LynxLabs · Investigación y Desarrollo",
         perks: [
           "Cubrí huecos de cobertura de pruebas en un backend multi-tenant de e-commerce en Rails, escribiendo las pruebas que faltaban con RSpec y Factory Bot para que el equipo pudiera refactorizar con confianza.",
-          "Migré funcionalidades a un nuevo back office empresarial multi-tenant construido con React y TanStack Query, cubriendo cada cambio con pruebas unitarias y end-to-end de Playwright.",
+          "Desarrollador full-stack en el departamento de Investigación y Desarrollo, migrando principalmente un backoffice empresarial multi-tenant con React, TypeScript y TanStack Query/Router/Table, e implementando módulos completos de producción con patrones escalables de manejo de estado y validación de datos.",
+          "Cubrí cada cambio con pruebas unitarias y end-to-end de Playwright, en colaboración con un equipo de ingeniería multidisciplinario.",
         ],
       },
       {
@@ -701,7 +713,7 @@ export const summaryContent = translations.en.summary;
 
 export const Pictures: PicProps[] = [
   {
-    src: "/img/pp.jpeg",
+    src: "/img/pp-2.png",
     alt: "Profile picture",
     width: 400,
     height: 400,
